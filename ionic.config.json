@@ -1,0 +1,7 @@
+{
+  "name": "orion-chat-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
