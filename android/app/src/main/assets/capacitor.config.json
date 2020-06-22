@@ -1,6 +1,6 @@
 {
   "appId": "com.angelxehg.orion",
-  "appName": "orion-chat-app",
+  "appName": "Orion Chat",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
