@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.angelxehg.orion",
   "appName": "orion-chat-app",
   "bundledWebRuntime": false,
   "npmClient": "npm",

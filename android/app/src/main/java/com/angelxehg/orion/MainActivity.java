@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.angelxehg.orion;
 
 import android.os.Bundle;
 
