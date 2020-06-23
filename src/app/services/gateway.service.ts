@@ -5,5 +5,14 @@ import { Injectable } from '@angular/core';
 })
 export class GatewayService {
 
-  constructor() { }
+  public api_path = "";
+  public paths = []
+
+  constructor() {
+    this.paths = [
+      "http://192.168.0.62:8000/api/v1/"
+    ];
+    this.api_path = this.paths[0];
+  }
+
 }

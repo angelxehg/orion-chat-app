@@ -25,7 +25,7 @@ export class WorkspacePage implements OnInit {
   doRefresh(event) {
     console.log('Begin async operation');
     //Get saved list of friends
-    this.friendService.loadAllThen(event.target.complete);
+    this.friendService.loadAllThen(event);
 
     setTimeout(() => {
       console.log('Async operation has ended');

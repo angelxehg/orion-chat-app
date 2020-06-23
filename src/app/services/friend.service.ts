@@ -3,18 +3,18 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Friend } from '../models/friend';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { GatewayService } from './gateway.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FriendService {
 
-  private api_path = "http://192.168.0.62:8000/api/v1/";
-  private path = this.api_path + "friends/";
-
   public friends: any;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private gateway: GatewayService) {
     this.friends = [];
   }
 
@@ -46,7 +46,7 @@ export class FriendService {
   // Create a new item
   createItem(item): Observable<Friend> {
     return this.http
-      .post<Friend>(this.path, JSON.stringify(item), this.httpOptions)
+      .post<Friend>(this.gateway.api_path + "friends/", JSON.stringify(item), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -56,7 +56,7 @@ export class FriendService {
   // Get single friend data by ID
   getItem(id): Observable<Friend> {
     return this.http
-      .get<Friend>(this.path + id + '/')
+      .get<Friend>(this.gateway.api_path + "friends/" + id + '/')
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -70,18 +70,18 @@ export class FriendService {
     })
   }
 
-  public async loadAllThen(action) {
+  public async loadAllThen(event) {
     this.getList().subscribe(response => {
       console.log(response);
       this.friends = response;
-      action();
+      event.target.complete();
     })
   }
 
   // Get friends data
   getList(): Observable<Friend> {
     return this.http
-      .get<Friend>(this.path)
+      .get<Friend>(this.gateway.api_path + "friends/")
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -91,7 +91,7 @@ export class FriendService {
   // Update item by id
   updateItem(id, item): Observable<Friend> {
     return this.http
-      .put<Friend>(this.path + id + '/', JSON.stringify(item), this.httpOptions)
+      .put<Friend>(this.gateway.api_path + "friends/" + id + '/', JSON.stringify(item), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -101,7 +101,7 @@ export class FriendService {
   // Delete item by id
   deleteItem(id) {
     return this.http
-      .delete<Friend>(this.path + id + '/', this.httpOptions)
+      .delete<Friend>(this.gateway.api_path + "friends/" + id + '/', this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
