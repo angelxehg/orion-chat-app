@@ -56,7 +56,7 @@ export class FriendService {
   // Get single friend data by ID
   getItem(id): Observable<Friend> {
     return this.http
-      .get<Friend>(this.path + '/' + id)
+      .get<Friend>(this.path + id + '/')
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -91,7 +91,7 @@ export class FriendService {
   // Update item by id
   updateItem(id, item): Observable<Friend> {
     return this.http
-      .put<Friend>(this.path + '/' + id, JSON.stringify(item), this.httpOptions)
+      .put<Friend>(this.path + id + '/', JSON.stringify(item), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -101,7 +101,7 @@ export class FriendService {
   // Delete item by id
   deleteItem(id) {
     return this.http
-      .delete<Friend>(this.path + '/' + id, this.httpOptions)
+      .delete<Friend>(this.path + id + '/', this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
