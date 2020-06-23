@@ -24,6 +24,7 @@ export class FriendCreatePage implements OnInit {
 
   submitForm() {
     this.friendService.createItem(this.data).subscribe((response) => {
+      this.friendService.loadAll();
       this.router.navigate(['/tabs/workspace']);
     });
 

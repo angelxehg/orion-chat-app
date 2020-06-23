@@ -18,7 +18,7 @@
   </ion-refresher>
   <!-- List of friends -->
   <ion-list>
-    <ion-item-sliding *ngFor="let item of friendsData">
+    <ion-item-sliding *ngFor="let item of friendService.friends">
       <ion-item>
         <ion-label>{{ item.name }}</ion-label>
       </ion-item>

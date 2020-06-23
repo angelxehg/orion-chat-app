@@ -8,33 +8,24 @@ import { FriendService } from '../services/friend.service';
 })
 export class WorkspacePage implements OnInit {
 
-  friendsData: any;
 
   constructor(
-    public friendService: FriendService
-  ) {
-    this.friendsData = [];
-  }
+    public friendService: FriendService) { }
 
   ngOnInit() {
-    // this.getAllFriends();
+    // this.friendService.loadAll();
   }
 
   ionViewWillEnter() {
     // Used ionViewWillEnter as ngOnInit is not 
     // called due to view persistence in Ionic
-    this.getAllFriends();
+    this.friendService.loadAll();
   }
 
   doRefresh(event) {
     console.log('Begin async operation');
     //Get saved list of friends
-    this.friendService.getList().subscribe(response => {
-      console.log(response);
-      this.friendsData = response;
-      console.log('Async operation has ended');
-      event.target.complete();
-    })
+    this.friendService.loadAllThen(event.target.complete);
 
     setTimeout(() => {
       console.log('Async operation has ended');
@@ -42,20 +33,11 @@ export class WorkspacePage implements OnInit {
     }, 2000);
   }
 
-  getAllFriends(refresher = false) {
-    //Get saved list of friends
-    this.friendService.getList().subscribe(response => {
-      console.log(response);
-      this.friendsData = response;
-    })
-  }
-
-
   delete(item) {
     //Delete item in Friend data
     this.friendService.deleteItem(item.id).subscribe(Response => {
       //Update list after delete is successful
-      this.getAllFriends();
+      this.friendService.loadAll();
     });
   }
 

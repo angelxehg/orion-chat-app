@@ -12,7 +12,11 @@ export class FriendService {
   private api_path = "http://192.168.0.62:8000/api/v1/";
   private path = this.api_path + "friends/";
 
-  constructor(private http: HttpClient) { }
+  public friends: any;
+
+  constructor(private http: HttpClient) {
+    this.friends = [];
+  }
 
   // Http Options
   httpOptions = {
@@ -57,6 +61,21 @@ export class FriendService {
         retry(2),
         catchError(this.handleError)
       )
+  }
+
+  public async loadAll() {
+    this.getList().subscribe(response => {
+      console.log(response);
+      this.friends = response;
+    })
+  }
+
+  public async loadAllThen(action) {
+    this.getList().subscribe(response => {
+      console.log(response);
+      this.friends = response;
+      action();
+    })
   }
 
   // Get friends data
