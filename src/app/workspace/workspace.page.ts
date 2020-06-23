@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { FriendService } from '../services/friend.service';
 
 @Component({
   selector: 'app-workspace',
@@ -11,7 +11,7 @@ export class WorkspacePage implements OnInit {
   friendsData: any;
 
   constructor(
-    public apiService: ApiService
+    public friendService: FriendService
   ) {
     this.friendsData = [];
   }
@@ -28,7 +28,7 @@ export class WorkspacePage implements OnInit {
 
   getAllFriends() {
     //Get saved list of friends
-    this.apiService.getList().subscribe(response => {
+    this.friendService.getList().subscribe(response => {
       console.log(response);
       this.friendsData = response;
     })
@@ -37,7 +37,7 @@ export class WorkspacePage implements OnInit {
 
   delete(item) {
     //Delete item in Friend data
-    this.apiService.deleteItem(item.id).subscribe(Response => {
+    this.friendService.deleteItem(item.id).subscribe(Response => {
       //Update list after delete is successful
       this.getAllFriends();
     });
