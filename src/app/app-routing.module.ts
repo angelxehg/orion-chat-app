@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./friend-create/friend-create.module').then(m => m.FriendCreatePageModule)
   },
   {
-    path: 'friend-update',
+    path: 'friend-update/:id',
     loadChildren: () => import('./friend-update/friend-update.module').then(m => m.FriendUpdatePageModule)
   }
 

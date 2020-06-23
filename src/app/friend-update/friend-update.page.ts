@@ -30,7 +30,7 @@ export class FriendUpdatePage implements OnInit {
     })
   }
 
-  update() {
+  saveChanges() {
     //Update item by taking id and updated data object
     this.friendService.updateItem(this.id, this.data).subscribe(response => {
       this.friendService.loadAll();
