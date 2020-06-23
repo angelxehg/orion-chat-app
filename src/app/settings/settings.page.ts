@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GatewayService } from '../services/gateway.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -10,7 +11,7 @@ export class SettingsPage implements OnInit {
 
   api_path: string;
 
-  constructor(private gateway: GatewayService) { }
+  constructor(private gateway: GatewayService, public toastController: ToastController) { }
 
   ngOnInit() {
     this.api_path = this.gateway.api_path;
@@ -23,6 +24,15 @@ export class SettingsPage implements OnInit {
 
   savePath() {
     this.gateway.api_path = this.api_path;
+    this.presentToast("Gateway set to " + this.api_path);
+  }
+
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
   }
 
 }
