@@ -5,13 +5,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  },  {
+  },
+  {
     path: 'friend-create',
-    loadChildren: () => import('./friend-create/friend-create.module').then( m => m.FriendCreatePageModule)
+    loadChildren: () => import('./friend-create/friend-create.module').then(m => m.FriendCreatePageModule)
   },
   {
     path: 'friend-update',
-    loadChildren: () => import('./friend-update/friend-update.module').then( m => m.FriendUpdatePageModule)
+    loadChildren: () => import('./friend-update/friend-update.module').then(m => m.FriendUpdatePageModule)
   }
 
 ];
