@@ -26,7 +26,23 @@ export class WorkspacePage implements OnInit {
     this.getAllFriends();
   }
 
-  getAllFriends() {
+  doRefresh(event) {
+    console.log('Begin async operation');
+    //Get saved list of friends
+    this.friendService.getList().subscribe(response => {
+      console.log(response);
+      this.friendsData = response;
+      console.log('Async operation has ended');
+      event.target.complete();
+    })
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
+  getAllFriends(refresher = false) {
     //Get saved list of friends
     this.friendService.getList().subscribe(response => {
       console.log(response);
