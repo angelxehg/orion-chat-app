@@ -11,8 +11,10 @@ import { retry, catchError } from 'rxjs/operators';
 export class ApiService {
 
   // API path
-  api_path = "https://c038c7ec-c471-48d3-8b04-b0771725fd55.mock.pstmn.io"
-  base_path = this.api_path + '/api/v1/friends/';
+  mock_path = "https://c038c7ec-c471-48d3-8b04-b0771725fd55.mock.pstmn.io/"
+  local_path = "http://localhost:8000/"
+  vaio_path = "http://192.168.0.62:8000/"
+  base_path = this.vaio_path + 'api/v1/friends/';
 
   constructor(private http: HttpClient) { }
 
