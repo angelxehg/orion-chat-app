@@ -12,13 +12,15 @@ import { AuthResponse } from './auth-response';
 })
 export class AuthService {
 
-  AUTH_SERVER_ADDRESS: string = 'http://vaio.home.com:8000/api/v1';
+  api_path: string = 'http://vaio.home.com:8000/api/v1';
   authSubject = new BehaviorSubject(false);
 
-  constructor(private httpClient: HttpClient, private storage: Storage) { }
+  constructor(private httpClient: HttpClient, private storage: Storage) {
+    console.log("Auth service up!");
+  }
 
   register(user: User): Observable<AuthResponse> {
-    return this.httpClient.post<AuthResponse>(`${this.AUTH_SERVER_ADDRESS}/auth/users/`, user).pipe(
+    return this.httpClient.post<AuthResponse>(`${this.api_path}/auth/users/`, user).pipe(
       tap(async (res: AuthResponse) => {
         if (res) {
           await this.storage.set("ACCESS_TOKEN", res.access);
@@ -31,7 +33,7 @@ export class AuthService {
   }
 
   login(user: User): Observable<AuthResponse> {
-    return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/auth/jwt/create/`, user).pipe(
+    return this.httpClient.post(`${this.api_path}/auth/jwt/create/`, user).pipe(
       tap(async (res: AuthResponse) => {
         if (res) {
           await this.storage.set("ACCESS_TOKEN", res.access);

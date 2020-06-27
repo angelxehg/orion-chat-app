@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GatewayService } from '../services/gateway.service';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -11,10 +11,10 @@ export class SettingsPage implements OnInit {
 
   api_path: string;
 
-  constructor(private gateway: GatewayService, public toastController: ToastController) { }
+  constructor(private authService: AuthService, public toastController: ToastController) { }
 
   ngOnInit() {
-    this.api_path = this.gateway.api_path;
+    this.api_path = this.authService.api_path;
   }
 
   defaultPath() {
@@ -23,7 +23,7 @@ export class SettingsPage implements OnInit {
   }
 
   savePath() {
-    this.gateway.api_path = this.api_path;
+    this.authService.api_path = this.api_path;
     this.presentToast("Gateway set to " + this.api_path);
   }
 

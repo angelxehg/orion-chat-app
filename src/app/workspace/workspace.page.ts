@@ -10,4 +10,8 @@ export class WorkspacePage implements OnInit {
   constructor() { }
 
   ngOnInit() { }
+
+  ionViewWillEnter() {
+    console.log("Workspace page to show...");
+  }
 }
