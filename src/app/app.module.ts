@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GatewayService } from './services/gateway.service';
 
+import { AuthModule } from './auth/auth.module';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,7 +21,8 @@ import { GatewayService } from './services/gateway.service';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AuthModule,
   ],
   providers: [
     StatusBar,
