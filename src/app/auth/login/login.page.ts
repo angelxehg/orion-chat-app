@@ -30,12 +30,12 @@ export class LoginPage implements OnInit {
   }
 
   loginSuccess(data) {
-    this.toast("Successful login!");
+    this.toast("Successful login: 200");
     this.router.navigateByUrl('/app');
   }
 
   loginError(error) {
-    this.toast("Login error: " + error.message);
+    this.toast("Login error: " + error.status + ": " + error.statusText);
     console.log(error);
   }
 

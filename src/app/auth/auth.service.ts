@@ -52,9 +52,7 @@ export class AuthService {
         if (res) {
           this.jwt_access = res.access;
           this.jwt_refresh = res.refresh;
-          console.log("Saving token at Storage...");
           let storageObs = from(this.storage.set("TOKEN_REFRESH", res.refresh));
-          console.log("Saved token at Storage!");
           return storageObs;
         }
         return of(null);
