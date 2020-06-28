@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -7,32 +6,17 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage {
 
-  api_path: string;
+  user = null;
 
-  constructor(private authService: AuthService, public toastController: ToastController) { }
+  constructor(private auth: AuthService) { }
 
-  ngOnInit() {
-    this.api_path = this.authService.api_path;
+  ionViewWillEnter() {
+    this.user = this.auth.getUser();
   }
 
-  defaultPath() {
-    this.api_path = "http://192.168.0.62:8000/api/v1/";
-    this.savePath();
+  logout() {
+    this.auth.logout();
   }
-
-  savePath() {
-    this.authService.api_path = this.api_path;
-    this.presentToast("Gateway set to " + this.api_path);
-  }
-
-  async presentToast(msg) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 2000
-    });
-    toast.present();
-  }
-
 }

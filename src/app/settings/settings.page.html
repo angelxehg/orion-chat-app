@@ -12,10 +12,11 @@
       <ion-title size="large">Settings</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-item>
-    <ion-label position="floating">API Gateway</ion-label>
-    <ion-input [(ngModel)]="api_path"></ion-input>
-  </ion-item>
-  <ion-button (click)="defaultPath()">Default</ion-button>
-  <ion-button color="success" (click)="savePath()">Save</ion-button>
+  <ion-card *ngIf="user">
+    <ion-card-content>
+      {{ user.email }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" (click)="logout()">Logout</ion-button>
 </ion-content>

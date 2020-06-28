@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -9,14 +10,30 @@ import { AuthService } from '../auth.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  credentials = {
+    username: 'sample',
+    password: 'v_for_vendetta'
+  };
 
-  ngOnInit() {
-  }
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private alertCtrl: AlertController) { }
 
-  login(form) {
-    this.authService.login(form.value).subscribe((res) => {
-      this.router.navigateByUrl('/tabs/workspace');
+  ngOnInit() { }
+
+  login() {
+    this.auth.login(this.credentials).subscribe(async res => {
+      if (res) {
+        this.router.navigateByUrl('/app');
+      } else {
+        const alert = await this.alertCtrl.create({
+          header: 'Login Failed',
+          message: 'Wrong credentials.',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
     });
   }
 
