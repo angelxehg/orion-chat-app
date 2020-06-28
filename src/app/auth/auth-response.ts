@@ -1,4 +1,4 @@
 export interface AuthResponse {
     access: string,
-    refresh: number
+    refresh: string
 }

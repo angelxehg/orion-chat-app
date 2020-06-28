@@ -8,13 +8,9 @@ import { AuthService } from '../auth/auth.service';
 })
 export class SettingsPage {
 
-  user = null;
-
   constructor(private auth: AuthService) { }
 
-  ionViewWillEnter() {
-    this.user = this.auth.getUser();
-  }
+  ionViewWillEnter() { }
 
   logout() {
     this.auth.logout();

@@ -11,8 +11,8 @@ import { AuthService } from '../auth.service';
 export class LoginPage implements OnInit {
 
   credentials = {
-    username: 'sample',
-    password: 'v_for_vendetta'
+    username: '',
+    password: ''
   };
 
   constructor(
