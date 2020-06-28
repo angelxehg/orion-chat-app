@@ -1,17 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-workspace',
   templateUrl: 'workspace.page.html',
   styleUrls: ['workspace.page.scss']
 })
-export class WorkspacePage implements OnInit {
+export class WorkspacePage {
 
   constructor() { }
-
-  ngOnInit() { }
-
-  ionViewWillEnter() {
-    console.log("Workspace page to show...");
-  }
 }

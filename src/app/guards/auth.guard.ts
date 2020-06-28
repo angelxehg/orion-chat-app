@@ -8,7 +8,7 @@ import { AuthService } from '../auth/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanLoad {
 
   constructor(private router: Router, private auth: AuthService, private alertCtrl: AlertController) { }
 
@@ -24,13 +24,25 @@ export class AuthGuard implements CanActivate {
             message: 'You session has expired.',
             buttons: ['OK']
           }).then(alert => alert.present());
-
           this.router.navigateByUrl('/');
           return false;
-        } else {
-          console.log("Guard Activate!");
-          return true;
         }
+        return true;
+      })
+    )
+  }
+
+  canLoad(
+    route: Route,
+    segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+    return this.auth.user.pipe(
+      take(1),
+      map(user => {
+        if (user) {
+          this.router.navigateByUrl('/app');
+          return false;
+        }
+        return true;
       })
     )
   }
