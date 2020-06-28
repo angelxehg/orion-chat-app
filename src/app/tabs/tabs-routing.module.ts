@@ -4,7 +4,12 @@ import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
+    redirectTo: '/app/workspace',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -25,15 +30,10 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/workspace',
+        redirectTo: '/app/workspace',
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/workspace',
-    pathMatch: 'full'
   }
 ];
 

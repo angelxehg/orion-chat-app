@@ -9,8 +9,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
-import { GatewayService } from './services/gateway.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,12 +19,12 @@ import { GatewayService } from './services/gateway.service';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    IonicStorageModule.forRoot(),
     HttpClientModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    GatewayService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

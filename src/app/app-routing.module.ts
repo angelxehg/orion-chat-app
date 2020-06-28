@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
+    path: 'app',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule),
+    canLoad: [AuthGuard]
   },
-  {
-    path: 'friend-create',
-    loadChildren: () => import('./friend-create/friend-create.module').then(m => m.FriendCreatePageModule)
-  },
-  {
-    path: 'friend-update/:id',
-    loadChildren: () => import('./friend-update/friend-update.module').then(m => m.FriendUpdatePageModule)
-  }
 
 ];
 @NgModule({
