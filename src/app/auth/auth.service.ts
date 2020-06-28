@@ -2,7 +2,7 @@ import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { take, map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -52,26 +52,14 @@ export class AuthService {
         if (res) {
           this.jwt_access = res.access;
           this.jwt_refresh = res.refresh;
+          console.log("Saving token at Storage...");
           let storageObs = from(this.storage.set("TOKEN_REFRESH", res.refresh));
+          console.log("Saved token at Storage!");
           return storageObs;
         }
         return of(null);
       })
     );
-    // return this.http.get('https://randomuser.me/api/').pipe(
-    //   take(1),
-    //   map(res => {
-    //     // Extract the JWT, here we just fake it
-    //     return `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1Njc2NjU3MDYsImV4cCI6MTU5OTIwMTcwNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoiMTIzNDUiLCJmaXJzdF9uYW1lIjoiU2ltb24iLCJsYXN0X25hbWUiOiJHcmltbSIsImVtYWlsIjoic2FpbW9uQGRldmRhY3RpYy5jb20ifQ.4LZTaUxsX2oXpwN6nrSScFXeBNZVEyuPxcOkbbDVZ5U`;
-    //   }),
-    //   switchMap(token => {
-    //     let decoded = helper.decodeToken(token);
-    //     this.userData.next(decoded);
-
-    //     let storageObs = from(this.storage.set("TOKEN_REFRESH", token));
-    //     return storageObs;
-    //   })
-    // );
   }
 
   getUser() {
