@@ -15,7 +15,7 @@ const helper = new JwtHelperService();
 })
 export class AuthService {
 
-  api_path: string = 'http://192.168.0.62:8000/api/v1';
+  api_path: string = 'https://api-orion-ecs.herokuapp.com/api/v1';
 
   private jwt_access = "";
   private jwt_refresh = "";
