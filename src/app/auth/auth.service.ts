@@ -46,16 +46,14 @@ export class AuthService {
           this.userData.next(decoded);
           if (decoded.exp < nextMinutes) {
             // Refresh Token expired within next 15 minutes
-            console.log("Refresh Token expired within next 15 minutes");
             this.logout();
             return null;
           }
           if (!this.jwt_refresh) {
             // First load of refresh token (app opened)
-            console.log("First load of refresh token (app opened)")
             this.jwt_refresh = token;
             this.refresh().subscribe({
-              next: data => console.log(data),
+              next: data => console.info("Token refreshed"),
               error: error => console.error(error)
             });
             return true;
@@ -74,14 +72,12 @@ export class AuthService {
       var nextMinutes = (Date.now() / 1000 | 0) + 900 // Now + 15 minutes
       if (decoded.exp < nextMinutes) {
         // Access Token expired within next 15 minutes
-        console.log("Access Token expired within next 15 minutes");
         this.refresh().subscribe({
-          next: data => console.log(data),
+          next: data => console.info("Token refreshed"),
           error: error => console.error(error)
         });
         return false;
       } else {
-        console.log("Access token still valid");
         // Access token still valid
         return true;
       }
@@ -91,13 +87,11 @@ export class AuthService {
   }
 
   refresh() {
-    console.log("Refreshing token...");
+    console.info("Refreshing token...");
     var data = { refresh: this.jwt_refresh };
     return this.http.post(`${this.api_path}/auth/jwt/refresh/`, data).pipe(
       tap(async (res: AuthResponse) => {
-        console.log("Token refresh response");
         if (res) {
-          console.log("Token refreshed!");
           this.jwt_access = res.access;
           this.jwt_refresh = res.refresh;
           let decoded = helper.decodeToken(res.refresh);

@@ -16,7 +16,7 @@ export class SettingsPage {
 
   refresh() {
     this.auth.refresh().subscribe({
-      next: data => console.log(data),
+      next: data => console.info("Token refreshed"),
       error: error => console.error(error)
     });
   }

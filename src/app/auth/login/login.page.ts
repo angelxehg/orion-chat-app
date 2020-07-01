@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
 
   loginError(error) {
     this.toast("Login error: " + error.status + ": " + error.statusText);
-    console.log(error);
+    console.error(error);
   }
 
   async toast(message) {
