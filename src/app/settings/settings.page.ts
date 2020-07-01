@@ -10,7 +10,16 @@ export class SettingsPage {
 
   constructor(private auth: AuthService) { }
 
-  ionViewWillEnter() { }
+  ionViewWillEnter() {
+    this.auth.access();
+  }
+
+  refresh() {
+    this.auth.refresh().subscribe({
+      next: data => console.log(data),
+      error: error => console.error(error)
+    });
+  }
 
   logout() {
     this.auth.logout();
