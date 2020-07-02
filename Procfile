@@ -1,1 +1,1 @@
-web: npm run build --prod && node server.js
+web: npm run build --prod --max_old_space_size=2560 && node server.js
