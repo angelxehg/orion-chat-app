@@ -1,6 +1,6 @@
 {
   "name": "orion-chat",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -9,7 +9,11 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "electron:linux": "electron-packager ./electron 'orion-chat' --overwrite --platform=linux --arch=x64 --out=dist",
+    "electron:linux:deb": "electron-installer-debian --src dist/orion-chat-linux-x64/ --dest dist/installers/ --arch amd64",
+    "electron:mac": "electron-packager ./electron 'orion-chat' --overwrite --platform=darwin --arch=x64 --out=dist",
+    "electron:windows": "electron-packager ./electron 'orion-chat' --overwrite --asar=true --platform=win32 --arch=ia32 --out=dist --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Orion Chat'"
   },
   "private": true,
   "dependencies": {
@@ -45,6 +49,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "electron-installer-debian": "^3.1.0",
     "electron-packager": "^15.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
