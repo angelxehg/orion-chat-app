@@ -18,6 +18,10 @@ const routes: Routes = [
     loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule),
     canLoad: [AuthGuard]
   },
+  {
+    path: 'panel',
+    loadChildren: () => import('./panel/panel.module').then( m => m.PanelPageModule)
+  },
 
 ];
 @NgModule({
