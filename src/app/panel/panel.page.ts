@@ -9,26 +9,38 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PanelPage implements OnInit {
 
-  public folder: string;
+  public selectedIndex = 0;
 
   constructor(private menu: MenuController, private activatedRoute: ActivatedRoute) { }
 
-  openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }
-
-  openEnd() {
-    this.menu.open('end');
-  }
-
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
-  }
+  public pages = [
+    {
+      title: 'Workspace',
+      url: '/app/workspace',
+      icon: 'briefcase'
+    },
+    {
+      title: 'Channels',
+      url: '/app/channels',
+      icon: 'chatbubbles'
+    },
+    {
+      title: 'Search',
+      url: '/app/search',
+      icon: 'search'
+    },
+    {
+      title: 'Settings',
+      url: '/app/settings',
+      icon: 'cog'
+    },
+  ];
 
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+    const path = window.location.pathname.split('folder/')[1];
+    if (path !== undefined) {
+      this.selectedIndex = this.pages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+    }
   }
 
 }
