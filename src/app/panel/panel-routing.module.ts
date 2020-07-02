@@ -15,19 +15,19 @@ const routes: Routes = [
     children: [
       {
         path: 'workspace',
-        loadChildren: () => import('../workspace/workspace.module').then(m => m.WorkspacePageModule)
+        loadChildren: () => import('./workspace/workspace.module').then(m => m.WorkspacePageModule)
       },
       {
         path: 'channels',
-        loadChildren: () => import('../channels/channels.module').then(m => m.ChannelsPageModule)
+        loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsPageModule)
       },
       {
         path: 'search',
-        loadChildren: () => import('../search/search.module').then(m => m.SearchPageModule)
+        loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
       },
       {
         path: 'settings',
-        loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
+        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
       },
       {
         path: '',
