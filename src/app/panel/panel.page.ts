@@ -15,13 +15,8 @@ export class PanelPage implements OnInit {
 
   public pages = [
     {
-      title: 'Organization',
-      url: '/app/organization',
-      icon: 'people'
-    },
-    {
-      title: 'Workspace',
-      url: '/app/workspace',
+      title: 'Workspaces',
+      url: '/app/workspaces',
       icon: 'briefcase'
     },
     {
@@ -33,6 +28,11 @@ export class PanelPage implements OnInit {
       title: 'Search',
       url: '/app/search',
       icon: 'search'
+    },
+    {
+      title: 'Organization',
+      url: '/app/organization',
+      icon: 'people'
     },
     {
       title: 'Profile',

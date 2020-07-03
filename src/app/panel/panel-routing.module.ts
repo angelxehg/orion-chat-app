@@ -6,7 +6,7 @@ import { PanelPage } from './panel.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app/workspace',
+    redirectTo: '/app/workspaces',
     pathMatch: 'full'
   },
   {
@@ -14,12 +14,8 @@ const routes: Routes = [
     component: PanelPage,
     children: [
       {
-        path: 'organization',
-        loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationPageModule)
-      },
-      {
-        path: 'workspace',
-        loadChildren: () => import('./workspace/workspace.module').then(m => m.WorkspacePageModule)
+        path: 'workspaces',
+        loadChildren: () => import('./workspaces/workspaces.module').then(m => m.WorkspacesPageModule)
       },
       {
         path: 'channels',
@@ -28,6 +24,10 @@ const routes: Routes = [
       {
         path: 'search',
         loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
+      },
+      {
+        path: 'organization',
+        loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationPageModule)
       },
       {
         path: 'profile',
@@ -39,7 +39,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/app/workspace',
+        redirectTo: '/app/workspaces',
         pathMatch: 'full'
       }
     ]

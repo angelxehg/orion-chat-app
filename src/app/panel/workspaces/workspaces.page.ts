@@ -3,10 +3,10 @@ import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-workspace',
-  templateUrl: 'workspace.page.html',
-  styleUrls: ['workspace.page.scss']
+  templateUrl: 'workspaces.page.html',
+  styleUrls: ['workspaces.page.scss']
 })
-export class WorkspacePage {
+export class WorkspacesPage {
 
   constructor(private auth: AuthService) { }
 
