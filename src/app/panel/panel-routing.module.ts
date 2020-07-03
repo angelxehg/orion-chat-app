@@ -26,6 +26,10 @@ const routes: Routes = [
         loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
       },
       {
+        path: 'files',
+        loadChildren: () => import('./files/files.module').then(m => m.FilesPageModule)
+      },
+      {
         path: 'organization',
         loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationPageModule)
       },
@@ -43,7 +47,7 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  },
+  }
 ];
 
 @NgModule({
