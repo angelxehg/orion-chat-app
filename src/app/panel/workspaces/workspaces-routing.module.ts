@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: WorkspacesPage,
+  },
+  {
+    path: ':workspace',
+    loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
   }
 ];
 
