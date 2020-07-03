@@ -14,6 +14,10 @@ const routes: Routes = [
     component: PanelPage,
     children: [
       {
+        path: 'organization',
+        loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationPageModule)
+      },
+      {
         path: 'workspace',
         loadChildren: () => import('./workspace/workspace.module').then(m => m.WorkspacePageModule)
       },
@@ -26,6 +30,10 @@ const routes: Routes = [
         loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
       },
       {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
+      },
+      {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
       },
@@ -35,7 +43,7 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  }
+  },
 ];
 
 @NgModule({
