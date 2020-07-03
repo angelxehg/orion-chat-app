@@ -8,6 +8,10 @@ const routes: Routes = [
     component: WorkspacesPage,
     children: [
       {
+        path: '',
+        loadChildren: () => import('./workspace-list/workspace-list.module').then(m => m.WorkspaceListPageModule)
+      },
+      {
         path: ':workspace',
         loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
       }
