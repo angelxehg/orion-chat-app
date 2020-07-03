@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-split-pane contentId="main" (ionSplitPaneVisible)="panelChange($event)">
+  <ion-split-pane contentId="main">
     <!--  the side menu  -->
     <ion-menu contentId="main">
       <ion-header>
@@ -11,14 +11,18 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list>
-          <ion-item *ngFor="let workspace of workspaces" routerLink="/app/workspaces/{{ workspace.id }}">
-            <ion-label>
-              <h2>{{ workspace.title }}</h2>
-              <p>{{ workspace.description }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
+        <ion-item-group *ngFor="let organization of organizations">
+          <ion-item-divider>
+            <ion-label>{{ organization.title }}</ion-label>
+          </ion-item-divider>
+          <ion-menu-toggle auto-hide="false" *ngFor="let workspace of organization.workspaces">
+            <ion-item routerDirection="root" [routerLink]="[workspace.url]" lines="none" detail="false"
+              color="{{ isUrlActive(workspace.url) ? 'secondary' : '' }}">
+              <!-- <ion-icon slot="start" [ios]="page.icon + '-outline'" [md]="page.icon + '-sharp'"></ion-icon> -->
+              <ion-label>{{ workspace.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-item-group>
       </ion-content>
     </ion-menu>
     <!-- the main content -->

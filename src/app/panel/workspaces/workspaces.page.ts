@@ -9,22 +9,31 @@ import { PanelService } from '../panel.service';
 })
 export class WorkspacesPage {
 
-  workspaces = [
+  organizations = [
     {
       id: 1,
-      title: "Workspace 1",
-      description: "Workspace 1 from Organization 1"
+      title: "Organization 1",
+      workspaces: [
+        {
+          id: 1,
+          title: "Workspace 1",
+          description: "Workspace 1 from Organization 1",
+          url: '/app/workspaces/1',
+        },
+        {
+          id: 2,
+          title: "Workspace 2",
+          description: "Workspace 2 from Organization 2",
+          url: '/app/workspaces/2',
+        },
+        {
+          id: 3,
+          title: "Workspace 3",
+          description: "Workspace 3 from Organization 3",
+          url: '/app/workspaces/3',
+        },
+      ]
     },
-    {
-      id: 2,
-      title: "Workspace 2",
-      description: "Workspace 2 from Organization 2"
-    },
-    {
-      id: 3,
-      title: "Workspace 3",
-      description: "Workspace 3 from Organization 3"
-    }
   ]
 
   constructor(
@@ -37,13 +46,7 @@ export class WorkspacesPage {
     this.auth.access();
   }
 
-  panelChange(e: any) {
-    if (e.detail.visible) {
-      console.log("desktop");
-      this.panel.secondaryShow();
-    } else {
-      console.log("mobile");
-      this.panel.secondaryHide();
-    }
+  isUrlActive(url) {
+    return window.location.pathname.includes(url);
   }
 }
