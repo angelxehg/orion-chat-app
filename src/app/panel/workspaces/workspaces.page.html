@@ -1,0 +1,31 @@
+<ion-content>
+  <ion-split-pane contentId="main">
+    <!--  the side menu  -->
+    <ion-menu contentId="main">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/"></ion-back-button>
+          </ion-buttons>
+          <ion-title size="large">Workspaces</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-item-group *ngFor="let organization of organizations">
+          <ion-item-divider>
+            <ion-label>{{ organization.title }}</ion-label>
+          </ion-item-divider>
+          <ion-menu-toggle auto-hide="false" *ngFor="let workspace of organization.workspaces">
+            <ion-item routerDirection="root" [routerLink]="[workspace.url]" lines="none" detail="false"
+              color="{{ isUrlActive(workspace.url) ? 'secondary' : '' }}">
+              <!-- <ion-icon slot="start" [ios]="page.icon + '-outline'" [md]="page.icon + '-sharp'"></ion-icon> -->
+              <ion-label>{{ workspace.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-item-group>
+      </ion-content>
+    </ion-menu>
+    <!-- the main content -->
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-split-pane>
+</ion-content>

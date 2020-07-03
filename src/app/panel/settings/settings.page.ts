@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Platform, ToastController } from '@ionic/angular';
+import { PanelService } from '../panel.service';
 
 @Component({
   selector: 'app-settings',
@@ -12,11 +13,12 @@ export class SettingsPage {
   constructor(
     private auth: AuthService,
     public toastController: ToastController,
-    private platform: Platform
-
+    private platform: Platform,
+    public panel: PanelService
   ) { }
 
   ionViewWillEnter() {
+    this.panel.show();
     this.auth.access();
   }
 

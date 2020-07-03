@@ -6,7 +6,7 @@ import { PanelPage } from './panel.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app/workspace',
+    redirectTo: '/app/home',
     pathMatch: 'full'
   },
   {
@@ -14,16 +14,24 @@ const routes: Routes = [
     component: PanelPage,
     children: [
       {
-        path: 'workspace',
-        loadChildren: () => import('./workspace/workspace.module').then(m => m.WorkspacePageModule)
-      },
-      {
-        path: 'channels',
-        loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsPageModule)
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
       },
       {
         path: 'search',
         loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
+      },
+      {
+        path: 'files',
+        loadChildren: () => import('./files/files.module').then(m => m.FilesPageModule)
+      },
+      {
+        path: 'organization',
+        loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationPageModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
         path: 'settings',
@@ -31,11 +39,19 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/app/workspace',
+        redirectTo: '/app/home',
         pathMatch: 'full'
       }
     ]
-  }
+  },
+  {
+    path: 'workspaces',
+    loadChildren: () => import('./workspaces/workspaces.module').then(m => m.WorkspacesPageModule)
+  },
+  {
+    path: 'channels',
+    loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsPageModule)
+  },
 ];
 
 @NgModule({

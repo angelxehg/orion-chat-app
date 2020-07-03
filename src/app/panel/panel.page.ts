@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { PanelService } from './panel.service';
 
 @Component({
   selector: 'app-panel',
@@ -11,36 +10,72 @@ export class PanelPage implements OnInit {
 
   public selectedIndex = 0;
 
-  constructor(private menu: MenuController, private activatedRoute: ActivatedRoute) { }
-
-  public pages = [
+  public pageGroups = [
     {
-      title: 'Workspace',
-      url: '/app/workspace',
-      icon: 'briefcase'
+      title: "Main",
+      pages: [
+        {
+          title: 'Main',
+          url: '/app/home',
+          icon: 'home',
+        },
+        {
+          title: 'Workspaces',
+          url: '/app/workspaces',
+          icon: 'briefcase',
+        },
+        {
+          title: 'Channels',
+          url: '/app/channels',
+          icon: 'chatbubbles',
+        },
+      ]
     },
     {
-      title: 'Channels',
-      url: '/app/channels',
-      icon: 'chatbubbles'
+      title: "Features",
+      pages: [
+        {
+          title: 'Search',
+          url: '/app/search',
+          icon: 'search',
+        },
+        {
+          title: 'Files',
+          url: '/app/files',
+          icon: 'folder',
+        },
+      ]
     },
     {
-      title: 'Search',
-      url: '/app/search',
-      icon: 'search'
-    },
-    {
-      title: 'Settings',
-      url: '/app/settings',
-      icon: 'cog'
-    },
-  ];
-
-  ngOnInit() {
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.pages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+      title: "Configuration",
+      pages: [
+        {
+          title: 'Organization',
+          url: '/app/organization',
+          icon: 'people',
+        },
+        {
+          title: 'Profile',
+          url: '/app/profile',
+          icon: 'person-circle',
+        },
+        {
+          title: 'Settings',
+          url: '/app/settings',
+          icon: 'cog',
+        },
+      ]
     }
+  ]
+
+  constructor(
+    public panel: PanelService
+  ) { }
+
+  ngOnInit() { }
+
+  isUrlActive(url) {
+    return window.location.pathname.includes(url);
   }
 
 }

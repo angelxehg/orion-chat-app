@@ -2,10 +2,10 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WorkspacePage } from './workspace.page';
+import { WorkspacesPage } from './workspaces.page';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
-import { WorkspacePageRoutingModule } from './workspace-routing.module';
+import { WorkspacesPageRoutingModule } from './workspaces-routing.module';
 
 @NgModule({
   imports: [
@@ -13,8 +13,8 @@ import { WorkspacePageRoutingModule } from './workspace-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    WorkspacePageRoutingModule
+    WorkspacesPageRoutingModule
   ],
-  declarations: [WorkspacePage]
+  declarations: [WorkspacesPage]
 })
-export class WorkspacePageModule { }
+export class WorkspacesPageModule { }

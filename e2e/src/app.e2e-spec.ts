@@ -9,6 +9,6 @@ describe('new App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getPageTitle()).toContain('Workspace');
+    expect(page.getPageTitle()).toContain('Workspaces');
   });
 });
