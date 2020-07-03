@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { WorkspaceListPage } from './workspace-list.page';
+import { WorkspaceDefaultPage } from './workspace-default.page';
 
-describe('WorkspaceListPage', () => {
-  let component: WorkspaceListPage;
-  let fixture: ComponentFixture<WorkspaceListPage>;
+describe('WorkspaceDefaultPage', () => {
+  let component: WorkspaceDefaultPage;
+  let fixture: ComponentFixture<WorkspaceDefaultPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkspaceListPage ],
+      declarations: [WorkspaceDefaultPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WorkspaceListPage);
+    fixture = TestBed.createComponent(WorkspaceDefaultPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
