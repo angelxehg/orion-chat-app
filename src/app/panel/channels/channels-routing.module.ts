@@ -6,6 +6,16 @@ const routes: Routes = [
   {
     path: '',
     component: ChannelsPage,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./channel-default/channel-default.module').then(m => m.ChannelDefaultPageModule)
+      },
+      {
+        path: ':channel',
+        loadChildren: () => import('./channel-details/channel-details.module').then(m => m.ChannelDetailsPageModule)
+      }
+    ]
   }
 ];
 

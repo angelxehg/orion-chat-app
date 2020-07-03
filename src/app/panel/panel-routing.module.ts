@@ -18,10 +18,6 @@ const routes: Routes = [
         loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
       },
       {
-        path: 'channels',
-        loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsPageModule)
-      },
-      {
         path: 'search',
         loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
       },
@@ -51,6 +47,10 @@ const routes: Routes = [
   {
     path: 'workspaces',
     loadChildren: () => import('./workspaces/workspaces.module').then(m => m.WorkspacesPageModule)
+  },
+  {
+    path: 'channels',
+    loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsPageModule)
   },
 ];
 
