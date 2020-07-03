@@ -8,5 +8,5 @@ import { PanelService } from '../../panel.service';
 })
 export class WorkspaceDefaultPage {
 
-  constructor(private panel: PanelService) { }
+  constructor(public panel: PanelService) { }
 }

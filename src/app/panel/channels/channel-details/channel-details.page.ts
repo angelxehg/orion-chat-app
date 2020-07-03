@@ -13,7 +13,7 @@ export class ChannelDetailsPage {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private panel: PanelService
+    public panel: PanelService
   ) { }
 
   ngOnInit() {

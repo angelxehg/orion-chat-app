@@ -14,7 +14,7 @@ export class SettingsPage {
     private auth: AuthService,
     public toastController: ToastController,
     private platform: Platform,
-    private panel: PanelService
+    public panel: PanelService
   ) { }
 
   ionViewWillEnter() {

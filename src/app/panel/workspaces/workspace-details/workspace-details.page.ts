@@ -13,7 +13,7 @@ export class WorkspaceDetailsPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private panel: PanelService
+    public panel: PanelService
   ) { }
 
   ngOnInit() {

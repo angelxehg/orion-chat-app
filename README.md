@@ -6,7 +6,7 @@ Orion Hybrid Chat application
 
 - Run application `ionic serve`
 
-- Compile sources `ionic build`
+- Compile sources `ionic build --prod`
 
 - Copy sources to android `ionic cap sync --no-build`
 
@@ -20,8 +20,6 @@ Orion Hybrid Chat application
 
 - Open Electron version `ionic cap open electron`
 
-## Build
-
 - Build for Linux `npm run electron:linux`
 
-- Create Debian package `npm run electron:linux`
+- Create Debian package `npm run electron:linux:deb`

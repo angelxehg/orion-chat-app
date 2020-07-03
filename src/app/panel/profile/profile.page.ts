@@ -11,7 +11,7 @@ export class ProfilePage {
 
   constructor(
     private auth: AuthService,
-    private panel: PanelService
+    public panel: PanelService
   ) { }
 
   ionViewWillEnter() {

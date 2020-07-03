@@ -69,7 +69,7 @@ export class PanelPage implements OnInit {
   ]
 
   constructor(
-    private panel: PanelService
+    public panel: PanelService
   ) { }
 
   ngOnInit() { }

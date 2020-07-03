@@ -13,10 +13,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron:linux": "electron-packager ./electron 'orion-chat' --overwrite --platform=linux --arch=x64 --out=dist",
-    "electron:linux:deb": "electron-installer-debian --src dist/orion-chat-linux-x64/ --dest dist/installers/ --arch amd64",
-    "electron:mac": "electron-packager ./electron 'orion-chat' --overwrite --platform=darwin --arch=x64 --out=dist",
-    "electron:windows": "electron-packager ./electron 'orion-chat' --overwrite --asar=true --platform=win32 --arch=ia32 --out=dist --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Orion Chat'"
+    "electron:linux": "electron-packager ./electron 'orion-chat-app' --overwrite --platform=linux --arch=x64 --out=dist",
+    "electron:linux:deb": "electron-installer-debian --src dist/orion-chat-app-linux-x64/ --dest dist/installers/ --arch amd64",
+    "electron:mac": "electron-packager ./electron 'orion-chat-app' --overwrite --platform=darwin --arch=x64 --out=dist",
+    "electron:windows": "electron-packager ./electron 'orion-chat-app' --overwrite --asar=true --platform=win32 --arch=ia32 --out=dist --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Orion Chat'"
   },
   "private": true,
   "dependencies": {

@@ -32,7 +32,7 @@ export class ChannelsPage {
 
   constructor(
     private auth: AuthService,
-    private panel: PanelService
+    public panel: PanelService
   ) { }
 
   ionViewWillEnter() {
