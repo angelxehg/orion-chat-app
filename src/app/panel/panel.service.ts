@@ -7,8 +7,11 @@ export class PanelService {
 
   public hidden: boolean
 
+  public secondary: boolean
+
   constructor() {
     this.hidden = false;
+    this.secondary = false;
   }
 
   show() {
@@ -19,5 +22,13 @@ export class PanelService {
   hide() {
     console.log("Hiding panel");
     this.hidden = true;
+  }
+
+  secondaryShow() {
+    this.secondary = true;
+  }
+
+  secondaryHide() {
+    this.secondary = false;
   }
 }

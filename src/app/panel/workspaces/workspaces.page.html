@@ -1,26 +1,28 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/app/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>
-      Workspaces
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Workspaces</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-list>
-    <ion-item *ngFor="let workspace of workspaces" routerLink="/app/workspaces/{{ workspace.id }}">
-      <ion-label>
-        <h2>{{ workspace.title }}</h2>
-        <p>{{ workspace.description }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+<ion-content>
+  <ion-split-pane contentId="main" (ionSplitPaneVisible)="panelChange($event)">
+    <!--  the side menu  -->
+    <ion-menu contentId="main">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button defaultHref="/app/"></ion-back-button>
+          </ion-buttons>
+          <ion-title size="large">Workspaces</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item *ngFor="let workspace of workspaces" routerLink="/app/workspaces/{{ workspace.id }}">
+            <ion-label>
+              <h2>{{ workspace.title }}</h2>
+              <p>{{ workspace.description }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <!-- the main content -->
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-split-pane>
+  hammer
 </ion-content>

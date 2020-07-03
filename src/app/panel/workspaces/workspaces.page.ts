@@ -36,4 +36,14 @@ export class WorkspacesPage {
     this.panel.hide();
     this.auth.access();
   }
+
+  panelChange(e: any) {
+    if (e.detail.visible) {
+      console.log("desktop");
+      this.panel.secondaryShow();
+    } else {
+      console.log("mobile");
+      this.panel.secondaryHide();
+    }
+  }
 }
