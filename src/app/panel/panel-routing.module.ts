@@ -6,13 +6,17 @@ import { PanelPage } from './panel.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app/workspaces',
+    redirectTo: '/app/home',
     pathMatch: 'full'
   },
   {
     path: '',
     component: PanelPage,
     children: [
+      {
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+      },
       {
         path: 'workspaces',
         loadChildren: () => import('./workspaces/workspaces.module').then(m => m.WorkspacesPageModule)
@@ -43,11 +47,11 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/app/workspaces',
+        redirectTo: '/app/home',
         pathMatch: 'full'
       }
     ]
-  }
+  },
 ];
 
 @NgModule({

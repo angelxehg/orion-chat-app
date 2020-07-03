@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
 import { PanelService } from '../panel.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
-  selector: 'app-search',
-  templateUrl: 'search.page.html',
-  styleUrls: ['search.page.scss']
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
-export class SearchPage {
+export class HomePage {
 
   constructor(
     private auth: AuthService,
@@ -18,4 +18,5 @@ export class SearchPage {
     this.panel.show();
     this.auth.access();
   }
+
 }

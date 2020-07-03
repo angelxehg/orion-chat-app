@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
+import { PanelService } from '../panel.service';
 
 @Component({
   selector: 'app-workspace',
@@ -26,9 +27,13 @@ export class WorkspacesPage {
     }
   ]
 
-  constructor(private auth: AuthService) { }
+  constructor(
+    private auth: AuthService,
+    private panel: PanelService
+  ) { }
 
   ionViewWillEnter() {
+    this.panel.hide();
     this.auth.access();
   }
 }

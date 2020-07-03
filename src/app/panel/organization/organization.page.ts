@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
+import { PanelService } from '../panel.service';
 
 @Component({
   selector: 'app-organization',
@@ -8,9 +9,13 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class OrganizationPage {
 
-  constructor(private auth: AuthService) { }
+  constructor(
+    private auth: AuthService,
+    private panel: PanelService
+  ) { }
 
   ionViewWillEnter() {
+    this.panel.show();
     this.auth.access();
   }
 }

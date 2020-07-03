@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PanelService } from './panel.service';
 
 @Component({
   selector: 'app-panel',
@@ -13,6 +14,11 @@ export class PanelPage implements OnInit {
     {
       title: "Main",
       pages: [
+        {
+          title: 'Main',
+          url: '/app/home',
+          icon: 'home',
+        },
         {
           title: 'Workspaces',
           url: '/app/workspaces',
@@ -62,7 +68,9 @@ export class PanelPage implements OnInit {
     }
   ]
 
-  constructor() { }
+  constructor(
+    private panel: PanelService
+  ) { }
 
   ngOnInit() { }
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
+import { PanelService } from '../panel.service';
 
 @Component({
   selector: 'app-files',
@@ -8,10 +9,13 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class FilesPage {
 
-  constructor(private auth: AuthService) { }
+  constructor(
+    private auth: AuthService,
+    private panel: PanelService
+  ) { }
 
   ionViewWillEnter() {
+    this.panel.show();
     this.auth.access();
   }
-
 }
