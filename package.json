@@ -1,12 +1,13 @@
 {
   "name": "orion-chat-app",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
     "build": "ng build",
+    "build:electron": "ng build --base-href=./ --prod",
     "build:prod": "ng build --prod",
     "heroku-postbuild": "npm run build:prod",
     "test": "ng test",

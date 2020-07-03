@@ -12,12 +12,10 @@ export class PanelService {
   }
 
   show() {
-    console.log("Showing panel");
     this.hidden = false;
   }
 
   hide() {
-    console.log("Hiding panel");
     this.hidden = true;
   }
 }

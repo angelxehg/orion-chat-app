@@ -8,9 +8,17 @@ Orion Hybrid Chat application
 
 - Compile sources `ionic build`
 
-- Copy sources to android `ionic cap copy`
+- Copy sources to android `ionic cap sync --no-build`
 
 - Open Android Studio `ionic cap open android`
+
+## Commands (Electron)
+
+- Compile sources for Electron `npm run build:electron`
+
+- Copy sources to electron `ionic cap sync --no-build`
+
+- Open Electron version `ionic cap open electron`
 
 ## Build
 
