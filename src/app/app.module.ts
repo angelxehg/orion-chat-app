@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxElectronModule } from 'ngx-electron';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +25,7 @@ import { NgxElectronModule } from 'ngx-electron';
     IonicStorageModule.forRoot(),
     HttpClientModule,
     NgxElectronModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     StatusBar,

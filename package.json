@@ -1,12 +1,14 @@
 {
-  "name": "orion-chat",
-  "version": "0.5.0",
+  "name": "orion-chat-app",
+  "version": "0.5.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
+    "build:prod": "ng build --prod",
+    "heroku-postbuild": "npm run build:prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -17,12 +19,17 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "~0.901.5",
+    "@angular/cli": "~9.1.5",
+    "@angular/compiler": "~9.1.6",
+    "@angular/compiler-cli": "~9.1.6",
     "@angular/common": "~9.1.6",
     "@angular/core": "~9.1.6",
     "@angular/forms": "~9.1.6",
     "@angular/platform-browser": "~9.1.6",
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
+    "@angular/service-worker": "~9.1.6",
     "@auth0/angular-jwt": "^4.2.0",
     "@capacitor/android": "^2.2.0",
     "@capacitor/core": "2.2.0",
@@ -31,17 +38,18 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^5.0.0",
     "@ionic/storage": "^2.2.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "electron": "^9.0.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
     "ngx-electron": "^2.2.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
+    "typescript": "~3.8.3",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.901.5",
-    "@angular/cli": "~9.1.5",
-    "@angular/compiler": "~9.1.6",
-    "@angular/compiler-cli": "~9.1.6",
     "@angular/language-service": "~9.1.6",
     "@capacitor/cli": "2.2.0",
     "@ionic/angular-toolkit": "^2.1.1",
@@ -60,8 +68,7 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
-    "typescript": "~3.8.3"
+    "tslint": "~6.1.0"
   },
   "description": "An Ionic project"
 }

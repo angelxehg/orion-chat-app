@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
+import { Platform, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -8,10 +9,20 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class SettingsPage {
 
-  constructor(private auth: AuthService) { }
+  constructor(
+    private auth: AuthService,
+    public toastController: ToastController,
+    private platform: Platform
+
+  ) { }
 
   ionViewWillEnter() {
     this.auth.access();
+  }
+
+  showPlatform() {
+    let text = 'I run on: ' + this.platform.platforms();
+    this.toast(text);
   }
 
   refresh() {
@@ -23,5 +34,13 @@ export class SettingsPage {
 
   logout() {
     this.auth.logout();
+  }
+
+  async toast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
   }
 }
