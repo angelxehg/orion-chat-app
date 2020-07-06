@@ -10,6 +10,8 @@ import { PanelService } from '../panel.service';
 })
 export class SettingsPage {
 
+  private version = "0.6.1";
+
   constructor(
     private auth: AuthService,
     public toastController: ToastController,
