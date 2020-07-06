@@ -22,7 +22,7 @@ Orion Hybrid Chat application
 
 ### Windows Package
 
-Requires `electron-installer-windows`
+Requires `electron-installer-windows` and `electron-packager` installed globally
 
 - Build for Windows `npm run electron:windows`
 
@@ -30,7 +30,7 @@ Requires `electron-installer-windows`
 
 ### Debian Package
 
-Requires `electron-installer-debian`
+Requires `electron-installer-debian` and `electron-packager` installed globally
 
 - Build for Linux `npm run electron:linux`
 
