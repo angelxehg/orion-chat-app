@@ -2,9 +2,9 @@
 
 Orion Hybrid Chat application
 
-## Commands
+- Run application in browser `ionic serve`
 
-- Run application `ionic serve`
+## Build (Android)
 
 - Compile sources `ionic build --prod`
 
@@ -12,13 +12,25 @@ Orion Hybrid Chat application
 
 - Open Android Studio `ionic cap open android`
 
-## Commands (Electron)
+## Build (Electron)
 
 - Compile sources for Electron `npm run build:electron`
 
 - Copy sources to electron `ionic cap sync --no-build`
 
 - Open Electron version `ionic cap open electron`
+
+### Windows Package
+
+Requires `electron-installer-windows` and `electron-packager` installed globally
+
+- Build for Windows `npm run electron:windows`
+
+- Create Windows package `npm run electron:windows:exe`
+
+### Debian Package
+
+Requires `electron-installer-debian` and `electron-packager` installed globally
 
 - Build for Linux `npm run electron:linux`
 

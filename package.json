@@ -1,7 +1,11 @@
 {
   "name": "orion-chat-app",
   "version": "0.6.1",
-  "author": "Ionic Framework",
+  "author": {
+    "name": "Angel Hurtado",
+    "email": "contact@angelxehg.com",
+    "url": "https://angelxehg.github.io/"
+  },
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -15,8 +19,8 @@
     "e2e": "ng e2e",
     "electron:linux": "electron-packager ./electron 'orion-chat-app' --overwrite --platform=linux --arch=x64 --out=dist",
     "electron:linux:deb": "electron-installer-debian --src dist/orion-chat-app-linux-x64/ --dest dist/installers/ --arch amd64",
-    "electron:mac": "electron-packager ./electron 'orion-chat-app' --overwrite --platform=darwin --arch=x64 --out=dist",
-    "electron:windows": "electron-packager ./electron 'orion-chat-app' --overwrite --asar=true --platform=win32 --arch=ia32 --out=dist --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Orion Chat'"
+    "electron:windows": "electron-packager ./electron orion-chat-app --overwrite --platform=win32 --arch=x64 --out=dist",
+    "electron:windows:exe": "electron-installer-windows --src dist/orion-chat-app-win32-x64/ --dest dist/installers/ --arch amd64"
   },
   "private": true,
   "dependencies": {
@@ -58,7 +62,6 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
-    "electron-installer-debian": "^3.1.0",
     "electron-packager": "^15.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
