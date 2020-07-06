@@ -15,7 +15,36 @@
       <ion-title size="large">Settings</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-button expand="block" (click)="showPlatform()">Platform</ion-button>
-  <ion-button expand="block" (click)="refresh()">Refresh</ion-button>
-  <ion-button expand="block" (click)="logout()">Logout</ion-button>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>
+        Theme
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>Force Dark Theme</ion-label>
+      <ion-toggle slot="end" [(ngModel)]="auth.forceDarkTheme" (ionChange)="forceDarkChanged($event)">
+      </ion-toggle>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>
+        Account
+      </ion-label>
+    </ion-item-divider>
+    <ion-item button="true" (click)="logout()">
+      <ion-label>Logout</ion-label>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>
+        About this app
+      </ion-label>
+    </ion-item-divider>
+    <ion-item button="true" (click)="openPortfolio()">
+      <ion-label>Orion Chat v{{ version }} | Angel Hurtado</ion-label>
+    </ion-item>
+  </ion-item-group>
 </ion-content>

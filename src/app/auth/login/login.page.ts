@@ -23,6 +23,7 @@ export class LoginPage implements OnInit {
   ngOnInit() { }
 
   login() {
+    this.toast("Attempting to log in...");
     this.auth.login(this.credentials).subscribe({
       next: data => this.loginSuccess(data),
       error: error => this.loginError(error)

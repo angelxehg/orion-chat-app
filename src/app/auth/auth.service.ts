@@ -23,6 +23,8 @@ export class AuthService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
 
+  public forceDarkTheme: boolean;
+
   constructor(
     private storage: Storage,
     private http: HttpClient,
@@ -30,6 +32,20 @@ export class AuthService {
     private router: Router,
     public toastController: ToastController) {
     this.loadStoredToken();
+    this.loadTheme();
+  }
+
+  loadTheme() {
+    this.storage.get("FORCE_DARK_THEME").then((val) => {
+      this.forceDarkTheme = val == 'TRUE';
+      document.body.classList.toggle('dark', this.forceDarkTheme);
+    });
+  }
+
+  toggleTheme() {
+    var storedVal = this.forceDarkTheme ? 'TRUE' : 'FALSE';
+    this.storage.set("FORCE_DARK_THEME", storedVal);
+    document.body.classList.toggle('dark', this.forceDarkTheme);
   }
 
   loadStoredToken() {

@@ -15,4 +15,24 @@
       <ion-title size="large">Homepage</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>
+        Pinned items
+      </ion-label>
+    </ion-item-divider>
+    <ion-grid>
+      <ion-row *ngFor="let group of tileGroups">
+        <ion-col size="6" size-sm *ngFor="let tile of group.tiles">
+          <ion-card class="no-margin" button="true" color="{{ tile.color }}" routerDirection="root"
+            [routerLink]="[tile.url]">
+            <ion-card-header>
+              <ion-icon size="medium" [ios]="tile.icon + '-outline'" [md]="tile.icon + '-sharp'"></ion-icon>
+              <ion-card-title>{{ tile.title }}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item-group>
 </ion-content>
