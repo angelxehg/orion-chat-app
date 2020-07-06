@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { ToastController } from '@ionic/angular';
 import { PanelService } from '../panel.service';
+import { Plugins } from '@capacitor/core';
+
+const { Browser } = Plugins;
 
 @Component({
   selector: 'app-settings',
@@ -10,10 +13,10 @@ import { PanelService } from '../panel.service';
 })
 export class SettingsPage {
 
-  private version = "0.6.1";
+  public version = "0.6.1";
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     public toastController: ToastController,
     public panel: PanelService
   ) { }
@@ -25,6 +28,10 @@ export class SettingsPage {
 
   logout() {
     this.auth.logout();
+  }
+
+  openPortfolio() {
+    Browser.open({ url: 'https://angelxehg.github.io/' });
   }
 
   forceDarkChanged($event) {

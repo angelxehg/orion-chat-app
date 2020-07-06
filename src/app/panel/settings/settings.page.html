@@ -33,7 +33,7 @@
         Account
       </ion-label>
     </ion-item-divider>
-    <ion-item (click)="logout()">
+    <ion-item button="true" (click)="logout()">
       <ion-label>Logout</ion-label>
     </ion-item>
   </ion-item-group>
@@ -43,7 +43,7 @@
         About this app
       </ion-label>
     </ion-item-divider>
-    <ion-item>
+    <ion-item button="true" (click)="openPortfolio()">
       <ion-label>Orion Chat v{{ version }} | Angel Hurtado</ion-label>
     </ion-item>
   </ion-item-group>

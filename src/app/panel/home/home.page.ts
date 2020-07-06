@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class HomePage {
 
-  private tileGroups = [
+  public tileGroups = [
     {
       tiles: [
         {
