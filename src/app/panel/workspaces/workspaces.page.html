@@ -17,7 +17,7 @@
           </ion-item-divider>
           <ion-menu-toggle auto-hide="false" *ngFor="let workspace of organization.workspaces">
             <ion-item routerDirection="root" [routerLink]="[workspace.url]" lines="none" detail="false"
-              color="{{ isUrlActive(workspace.url) ? 'secondary' : '' }}">
+              color="{{ isUrlActive(workspace.url) ? 'primary' : '' }}">
               <!-- <ion-icon slot="start" [ios]="page.icon + '-outline'" [md]="page.icon + '-sharp'"></ion-icon> -->
               <ion-label>{{ workspace.title }}</ion-label>
             </ion-item>
