@@ -1,7 +1,11 @@
 {
   "name": "orion-chat-app",
   "version": "0.6.1",
-  "author": "Ionic Framework",
+  "author": {
+    "name": "Angel Hurtado",
+    "email": "contact@angelxehg.com",
+    "url": "https://angelxehg.github.io/"
+  },
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -16,7 +20,7 @@
     "electron:linux": "electron-packager ./electron 'orion-chat-app' --overwrite --platform=linux --arch=x64 --out=dist",
     "electron:linux:deb": "electron-installer-debian --src dist/orion-chat-app-linux-x64/ --dest dist/installers/ --arch amd64",
     "electron:windows": "electron-packager ./electron 'orion-chat-app' --overwrite --platform=win32 --arch=x64 --out=dist",
-    "electron:windows:exe": "electron-installer-windows"
+    "electron:windows:exe": "electron-installer-windows --src dist/'orion-chat-app'-win32-x64/ --dest dist/installers/ --arch amd64"
   },
   "private": true,
   "dependencies": {

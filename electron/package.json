@@ -17,6 +17,10 @@
     "capacitor",
     "electron"
   ],
-  "author": "",
-  "license": "ISC"
+  "author": {
+    "name": "Angel Hurtado",
+    "email": "contact@angelxehg.com",
+    "url": "https://angelxehg.github.io/"
+  },
+  "license": "MIT"
 }
