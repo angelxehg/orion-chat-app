@@ -29,16 +29,19 @@
                 <ion-input type="username" placeholder="Username" name="username" [(ngModel)]="credentials.username">
                 </ion-input>
               </ion-item>
+              <ion-label color="danger" *ngIf="error.username">{{ error.username }}</ion-label>
               <ion-item>
                 <ion-label position="stacked">Email</ion-label>
                 <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="credentials.email">
                 </ion-input>
               </ion-item>
+              <ion-label color="danger" *ngIf="error.email">{{ error.email }}</ion-label>
               <ion-item>
                 <ion-label position="stacked">Password</ion-label>
                 <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password">
                 </ion-input>
               </ion-item>
+              <ion-label color="danger" *ngIf="error.password">{{ error.password }}</ion-label>
               <ion-item>
                 <ion-label position="stacked">Confirm password</ion-label>
                 <ion-input type="password" placeholder="Confirm password" name="re_password"

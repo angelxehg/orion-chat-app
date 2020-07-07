@@ -17,35 +17,48 @@ export class RegisterPage {
     re_password: ''
   };
 
+  error = {};
+
   constructor(
     private auth: AuthService,
     private router: Router,
     public toastController: ToastController) { }
 
-  register() {
-    this.toast("Attempting to register...");
-    // this.auth.register(this.credentials).subscribe({
-    //   next: data => this.registerSuccess(data),
-    //   error: error => this.registerError(error)
-    // });
-  }
-
-  registerSuccess(data) {
-    this.toast("Successful register: 200");
-    this.router.navigateByUrl('/app');
-  }
-
-  registerError(error) {
-    this.toast("register error: " + error.status + ": " + error.statusText);
-    console.error(error);
-  }
-
-  async toast(message) {
+  async register() {
     const toast = await this.toastController.create({
-      message: message,
-      duration: 2000
+      message: "Attempting to log in...",
+      duration: 5000
     });
     toast.present();
+    this.error = {};
+    this.auth.register(this.credentials).subscribe({
+      next: async data => {
+        console.log(data);
+        toast.dismiss();
+        this.error = {};
+        this.credentials = {
+          username: '',
+          email: '',
+          password: '',
+          re_password: ''
+        };
+        const toast2 = await this.toastController.create({
+          message: "Register successful. Please log in",
+          duration: 2000
+        });
+        toast2.present();
+        this.router.navigateByUrl('/');
+      },
+      error: err => {
+        toast.dismiss();
+        console.error(err);
+        if (err.error) {
+          this.error = err.error;
+        }
+        if (err.status == 401) {
+          this.error = { credentials: err.error.detail };
+        }
+      }
+    });
   }
-
 }

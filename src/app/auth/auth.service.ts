@@ -136,6 +136,10 @@ export class AuthService {
     );
   }
 
+  register(credentials: { username: string, email: string, password: string, re_password: string }) {
+    return this.http.post(`${this.api_path}/auth/users/`, credentials);
+  }
+
   getUser() {
     return this.userData.getValue();
   }
