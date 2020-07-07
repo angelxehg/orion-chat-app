@@ -26,12 +26,15 @@
                 <ion-input type="username" placeholder="Username" name="username" [(ngModel)]="credentials.username">
                 </ion-input>
               </ion-item>
+              <ion-label color="danger" *ngIf="error.username">{{ error.username }}</ion-label>
               <ion-item>
                 <ion-label position="stacked">Password</ion-label>
                 <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password">
                 </ion-input>
               </ion-item>
+              <ion-label color="danger" *ngIf="error.password">{{ error.password }}</ion-label>
             </ion-list>
+            <ion-label color="danger" *ngIf="error.credentials">{{ error.credentials }}</ion-label>
             <ion-button (click)="login()" color="success" fill="clear" expand="block">
               Login
             </ion-button>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -8,44 +8,43 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
 
   credentials = {
     username: '',
     password: ''
   };
 
+  error = {};
+
   constructor(
     private auth: AuthService,
     private router: Router,
     public toastController: ToastController) { }
 
-  ngOnInit() { }
-
-  login() {
-    this.toast("Attempting to log in...");
-    this.auth.login(this.credentials).subscribe({
-      next: data => this.loginSuccess(data),
-      error: error => this.loginError(error)
-    });
-  }
-
-  loginSuccess(data) {
-    this.toast("Successful login: 200");
-    this.router.navigateByUrl('/app');
-  }
-
-  loginError(error) {
-    this.toast("Login error: " + error.status + ": " + error.statusText);
-    console.error(error);
-  }
-
-  async toast(message) {
+  async login() {
     const toast = await this.toastController.create({
-      message: message,
-      duration: 2000
+      message: "Attempting to log in...",
+      duration: 5000
     });
     toast.present();
+    this.error = {};
+    this.auth.login(this.credentials).subscribe({
+      next: () => {
+        toast.dismiss();
+        this.error = {};
+        this.router.navigateByUrl('/app');
+      },
+      error: err => {
+        toast.dismiss();
+        console.error(err);
+        if (err.error) {
+          this.error = err.error;
+        }
+        if (err.status == 401) {
+          this.error = { credentials: err.error.detail };
+        }
+      }
+    });
   }
-
 }
