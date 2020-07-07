@@ -15,7 +15,11 @@ export class LoginPage {
     password: ''
   };
 
-  error = {};
+  error = {
+    username: '',
+    password: '',
+    credentials: ''
+  };
 
   constructor(
     private auth: AuthService,
@@ -28,11 +32,18 @@ export class LoginPage {
       duration: 5000
     });
     toast.present();
-    this.error = {};
+    this.error = {
+      username: '',
+      password: '',
+      credentials: ''
+    };
     this.auth.login(this.credentials).subscribe({
       next: () => {
         toast.dismiss();
-        this.error = {};
+        this.credentials = {
+          username: '',
+          password: ''
+        };
         this.router.navigateByUrl('/app');
       },
       error: err => {
@@ -42,7 +53,7 @@ export class LoginPage {
           this.error = err.error;
         }
         if (err.status == 401) {
-          this.error = { credentials: err.error.detail };
+          this.error.credentials = err.error.detail;
         }
       }
     });

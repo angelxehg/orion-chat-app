@@ -17,7 +17,13 @@ export class RegisterPage {
     re_password: ''
   };
 
-  error = {};
+  error = {
+    username: '',
+    email: '',
+    password: '',
+    re_password: '',
+    credentials: ''
+  };
 
   constructor(
     private auth: AuthService,
@@ -30,12 +36,16 @@ export class RegisterPage {
       duration: 5000
     });
     toast.present();
-    this.error = {};
+    this.error = {
+      username: '',
+      email: '',
+      password: '',
+      re_password: '',
+      credentials: ''
+    };
     this.auth.register(this.credentials).subscribe({
       next: async data => {
-        console.log(data);
         toast.dismiss();
-        this.error = {};
         this.credentials = {
           username: '',
           email: '',
@@ -56,7 +66,7 @@ export class RegisterPage {
           this.error = err.error;
         }
         if (err.status == 401) {
-          this.error = { credentials: err.error.detail };
+          this.error.credentials = err.error.detail;
         }
       }
     });
