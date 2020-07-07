@@ -22,9 +22,9 @@
       </ion-label>
     </ion-item-divider>
     <ion-grid>
-      <ion-row *ngFor="let group of tileGroups">
+      <ion-row *ngFor="let group of tileGroups" class="ion-align-items-stretch">
         <ion-col size="6" size-sm *ngFor="let tile of group.tiles">
-          <ion-card class="no-margin" button="true" color="{{ tile.color }}" routerDirection="root"
+          <ion-card class="no-margin full-height" button="true" color="{{ tile.color }}" routerDirection="root"
             [routerLink]="[tile.url]">
             <ion-card-header>
               <ion-icon size="medium" [ios]="tile.icon + '-outline'" [md]="tile.icon + '-sharp'"></ion-icon>
