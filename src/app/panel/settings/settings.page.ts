@@ -13,7 +13,7 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
-  public version = "0.6.1";
+  public version = "0.6.2";
 
   constructor(
     public auth: AuthService,
