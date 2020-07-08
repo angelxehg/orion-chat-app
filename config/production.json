@@ -1,0 +1,11 @@
+{
+    "features": {
+        "home-pins": false,
+        "workspaces": false,
+        "channels": false,
+        "search": false,
+        "files": false,
+        "organization": false,
+        "profile": false
+    }
+}
