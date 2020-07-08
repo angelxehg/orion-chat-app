@@ -3,6 +3,7 @@ import { AuthService } from '../../auth/auth.service';
 import { ToastController } from '@ionic/angular';
 import { PanelService } from '../panel.service';
 import { Plugins } from '@capacitor/core';
+import { environment } from '../../../environments/environment';
 
 const { Browser } = Plugins;
 
@@ -13,13 +14,17 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
+  public target = "";
+
   public version = "1.0.0-alpha.1";
 
   constructor(
     public auth: AuthService,
     public toastController: ToastController,
     public panel: PanelService
-  ) { }
+  ) {
+    this.target = environment.production ? 'Production' : 'Development';
+  }
 
   ionViewWillEnter() {
     this.panel.show();
