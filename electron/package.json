@@ -1,6 +1,6 @@
 {
   "name": "orion-chat-app",
-  "version": "0.6.2",
+  "version": "1.0.0-alpha.1",
   "description": "An Amazing Capacitor App",
   "main": "index.js",
   "scripts": {
