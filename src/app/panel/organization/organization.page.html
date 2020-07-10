@@ -12,4 +12,26 @@
       <ion-title size="large">Organization</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-grid class="fill-content">
+    <ion-row class="fill-content ion-justify-content-center ion-align-items-center">
+      <ion-col size="12" size-sm="8" size-md="6" size-lg="4" size-xl="3">
+        <ion-card class="bottom-margin">
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Select an organization to continue</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list *ngFor="let organization of organizations" lines="full" class="ion-no-margin ion-no-padding">
+              <ion-item lines="none" detail="false" button="true" (click)="openOrganization(organization)">
+                <ion-icon slot="start" [ios]="'people-outline'" [md]="'people-sharp'"></ion-icon>
+                <ion-label>
+                  <h2>{{ organization.title }}</h2>
+                  <p>{{ organization.description }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

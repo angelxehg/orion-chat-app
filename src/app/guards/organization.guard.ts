@@ -18,7 +18,6 @@ export class OrganizationGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('params:', next.url);
     if (next.url.length == 0) {
       return true;
     }
@@ -28,8 +27,6 @@ export class OrganizationGuard implements CanActivate {
     return this.org.organization.pipe(
       take(1),
       map(organization => {
-        console.log("Organization guard called!");
-        console.log(organization);
         if (!organization) {
           this.router.navigateByUrl('/app/organization');
           return false;

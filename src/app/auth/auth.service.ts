@@ -31,7 +31,7 @@ export class AuthService {
     private router: Router,
     public toastController: ToastController) {
     if (!environment.production) {
-      console.log("Using local API: " + environment.api_url);
+      console.info("Using local API: " + environment.api_url);
     }
     this.loadStoredToken();
     this.loadTheme();
@@ -147,7 +147,8 @@ export class AuthService {
   }
 
   logout() {
-    this.storage.remove("TOKEN_REFRESH").then(() => {
+    this.storage.clear().then(() => {
+      this.loadTheme();
       this.router.navigateByUrl('/');
       this.userData.next(null);
       this.toast("Session closed. Please log in again")

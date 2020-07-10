@@ -21,10 +21,10 @@ export class OrganizationService {
     private router: Router,
     public toastController: ToastController
   ) {
-    this.loadSelectedOrganization();
+    this.loadStoredOrganization();
   }
 
-  loadSelectedOrganization() {
+  loadStoredOrganization() {
     let platformObs = from(this.plt.ready());
     this.organization = platformObs.pipe(
       switchMap(() => {
@@ -35,10 +35,15 @@ export class OrganizationService {
           this.organizationData.next(organization_id);
           return true;
         } else {
-          console.log("NO ORGANIZATION!!");
           return null;
         }
       })
     );
+  }
+
+  loadOrganization(organization) {
+    this.organizationData.next(organization.id);
+    let storageObs = from(this.storage.set("ORGANIZATION_ID", organization.id));
+    return storageObs;
   }
 }

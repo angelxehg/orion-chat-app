@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { PanelService } from '../panel.service';
+import { OrganizationService } from 'src/app/services/organization.service';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-organization',
@@ -9,13 +12,46 @@ import { PanelService } from '../panel.service';
 })
 export class OrganizationPage {
 
+  public organizations = [
+    {
+      id: 1,
+      title: "Organization 1",
+      description: "Organization Description",
+    },
+  ];
+
   constructor(
     private auth: AuthService,
-    public panel: PanelService
+    private router: Router,
+    public panel: PanelService,
+    public org: OrganizationService,
+    public toastController: ToastController
   ) { }
 
   ionViewWillEnter() {
     this.panel.hide();
     this.auth.access();
+  }
+
+  async openOrganization(organization) {
+    const toast = await this.toastController.create({
+      message: "Loading organization...",
+      duration: 5000
+    });
+    toast.present();
+    this.org.loadOrganization(organization).subscribe({
+      next: () => {
+        toast.dismiss();
+        this.router.navigateByUrl('/app/home');
+      },
+      error: async err => {
+        toast.dismiss();
+        const toast2 = await this.toastController.create({
+          message: "Error selecting organization!",
+          duration: 2000
+        });
+        toast2.present();
+      }
+    });
   }
 }
