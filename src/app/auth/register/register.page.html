@@ -1,15 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>
-      Register
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" color="primary">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Register</ion-title>
@@ -49,8 +38,11 @@
                 </ion-input>
               </ion-item>
             </ion-list>
-            <ion-button (click)="register()" color="success" fill="clear" expand="block">
+            <ion-button (click)="register()" color="success" expand="full">
               Register
+            </ion-button>
+            <ion-button routerLink="/" color="secondary" fill="clear" expand="block">
+              Do you have an account? Login
             </ion-button>
           </ion-card-content>
         </ion-card>
