@@ -15,7 +15,7 @@ export class OrganizationPage {
   ) { }
 
   ionViewWillEnter() {
-    this.panel.show();
+    this.panel.hide();
     this.auth.access();
   }
 }
