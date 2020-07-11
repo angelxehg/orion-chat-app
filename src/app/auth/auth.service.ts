@@ -7,6 +7,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthResponse } from './auth-response';
+import { environment } from '../../environments/environment';
 
 const helper = new JwtHelperService();
 
@@ -14,8 +15,6 @@ const helper = new JwtHelperService();
   providedIn: 'root'
 })
 export class AuthService {
-
-  api_path: string = 'https://api-orion-ecs.herokuapp.com/api/v1';
 
   private jwt_access = "";
   private jwt_refresh = "";
@@ -31,8 +30,15 @@ export class AuthService {
     private plt: Platform,
     private router: Router,
     public toastController: ToastController) {
+    if (!environment.production) {
+      console.info("Using local API: " + environment.api_url);
+    }
     this.loadStoredToken();
     this.loadTheme();
+  }
+
+  getToken() {
+    return this.jwt_access;
   }
 
   loadTheme() {
@@ -103,9 +109,8 @@ export class AuthService {
   }
 
   refresh() {
-    console.info("Refreshing token...");
     var data = { refresh: this.jwt_refresh };
-    return this.http.post(`${this.api_path}/auth/jwt/refresh/`, data).pipe(
+    return this.http.post(`${environment.api_url}/auth/jwt/refresh/`, data).pipe(
       tap(async (res: AuthResponse) => {
         if (res) {
           this.jwt_access = res.access;
@@ -121,7 +126,7 @@ export class AuthService {
   }
 
   login(credentials: { username: string, password: string }) {
-    return this.http.post(`${this.api_path}/auth/jwt/create/`, credentials).pipe(
+    return this.http.post(`${environment.api_url}/auth/jwt/create/`, credentials).pipe(
       tap(async (res: AuthResponse) => {
         if (res) {
           this.jwt_access = res.access;
@@ -137,7 +142,7 @@ export class AuthService {
   }
 
   register(credentials: { username: string, email: string, password: string, re_password: string }) {
-    return this.http.post(`${this.api_path}/auth/users/`, credentials);
+    return this.http.post(`${environment.api_url}/auth/users/`, credentials);
   }
 
   getUser() {
@@ -145,7 +150,8 @@ export class AuthService {
   }
 
   logout() {
-    this.storage.remove("TOKEN_REFRESH").then(() => {
+    this.storage.clear().then(() => {
+      this.loadTheme();
       this.router.navigateByUrl('/');
       this.userData.next(null);
       this.toast("Session closed. Please log in again")

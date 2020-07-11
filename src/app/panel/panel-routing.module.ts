@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { PanelPage } from './panel.page';
+import { OrganizationGuard } from '../guards/organization.guard';
 
 const routes: Routes = [
   {
@@ -12,10 +13,11 @@ const routes: Routes = [
   {
     path: '',
     component: PanelPage,
+    canActivateChild: [OrganizationGuard],
     children: [
       {
         path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'search',
