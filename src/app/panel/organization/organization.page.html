@@ -7,8 +7,9 @@
             <ion-card-title class="ion-text-center">Select an organization to continue</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-list *ngFor="let organization of organizations" lines="full" class="ion-no-margin ion-no-padding">
-              <ion-item lines="none" detail="false" button="true" (click)="openOrganization(organization)">
+            <ion-list *ngFor="let organization of org.all()" lines="full" class="ion-no-margin ion-no-padding">
+              <ion-item color="{{ org.current() == organization.id ? 'success' : '' }}" lines="none" detail="false"
+                button="true" (click)="openOrganization(organization)">
                 <ion-icon slot="start" [ios]="'people-outline'" [md]="'people-sharp'"></ion-icon>
                 <ion-label>
                   <h2>{{ organization.title }}</h2>

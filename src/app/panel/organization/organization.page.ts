@@ -12,14 +12,6 @@ import { ToastController } from '@ionic/angular';
 })
 export class OrganizationPage {
 
-  public organizations = [
-    {
-      id: 1,
-      title: "Organization 1",
-      description: "Organization Description",
-    },
-  ];
-
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -31,6 +23,10 @@ export class OrganizationPage {
   ionViewWillEnter() {
     this.panel.hide();
     this.auth.access();
+    this.org.fetch().subscribe({
+      next: (data) => { },
+      error: err => { }
+    });
   }
 
   async openOrganization(organization) {

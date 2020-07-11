@@ -109,7 +109,6 @@ export class AuthService {
   }
 
   refresh() {
-    console.info("Refreshing token...");
     var data = { refresh: this.jwt_refresh };
     return this.http.post(`${environment.api_url}/auth/jwt/refresh/`, data).pipe(
       tap(async (res: AuthResponse) => {

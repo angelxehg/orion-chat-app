@@ -5,6 +5,7 @@ import { Platform, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class OrganizationService {
 
   public organization: Observable<any>;
   private organizationData = new BehaviorSubject(null);
+
+  public organizations: Observable<any>;
+  private organizationsData = new BehaviorSubject(null);
 
   constructor(
     private storage: Storage,
@@ -45,5 +49,24 @@ export class OrganizationService {
     this.organizationData.next(organization.id);
     let storageObs = from(this.storage.set("ORGANIZATION_ID", organization.id));
     return storageObs;
+  }
+
+  fetch() {
+    return this.http.get(`${environment.api_url}/organizations/`).pipe(
+      tap(async (res) => {
+        if (res) {
+          this.organizationsData.next(res);
+        }
+        return of(null);
+      })
+    );
+  }
+
+  current() {
+    return this.organizationData.getValue();
+  }
+
+  all() {
+    return this.organizationsData.getValue();
   }
 }
