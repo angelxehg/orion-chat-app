@@ -37,6 +37,10 @@ export class AuthService {
     this.loadTheme();
   }
 
+  getToken() {
+    return this.jwt_access;
+  }
+
   loadTheme() {
     this.storage.get("FORCE_DARK_THEME").then((val) => {
       this.forceDarkTheme = val == 'TRUE';
