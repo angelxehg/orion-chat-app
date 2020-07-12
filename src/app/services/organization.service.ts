@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Platform, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, take } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -59,7 +59,7 @@ export class OrganizationService {
         }
         return of(null);
       })
-    );
+    ).subscribe();
   }
 
   current() {

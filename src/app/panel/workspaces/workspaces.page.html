@@ -11,15 +11,16 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-item-group *ngFor="let organization of organizations">
+        <ion-item-group>
           <ion-item-divider>
-            <ion-label>{{ organization.title }}</ion-label>
+            <ion-label>My workspaces</ion-label>
           </ion-item-divider>
-          <ion-menu-toggle auto-hide="false" *ngFor="let workspace of organization.workspaces">
-            <ion-item routerDirection="root" [routerLink]="[workspace.url]" lines="none" detail="false"
-              color="{{ isUrlActive(workspace.url) ? 'primary' : '' }}">
-              <!-- <ion-icon slot="start" [ios]="page.icon + '-outline'" [md]="page.icon + '-sharp'"></ion-icon> -->
-              <ion-label>{{ workspace.title }}</ion-label>
+          <ion-menu-toggle auto-hide="false" *ngFor="let workspace of workspaces.all()">
+            <ion-item routerDirection="root" [routerLink]="[workspace.url]" lines="none" detail="false" color="{{ isUrlActive(workspace.url) ? 'primary' : '' }}">
+              <ion-label>
+                <h2>{{ workspace.title }}</h2>
+                <p>{{ workspace.description }}</p>
+              </ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-item-group>

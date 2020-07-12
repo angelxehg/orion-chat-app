@@ -23,10 +23,7 @@ export class OrganizationPage {
   ionViewWillEnter() {
     this.panel.hide();
     this.auth.access();
-    this.org.fetch().subscribe({
-      next: (data) => { },
-      error: err => { }
-    });
+    this.org.fetch();
   }
 
   async openOrganization(organization) {
