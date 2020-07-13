@@ -41,9 +41,9 @@ export class OrganizationPage {
         toast.dismiss();
         if (organization.admin_flag) {
           var url = '/app/organization/' + organization.id;
-          console.log("I'm admin of the selected org. You should navigate to " + url);
+          return this.router.navigateByUrl(url);
         }
-        this.router.navigateByUrl('/app/home');
+        return this.router.navigateByUrl('/app/home');
       },
       error: async err => {
         toast.dismiss();
