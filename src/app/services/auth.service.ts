@@ -152,7 +152,7 @@ export class AuthService {
   logout() {
     this.storage.clear().then(() => {
       this.loadTheme();
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/login');
       this.userData.next(null);
       this.toast("Session closed. Please log in again")
     });

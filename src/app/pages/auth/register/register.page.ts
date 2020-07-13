@@ -57,7 +57,7 @@ export class RegisterPage {
           duration: 2000
         });
         toast2.present();
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/login');
       },
       error: err => {
         toast.dismiss();

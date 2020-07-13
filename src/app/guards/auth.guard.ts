@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate, CanLoad {
             message: 'You session has expired.',
             buttons: ['OK']
           }).then(alert => alert.present());
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/login');
           return false;
         }
         return true;

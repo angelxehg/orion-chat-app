@@ -33,15 +33,14 @@
               <ion-label color="danger" *ngIf="error.password">{{ error.password }}</ion-label>
               <ion-item>
                 <ion-label position="stacked">Confirm password</ion-label>
-                <ion-input type="password" placeholder="Confirm password" name="re_password"
-                  [(ngModel)]="credentials.re_password">
+                <ion-input type="password" placeholder="Confirm password" name="re_password" [(ngModel)]="credentials.re_password">
                 </ion-input>
               </ion-item>
             </ion-list>
             <ion-button (click)="register()" color="success" expand="full">
               Register
             </ion-button>
-            <ion-button routerLink="/" color="secondary" fill="clear" expand="block">
+            <ion-button routerLink="/login" color="secondary" fill="clear" expand="block">
               Do you have an account? Login
             </ion-button>
           </ion-card-content>
