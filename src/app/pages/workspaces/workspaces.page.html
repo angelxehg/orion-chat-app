@@ -19,7 +19,7 @@
             <ion-label>My workspaces</ion-label>
           </ion-item-divider>
           <ion-menu-toggle auto-hide="false" *ngFor="let workspace of workspaces.all()">
-            <ion-item routerDirection="root" routerLink="/app/workspaces/{{workspace.id}}" lines="none" detail="false" color="{{ isUrlActive(workspace.url) ? 'primary' : '' }}">
+            <ion-item routerDirection="root" routerLink="/app/workspaces/{{workspace.id}}" lines="none" detail="false" color="{{ isUrlActive('workspaces/' + workspace.id) ? 'primary' : '' }}">
               <ion-label>
                 <h2>{{ workspace.title }}</h2>
                 <p>{{ workspace.description }}</p>

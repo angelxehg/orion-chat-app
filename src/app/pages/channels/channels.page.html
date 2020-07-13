@@ -8,13 +8,18 @@
             <ion-back-button defaultHref="app/home"></ion-back-button>
           </ion-buttons>
           <ion-title size="large">Channels</ion-title>
+          <ion-buttons slot="end" routerLink="/app/channels/new">
+            <ion-icon slot="icon-only" ios="add-outline" md="add-sharp"></ion-icon>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list>
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>My channels</ion-label>
+          </ion-item-divider>
           <ion-menu-toggle auto-hide="false" *ngFor="let channel of channels">
-            <ion-item routerDirection="root" [routerLink]="[channel.url]" lines="none" detail="false"
-              color="{{ isUrlActive(channel.url) ? 'success' : '' }}">
+            <ion-item routerDirection="root" routerLink="/app/channels/{{channel.id}}" lines="none" detail="false" color="{{ isUrlActive('channels/' + channel.id) ? 'success' : '' }}">
               <ion-icon slot="start" [ios]="'people-outline'" [md]="'people-sharp'"></ion-icon>
               <ion-label>
                 <h2>{{ channel.title }}</h2>
@@ -22,7 +27,7 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
+        </ion-item-group>
       </ion-content>
     </ion-menu>
     <!-- the main content -->

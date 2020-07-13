@@ -9,7 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./channel-default/channel-default.module').then(m => m.ChannelDefaultPageModule)
+        loadChildren: () => import('./channel-details/channel-details.module').then(m => m.ChannelDetailsPageModule)
+      },
+      {
+        path: 'new',
+        loadChildren: () => import('./channel-details/channel-details.module').then(m => m.ChannelDetailsPageModule)
       },
       {
         path: ':channel',
