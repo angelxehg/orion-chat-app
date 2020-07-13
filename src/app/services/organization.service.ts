@@ -46,10 +46,15 @@ export class OrganizationService {
     );
   }
 
-  loadOrganization(organization) {
-    this.organizationData.next(organization.id);
-    let storageObs = from(this.storage.set("ORGANIZATION_ID", organization.id));
-    return storageObs;
+  current = {
+    get: (): number => {
+      return this.organizationData.getValue();
+    },
+    set: (organization: Organization): Observable<any> => {
+      this.organizationData.next(organization.id);
+      let storageObs = from(this.storage.set("ORGANIZATION_ID", organization.id));
+      return storageObs;
+    }
   }
 
   fetch() {
@@ -61,10 +66,6 @@ export class OrganizationService {
         return of(null);
       })
     );
-  }
-
-  current() {
-    return this.organizationData.getValue();
   }
 
   all() {

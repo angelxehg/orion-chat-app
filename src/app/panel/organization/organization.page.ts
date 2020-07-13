@@ -36,7 +36,7 @@ export class OrganizationPage {
       duration: 5000
     });
     toast.present();
-    this.org.loadOrganization(organization).subscribe({
+    this.org.current.set(organization).subscribe({
       next: () => {
         toast.dismiss();
         if (organization.admin_flag) {
