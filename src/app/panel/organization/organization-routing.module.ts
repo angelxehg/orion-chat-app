@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { OrganizationPage } from './organization.page';
+import { OrganizationAdminGuard } from 'src/app/guards/organization-admin.guard';
 
 const routes: Routes = [
   {
@@ -14,7 +15,8 @@ const routes: Routes = [
   },
   {
     path: ':organization',
-    loadChildren: () => import('./organization-details/organization-details.module').then(m => m.OrganizationDetailsPageModule)
+    loadChildren: () => import('./organization-details/organization-details.module').then(m => m.OrganizationDetailsPageModule),
+    canActivate: [OrganizationAdminGuard]
   }
 
 ];
