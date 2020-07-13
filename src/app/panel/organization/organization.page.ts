@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { PanelService } from '../panel.service';
 import { OrganizationService } from 'src/app/services/organization.service';
 

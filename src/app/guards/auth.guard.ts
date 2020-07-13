@@ -3,7 +3,7 @@ import { CanActivate, CanActivateChild, CanDeactivate, CanLoad, Route, UrlSegmen
 import { Observable } from 'rxjs';
 import { AlertController } from '@ionic/angular';
 import { take, map } from 'rxjs/operators';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
