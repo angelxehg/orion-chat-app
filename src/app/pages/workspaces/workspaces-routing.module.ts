@@ -9,7 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./workspace-default/workspace-default.module').then(m => m.WorkspaceDefaultPageModule)
+        loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
+      },
+      {
+        path: 'new',
+        loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
       },
       {
         path: ':workspace',

@@ -8,6 +8,9 @@
             <ion-back-button defaultHref="app/home"></ion-back-button>
           </ion-buttons>
           <ion-title size="large">Workspaces</ion-title>
+          <ion-buttons slot="end" routerLink="/app/workspaces/new">
+            <ion-icon slot="icon-only" ios="add-outline" md="add-sharp"></ion-icon>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
@@ -16,7 +19,7 @@
             <ion-label>My workspaces</ion-label>
           </ion-item-divider>
           <ion-menu-toggle auto-hide="false" *ngFor="let workspace of workspaces.all()">
-            <ion-item routerDirection="root" [routerLink]="[workspace.url]" lines="none" detail="false" color="{{ isUrlActive(workspace.url) ? 'primary' : '' }}">
+            <ion-item routerDirection="root" routerLink="/app/workspaces/{{workspace.id}}" lines="none" detail="false" color="{{ isUrlActive(workspace.url) ? 'primary' : '' }}">
               <ion-label>
                 <h2>{{ workspace.title }}</h2>
                 <p>{{ workspace.description }}</p>

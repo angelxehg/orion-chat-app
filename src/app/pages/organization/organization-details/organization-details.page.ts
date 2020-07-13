@@ -54,7 +54,8 @@ export class OrganizationDetailsPage {
     this.page = {
       title: "Create organization",
       description: "Create a new organization",
-      action: "Create"
+      action: "Create",
+      empty: false
     };
   }
 
@@ -62,7 +63,8 @@ export class OrganizationDetailsPage {
     this.page = {
       title: "Edit organization",
       description: "Update organization data",
-      action: "Update"
+      action: "Update",
+      empty: false
     };
   }
 
