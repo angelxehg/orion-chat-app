@@ -26,20 +26,20 @@ export class OrganizationService {
     private router: Router,
     public toastController: ToastController
   ) {
-    this.loadStoredOrganization();
+    this.organization = this.load();
     this.organizations = this.fetch();
   }
 
-  loadStoredOrganization() {
+  load() {
     let platformObs = from(this.plt.ready());
-    this.organization = platformObs.pipe(
+    return this.organization = platformObs.pipe(
       switchMap(() => {
         return from(this.storage.get("ORGANIZATION_ID"));
       }),
       map(organization_id => {
         if (organization_id) {
           this.organizationData.next(organization_id);
-          return true;
+          return organization_id;
         } else {
           return null;
         }

@@ -17,10 +17,10 @@ export class OrganizationAdminGuard implements CanActivate {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     var id = parseInt(next.paramMap.get("organization"));
     return this.org.organizations.pipe(
-      take(1),
       map((organizations: Array<Organization>) => {
         var current = organizations.find(e => e.id == id);
         this.org.current.set(current).subscribe();

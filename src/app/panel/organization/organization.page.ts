@@ -10,6 +10,8 @@ import { OrganizationService } from 'src/app/services/organization.service';
 })
 export class OrganizationPage {
 
+  public selected: number;
+
   constructor(
     private auth: AuthService,
     public panel: PanelService,
@@ -20,5 +22,10 @@ export class OrganizationPage {
     this.panel.hide();
     this.auth.access();
     this.org.fetch().subscribe();
+    this.org.organization.subscribe({
+      next: (value) => {
+        this.selected = value;
+      }
+    })
   }
 }

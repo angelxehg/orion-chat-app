@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Organization } from 'src/app/services/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { PageData } from '../../page-data';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-organization-details',
@@ -17,6 +18,7 @@ export class OrganizationDetailsPage {
   public page: PageData;
 
   constructor(
+    private auth: AuthService,
     private route: ActivatedRoute,
     private org: OrganizationService,
     public panel: PanelService,
