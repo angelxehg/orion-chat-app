@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthInterceptorService implements HttpInterceptor {
+export class InterceptorService implements HttpInterceptor {
 
   skip: Array<string>;
 

@@ -14,7 +14,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxElectronModule } from 'ngx-electron';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { AuthInterceptorService } from './services/interceptor.service';
+import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +34,7 @@ import { AuthInterceptorService } from './services/interceptor.service';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
+      useClass: InterceptorService,
       multi: true
     }
   ],
