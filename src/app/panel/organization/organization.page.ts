@@ -4,6 +4,7 @@ import { PanelService } from '../panel.service';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { Organization } from 'src/app/services/organization';
 
 @Component({
   selector: 'app-organization',
@@ -29,7 +30,7 @@ export class OrganizationPage {
     });
   }
 
-  async openOrganization(organization) {
+  async openOrganization(organization: Organization) {
     const toast = await this.toastController.create({
       message: "Loading organization...",
       duration: 5000
@@ -38,6 +39,10 @@ export class OrganizationPage {
     this.org.loadOrganization(organization).subscribe({
       next: () => {
         toast.dismiss();
+        if (organization.admin_flag) {
+          var url = '/app/organization/' + organization.id;
+          console.log("I'm admin of the selected org. You should navigate to " + url);
+        }
         this.router.navigateByUrl('/app/home');
       },
       error: async err => {

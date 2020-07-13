@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { Organization } from './organization';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,7 @@ export class OrganizationService {
 
   fetch() {
     return this.http.get(`${environment.api_url}/organizations/`).pipe(
-      tap(async (res) => {
+      tap(async (res: Array<Organization>) => {
         if (res) {
           this.organizationsData.next(res);
         }
