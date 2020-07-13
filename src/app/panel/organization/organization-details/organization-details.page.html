@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Edit Organization
+      {{ page.title }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -17,7 +17,7 @@
   </ion-header>
   <ion-item-divider>
     <ion-label>
-      Update organization data
+      {{ page.description }}
     </ion-label>
   </ion-item-divider>
   <ion-item>
@@ -31,6 +31,6 @@
     </ion-textarea>
   </ion-item>
   <div class="ion-padding">
-    <ion-button expand="block" class="ion-no-margin">Update</ion-button>
+    <ion-button expand="block" class="ion-no-margin">{{ page.action }}</ion-button>
   </div>
 </ion-content>

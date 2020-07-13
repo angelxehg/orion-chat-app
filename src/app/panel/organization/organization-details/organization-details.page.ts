@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
 import { PanelService } from '../../panel.service';
 import { ActivatedRoute } from '@angular/router';
 import { Organization } from 'src/app/services/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
-import { take, map } from 'rxjs/operators';
+import { PageData } from '../../page-data';
 
 @Component({
   selector: 'app-organization-details',
@@ -13,31 +12,65 @@ import { take, map } from 'rxjs/operators';
 })
 export class OrganizationDetailsPage {
 
-  public organization: Organization = {
-    id: 0,
-    title: "",
-    description: "",
-    admin_flag: false,
-    people: []
-  }
+  public organization: Organization;
+
+  public page: PageData;
 
   constructor(
     private route: ActivatedRoute,
-    private auth: AuthService,
     private org: OrganizationService,
     public panel: PanelService,
-  ) { }
-
-  ionViewWillEnter() {
-    this.panel.show();
-    this.auth.access();
-    this.org.organizations.subscribe({
-      next: (data: Array<Organization>) => {
-        var thisID = parseInt(this.route.snapshot.paramMap.get('organization'));
-        var selected = data.find(e => e.id == thisID);
-        this.organization = Object.create(selected);
-      }
-    });
+  ) {
+    this.clear();
+    this.createMode();
   }
 
+  ionViewWillEnter() {
+    // Panel
+    this.panel.show();
+    // Configure mode
+    this.clear();
+    var param = this.route.snapshot.paramMap.get('organization');
+    if (!param) {
+      // New mode
+      this.createMode();
+    } else {
+      // Edit mode
+      this.editMode();
+      var thisID = parseInt(param);
+      this.org.organizations.subscribe({
+        next: (data: Array<Organization>) => {
+
+          var selected = data.find(e => e.id == thisID);
+          this.organization = Object.create(selected);
+        }
+      });
+    }
+  }
+
+  createMode() {
+    this.page = {
+      title: "Create organization",
+      description: "Create a new organization",
+      action: "Create"
+    };
+  }
+
+  editMode() {
+    this.page = {
+      title: "Edit organization",
+      description: "Update organization data",
+      action: "Update"
+    };
+  }
+
+  clear() {
+    this.organization = {
+      id: 0,
+      title: "",
+      description: "",
+      admin_flag: false,
+      people: []
+    }
+  }
 }

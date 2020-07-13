@@ -9,6 +9,10 @@ const routes: Routes = [
     component: OrganizationPage
   },
   {
+    path: 'new',
+    loadChildren: () => import('./organization-details/organization-details.module').then(m => m.OrganizationDetailsPageModule)
+  },
+  {
     path: ':organization',
     loadChildren: () => import('./organization-details/organization-details.module').then(m => m.OrganizationDetailsPageModule)
   }
