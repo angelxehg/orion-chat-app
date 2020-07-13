@@ -15,14 +15,13 @@ export class WorkspaceService {
 
   constructor(
     private http: HttpClient,
-    private organization: OrganizationService
+    private org: OrganizationService
   ) { }
 
   fetch() {
-    return this.organization.organization.pipe(
+    return this.org.organization.pipe(
       take(1),
-      map(ok => {
-        var org = this.organization.current();
+      map(org => {
         var url = `${environment.api_url}/organizations/${org}/workspaces/`;
         return this.http.get(url).subscribe({
           next: (data) => {
