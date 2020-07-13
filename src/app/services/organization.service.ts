@@ -66,7 +66,7 @@ export class OrganizationService {
         }
         return of(null);
       })
-    );
+    ).subscribe();
   }
 
   all(): Array<Organization> {
