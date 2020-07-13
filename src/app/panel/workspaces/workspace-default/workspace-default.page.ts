@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PanelService } from '../../panel.service';
+import { PanelService } from '../../../services/panel.service';
 
 @Component({
   selector: 'app-workspace-default',

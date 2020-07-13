@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PanelService } from '../../panel.service';
+import { PanelService } from '../../../services/panel.service';
 import { ActivatedRoute } from '@angular/router';
 import { Organization } from '../../../models/organization';
 import { OrganizationService } from 'src/app/services/organization.service';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { PanelService } from '../panel.service';
+import { PanelService } from '../../services/panel.service';
 import { OrganizationService } from 'src/app/services/organization.service';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PanelService } from '../../panel.service';
+import { PanelService } from '../../../services/panel.service';
 
 @Component({
   selector: 'app-channel-details',

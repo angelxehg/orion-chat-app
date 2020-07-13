@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { PanelService } from '../panel.service';
+import { PanelService } from '../../services/panel.service';
 
 @Component({
   selector: 'app-files',

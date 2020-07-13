@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ToastController } from '@ionic/angular';
-import { PanelService } from '../panel.service';
+import { PanelService } from '../../services/panel.service';
 import { Plugins } from '@capacitor/core';
 import { environment } from '../../../environments/environment';
 
