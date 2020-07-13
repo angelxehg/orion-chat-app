@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Platform, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, take } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Organization } from './organization';
 
@@ -27,6 +27,7 @@ export class OrganizationService {
     public toastController: ToastController
   ) {
     this.loadStoredOrganization();
+    this.organizations = this.fetch();
   }
 
   loadStoredOrganization() {
@@ -68,7 +69,7 @@ export class OrganizationService {
     );
   }
 
-  all() {
+  all(): Array<Organization> {
     return this.organizationsData.getValue();
   }
 }
