@@ -6,7 +6,7 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AuthResponse } from './auth-response';
+import { TokenResponse } from '../models/token-response';
 import { environment } from '../../environments/environment';
 
 const helper = new JwtHelperService();
@@ -111,7 +111,7 @@ export class AuthService {
   refresh() {
     var data = { refresh: this.jwt_refresh };
     return this.http.post(`${environment.api_url}/auth/jwt/refresh/`, data).pipe(
-      tap(async (res: AuthResponse) => {
+      tap(async (res: TokenResponse) => {
         if (res) {
           this.jwt_access = res.access;
           this.jwt_refresh = res.refresh;
@@ -127,7 +127,7 @@ export class AuthService {
 
   login(credentials: { username: string, password: string }) {
     return this.http.post(`${environment.api_url}/auth/jwt/create/`, credentials).pipe(
-      tap(async (res: AuthResponse) => {
+      tap(async (res: TokenResponse) => {
         if (res) {
           this.jwt_access = res.access;
           this.jwt_refresh = res.refresh;

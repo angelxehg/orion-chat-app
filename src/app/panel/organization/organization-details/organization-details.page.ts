@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PanelService } from '../../panel.service';
 import { ActivatedRoute } from '@angular/router';
-import { Organization } from 'src/app/services/organization';
+import { Organization } from '../../../models/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { PageData } from '../../page-data';
 import { AuthService } from 'src/app/auth/auth.service';
