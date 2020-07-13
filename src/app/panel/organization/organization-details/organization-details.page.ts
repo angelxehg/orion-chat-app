@@ -3,7 +3,7 @@ import { PanelService } from '../../panel.service';
 import { ActivatedRoute } from '@angular/router';
 import { Organization } from '../../../models/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
-import { PageData } from '../../page-data';
+import { PageData } from '../../../models/page-data';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
