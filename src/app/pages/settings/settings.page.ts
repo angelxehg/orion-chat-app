@@ -4,6 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { PanelService } from '../../services/panel.service';
 import { Plugins } from '@capacitor/core';
 import { environment } from '../../../environments/environment';
+import { ThemeService } from 'src/app/services/theme.service';
 
 const { Browser } = Plugins;
 
@@ -20,6 +21,7 @@ export class SettingsPage {
 
   constructor(
     public auth: AuthService,
+    public theme: ThemeService,
     public toastController: ToastController,
     public panel: PanelService
   ) {
@@ -36,10 +38,10 @@ export class SettingsPage {
   }
 
   openPortfolio() {
-    Browser.open({ url: 'https://angelxehg.github.io/' });
+    Browser.open({ url: 'https://angelxehg.com/' });
   }
 
   forceDarkChanged($event) {
-    this.auth.toggleTheme();
+    this.theme.toggle();
   }
 }

@@ -22,36 +22,21 @@ export class AuthService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
 
-  public forceDarkTheme: boolean;
-
   constructor(
     private storage: Storage,
     private http: HttpClient,
     private plt: Platform,
     private router: Router,
-    public toastController: ToastController) {
+    public toastController: ToastController
+  ) {
     if (!environment.production) {
       console.info("Using local API: " + environment.api_url);
     }
     this.loadStoredToken();
-    this.loadTheme();
   }
 
   getToken() {
     return this.jwt_access;
-  }
-
-  loadTheme() {
-    this.storage.get("FORCE_DARK_THEME").then((val) => {
-      this.forceDarkTheme = val == 'TRUE';
-      document.body.classList.toggle('dark', this.forceDarkTheme);
-    });
-  }
-
-  toggleTheme() {
-    var storedVal = this.forceDarkTheme ? 'TRUE' : 'FALSE';
-    this.storage.set("FORCE_DARK_THEME", storedVal);
-    document.body.classList.toggle('dark', this.forceDarkTheme);
   }
 
   loadStoredToken() {
@@ -151,7 +136,6 @@ export class AuthService {
 
   logout() {
     this.storage.clear().then(() => {
-      this.loadTheme();
       this.router.navigateByUrl('/login');
       this.userData.next(null);
       this.toast("Session closed. Please log in again")

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PanelService } from '../services/panel.service';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-panel',
@@ -69,8 +70,11 @@ export class PanelPage implements OnInit {
   ]
 
   constructor(
-    public panel: PanelService
-  ) { }
+    public panel: PanelService,
+    private theme: ThemeService
+  ) {
+    this.theme.load();
+  }
 
   ngOnInit() { }
 

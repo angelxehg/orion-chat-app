@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +24,12 @@ export class LoginPage {
 
   constructor(
     private auth: AuthService,
+    private theme: ThemeService,
     private router: Router,
-    public toastController: ToastController) { }
+    public toastController: ToastController
+  ) {
+    this.theme.load();
+  }
 
   async login() {
     const toast = await this.toastController.create({

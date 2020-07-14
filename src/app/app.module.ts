@@ -15,6 +15,7 @@ import { NgxElectronModule } from 'ngx-electron';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { InterceptorService } from './services/interceptor.service';
+import { ThemeService } from './services/theme.service';
 
 @NgModule({
   declarations: [AppComponent],
