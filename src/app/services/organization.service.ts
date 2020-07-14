@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { map, switchMap, tap, take } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { Organization } from './organization';
+import { Organization } from '../models/organization';
 
 @Injectable({
   providedIn: 'root'

@@ -17,27 +17,27 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+        loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'search',
-        loadChildren: () => import('./search/search.module').then(m => m.SearchPageModule)
+        loadChildren: () => import('../pages/search/search.module').then(m => m.SearchPageModule)
       },
       {
         path: 'files',
-        loadChildren: () => import('./files/files.module').then(m => m.FilesPageModule)
+        loadChildren: () => import('../pages/files/files.module').then(m => m.FilesPageModule)
       },
       {
         path: 'organization',
-        loadChildren: () => import('./organization/organization.module').then(m => m.OrganizationPageModule)
+        loadChildren: () => import('../pages/organization/organization.module').then(m => m.OrganizationPageModule)
       },
       {
         path: 'profile',
-        loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
+        loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
         path: 'settings',
-        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
+        loadChildren: () => import('../pages/settings/settings.module').then(m => m.SettingsPageModule)
       },
       {
         path: '',
@@ -48,11 +48,11 @@ const routes: Routes = [
   },
   {
     path: 'workspaces',
-    loadChildren: () => import('./workspaces/workspaces.module').then(m => m.WorkspacesPageModule)
+    loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule)
   },
   {
     path: 'channels',
-    loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsPageModule)
+    loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule)
   },
 ];
 

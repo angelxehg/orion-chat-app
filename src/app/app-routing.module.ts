@@ -4,18 +4,23 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/app/home',
+    pathMatch: 'full'
+  },
+  {
     path: 'app',
     loadChildren: () => import('./panel/panel.module').then(m => m.PanelPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule),
+    loadChildren: () => import('./pages/auth/register/register.module').then(m => m.RegisterPageModule),
     canLoad: [AuthGuard]
   },
   {
-    path: '',
-    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule),
+    path: 'login',
+    loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginPageModule),
     canLoad: [AuthGuard]
   },
 ];
