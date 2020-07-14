@@ -19,8 +19,7 @@ export class AuthService {
   private jwt_access = "";
   private jwt_refresh = "";
 
-  public user: Observable<any>;
-  private userData = new BehaviorSubject(null);
+  public status: Observable<boolean>;
 
   constructor(
     private storage: Storage,
@@ -32,60 +31,52 @@ export class AuthService {
     if (!environment.production) {
       console.info("Using local API: " + environment.api_url);
     }
-    this.loadStoredToken();
+    this.status = this.loadTokens();
+  }
+
+  private loadTokens() {
+    return from(this.plt.ready()).pipe(
+      switchMap(async () => {
+        if (!this.jwt_refresh) {
+          var storedToken = await this.storage.get("TOKEN_REFRESH"); // Get token from storage
+          if (!storedToken) {
+            return false;
+          }
+          this.jwt_refresh = storedToken;
+        }
+        if (!this.jwt_access) {
+          try {
+            await this.refresh().toPromise(); // Get refresh from api
+          } catch (error) {
+            console.error(error);
+            return false;
+          }
+        }
+        return true;
+      }),
+    )
+  }
+
+  private verifyRefresh() {
+
+  }
+
+  private access() {
+
   }
 
   getToken() {
     return this.jwt_access;
   }
 
-  loadStoredToken() {
-    let platformObs = from(this.plt.ready());
-
-    this.user = platformObs.pipe(
-      switchMap(() => {
-        return from(this.storage.get("TOKEN_REFRESH"));
-      }),
-      map(token => {
-        if (token) {
-          let decoded = helper.decodeToken(token);
-          var nextMinutes = (Date.now() / 1000 | 0) + 900 // Now + 15 minutes
-          this.userData.next(decoded);
-          if (decoded.exp < nextMinutes) {
-            // Refresh Token expired within next 15 minutes
-            this.logout();
-            return null;
-          }
-          if (!this.jwt_refresh) {
-            // First load of refresh token (app opened)
-            this.jwt_refresh = token;
-            this.refresh().subscribe({
-              next: data => console.info("Token refreshed"),
-              error: error => console.error(error)
-            });
-            return true;
-          }
-          return true;
-        } else {
-          return null;
-        }
-      })
-    );
-  }
-
   refresh() {
     var data = { refresh: this.jwt_refresh };
     return this.http.post(`${environment.api_url}/auth/jwt/refresh/`, data).pipe(
-      tap(async (res: TokenResponse) => {
-        if (res) {
-          this.jwt_access = res.access;
-          this.jwt_refresh = res.refresh;
-          let decoded = helper.decodeToken(res.refresh);
-          this.userData.next(decoded);
-          let storageObs = from(this.storage.set("TOKEN_REFRESH", res.refresh));
-          return storageObs;
-        }
-        return of(null);
+      switchMap(async (res: TokenResponse) => {
+        this.jwt_access = res.access;
+        this.jwt_refresh = res.refresh;
+        await this.storage.set("TOKEN_REFRESH", this.jwt_refresh);
+        return true;
       })
     );
   }
@@ -97,7 +88,6 @@ export class AuthService {
           this.jwt_access = res.access;
           this.jwt_refresh = res.refresh;
           let decoded = helper.decodeToken(res.refresh);
-          this.userData.next(decoded);
           let storageObs = from(this.storage.set("TOKEN_REFRESH", res.refresh));
           return storageObs;
         }
@@ -110,14 +100,9 @@ export class AuthService {
     return this.http.post(`${environment.api_url}/auth/users/`, credentials);
   }
 
-  getUser() {
-    return this.userData.getValue();
-  }
-
   logout() {
     this.storage.clear().then(() => {
       this.router.navigateByUrl('/login');
-      this.userData.next(null);
       this.toast("Session closed. Please log in again")
     });
   }

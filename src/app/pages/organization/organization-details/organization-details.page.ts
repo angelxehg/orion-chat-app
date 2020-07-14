@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Organization } from '../../../models/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { PageData } from '../../../models/page-data';
-import { AuthService } from '../../../services/auth.service';
+import { isArray } from 'util';
 
 @Component({
   selector: 'app-organization-details',
@@ -18,7 +18,6 @@ export class OrganizationDetailsPage {
   public page: PageData;
 
   constructor(
-    private auth: AuthService,
     private route: ActivatedRoute,
     private org: OrganizationService,
     public panel: PanelService,
@@ -40,13 +39,12 @@ export class OrganizationDetailsPage {
       // Edit mode
       this.editMode();
       var thisID = parseInt(param);
-      this.org.organizations.subscribe({
-        next: (data: Array<Organization>) => {
-
+      this.org.fetch().subscribe({
+        next: (data) => {
           var selected = data.find(e => e.id == thisID);
           this.organization = Object.create(selected);
         }
-      });
+      })
     }
   }
 
