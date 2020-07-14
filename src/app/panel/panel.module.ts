@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PanelPageRoutingModule } from './panel-routing.module';
 
 import { PanelPage } from './panel.page';
+import { MainMenuComponent } from '../components/main-menu/main-menu.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { PanelPage } from './panel.page';
     IonicModule,
     PanelPageRoutingModule
   ],
-  declarations: [PanelPage]
+  declarations: [PanelPage, MainMenuComponent]
 })
-export class PanelPageModule {}
+export class PanelPageModule { }

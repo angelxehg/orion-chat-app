@@ -34,64 +34,6 @@ export class PanelPage implements OnInit {
     },
   ]
 
-  public pageGroups = [
-    {
-      title: "Main",
-      pages: [
-        {
-          title: 'Home',
-          url: '/app/home',
-          icon: 'home',
-        },
-        {
-          title: 'Workspaces',
-          url: '/app/workspaces',
-          icon: 'briefcase',
-        },
-        {
-          title: 'Channels',
-          url: '/app/channels',
-          icon: 'chatbubbles',
-        },
-      ]
-    },
-    {
-      title: "Features",
-      pages: [
-        {
-          title: 'Search',
-          url: '/app/search',
-          icon: 'search',
-        },
-        {
-          title: 'Files',
-          url: '/app/files',
-          icon: 'folder',
-        },
-      ]
-    },
-    {
-      title: "Configuration",
-      pages: [
-        {
-          title: 'Organization',
-          url: '/app/organization',
-          icon: 'people',
-        },
-        {
-          title: 'Profile',
-          url: '/app/profile',
-          icon: 'person-circle',
-        },
-        {
-          title: 'Settings',
-          url: '/app/settings',
-          icon: 'cog',
-        },
-      ]
-    }
-  ]
-
   constructor(
     public panel: PanelService,
     private theme: ThemeService
@@ -100,9 +42,5 @@ export class PanelPage implements OnInit {
   }
 
   ngOnInit() { }
-
-  isUrlActive(url) {
-    return window.location.pathname.includes(url);
-  }
 
 }
