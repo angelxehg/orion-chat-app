@@ -85,6 +85,8 @@ export class AuthService {
   logout() {
     this.storage.clear().then(() => {
       this.router.navigateByUrl('/login');
+      this.jwt_access = "";
+      this.jwt_refresh = "";
       this.toast("Session closed. Please log in again")
     });
   }

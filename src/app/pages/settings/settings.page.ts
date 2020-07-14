@@ -17,7 +17,7 @@ export class SettingsPage {
 
   public target = "";
 
-  public version = "0.7.0";
+  public version = "0.7.1";
 
   constructor(
     public auth: AuthService,
@@ -25,7 +25,7 @@ export class SettingsPage {
     public toastController: ToastController,
     public panel: PanelService
   ) {
-    this.target = environment.production ? 'Production' : 'Development';
+    this.target = environment.production ? 'Stable' : 'Debug';
   }
 
   ionViewWillEnter() {

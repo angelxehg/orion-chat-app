@@ -48,11 +48,13 @@ const routes: Routes = [
   },
   {
     path: 'workspaces',
-    loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule)
+    loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule),
+    canActivate: [OrganizationGuard],
   },
   {
     path: 'channels',
-    loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule)
+    loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule),
+    canActivate: [OrganizationGuard],
   },
 ];
 
