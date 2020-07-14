@@ -12,8 +12,7 @@
             <ion-label>{{ group.title }}</ion-label>
           </ion-item-divider>
           <ion-menu-toggle auto-hide="false" *ngFor="let page of group.pages">
-            <ion-item routerDirection="root" [routerLink]="[page.url]" lines="none" detail="false"
-              color="{{ isUrlActive(page.url) ? 'tertiary' : '' }}">
+            <ion-item routerDirection="root" [routerLink]="[page.url]" lines="none" detail="false" color="{{ isUrlActive(page.url) ? 'tertiary' : '' }}">
               <ion-icon slot="start" [ios]="page.icon + '-outline'" [md]="page.icon + '-sharp'"></ion-icon>
               <ion-label>{{ page.title }}</ion-label>
             </ion-item>
@@ -21,6 +20,15 @@
         </ion-item-group>
       </ion-content>
     </ion-menu>
-    <ion-router-outlet id="main"></ion-router-outlet>
+    <ion-router-outlet id="main">
+      <ion-tabs>
+        <ion-tab-bar class="ion-hide-lg-up" slot="bottom">
+          <ion-tab-button *ngFor="let tab of tabs" tab="{{ tab.url }}">
+            <ion-icon [ios]="tab.icon + '-outline'" [md]="tab.icon + '-sharp'"></ion-icon>
+            <ion-label>{{ tab.title }}</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
+    </ion-router-outlet>
   </ion-split-pane>
 </ion-content>
