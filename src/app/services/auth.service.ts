@@ -73,26 +73,6 @@ export class AuthService {
     );
   }
 
-  access() {
-    if (this.jwt_access) {
-      let decoded = helper.decodeToken(this.jwt_access);
-      var nextMinutes = (Date.now() / 1000 | 0) + 900 // Now + 15 minutes
-      if (decoded.exp < nextMinutes) {
-        // Access Token expired within next 15 minutes
-        this.refresh().subscribe({
-          next: data => console.info("Token refreshed"),
-          error: error => console.error(error)
-        });
-        return false;
-      } else {
-        // Access token still valid
-        return true;
-      }
-    } else {
-      return false;
-    }
-  }
-
   refresh() {
     var data = { refresh: this.jwt_refresh };
     return this.http.post(`${environment.api_url}/auth/jwt/refresh/`, data).pipe(

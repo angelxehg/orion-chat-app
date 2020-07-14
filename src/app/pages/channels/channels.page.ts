@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { PanelService } from '../../services/panel.service';
 
 @Component({
@@ -31,13 +30,11 @@ export class ChannelsPage {
   ]
 
   constructor(
-    private auth: AuthService,
     public panel: PanelService
   ) { }
 
   ionViewWillEnter() {
     this.panel.hide();
-    this.auth.access();
   }
 
   isUrlActive(url) {

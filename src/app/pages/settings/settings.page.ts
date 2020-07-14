@@ -30,7 +30,6 @@ export class SettingsPage {
 
   ionViewWillEnter() {
     this.panel.show();
-    this.auth.access();
   }
 
   logout() {
