@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { PanelService } from '../../services/panel.service';
 
 @Component({
@@ -10,12 +9,10 @@ import { PanelService } from '../../services/panel.service';
 export class SearchPage {
 
   constructor(
-    private auth: AuthService,
     public panel: PanelService
   ) { }
 
   ionViewWillEnter() {
     this.panel.show();
-    this.auth.access();
   }
 }

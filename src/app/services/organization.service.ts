@@ -4,9 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Platform, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { map, switchMap, tap, take } from 'rxjs/operators';
+import { map, switchMap, tap, take, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Organization } from '../models/organization';
+import { AuthService } from './auth.service';
+import { async } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,7 @@ export class OrganizationService {
   private organizationsData = new BehaviorSubject(null);
 
   constructor(
+    private auth: AuthService,
     private storage: Storage,
     private http: HttpClient,
     private plt: Platform,
@@ -60,11 +63,9 @@ export class OrganizationService {
 
   fetch() {
     return this.http.get(`${environment.api_url}/organizations/`).pipe(
-      tap(async (res: Array<Organization>) => {
-        if (res) {
-          this.organizationsData.next(res);
-        }
-        return of(null);
+      switchMap(async (data: Array<Organization>) => {
+        this.organizationsData.next(data);
+        return this.all();
       })
     );
   }

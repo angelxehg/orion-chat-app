@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { PanelService } from '../../services/panel.service';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -69,13 +68,11 @@ export class HomePage {
   ];
 
   constructor(
-    private auth: AuthService,
     public panel: PanelService
   ) { }
 
   ionViewWillEnter() {
     this.panel.show();
-    this.auth.access();
   }
 
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { AuthService } from './auth.service';
+import { switchMap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -29,19 +30,23 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.auth.getToken();
     let request = req;
     if (this.skipRequest(request)) {
       return next.handle(request);
     }
-    if (token) {
-      request = req.clone({
-        setHeaders: {
-          authorization: `Bearer ${token}`
+    return this.auth.token.pipe(
+      switchMap(async token => {
+        if (!token) {
+          console.error("No token! canceling request!");
+          return EMPTY.toPromise();
         }
-      });
-    }
-    return next.handle(request);
+        request = req.clone({
+          setHeaders: { authorization: `Bearer ${token}` }
+        });
+        var handle = await next.handle(request).toPromise();
+        return handle;
+      })
+    );
   }
 
 }
