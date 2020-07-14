@@ -1,8 +1,8 @@
 import { Platform, ToastController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -19,8 +19,6 @@ export class AuthService {
   private jwt_access = "";
   private jwt_refresh = "";
 
-  public status: Observable<boolean>;
-
   constructor(
     private storage: Storage,
     private http: HttpClient,
@@ -31,43 +29,28 @@ export class AuthService {
     if (!environment.production) {
       console.info("Using local API: " + environment.api_url);
     }
-    this.status = this.loadTokens();
   }
 
-  private loadTokens() {
-    return from(this.plt.ready()).pipe(
-      switchMap(async () => {
-        if (!this.jwt_refresh) {
-          var storedToken = await this.storage.get("TOKEN_REFRESH"); // Get token from storage
-          if (!storedToken) {
-            return false;
-          }
-          this.jwt_refresh = storedToken;
+  public token: Observable<string> = from(this.plt.ready()).pipe(
+    switchMap(async () => {
+      if (!this.jwt_refresh) {
+        var storedToken = await this.storage.get("TOKEN_REFRESH"); // Get token from storage
+        if (!storedToken) {
+          return "";
         }
-        if (!this.jwt_access) {
-          try {
-            await this.refresh().toPromise(); // Get refresh from api
-          } catch (error) {
-            console.error(error);
-            return false;
-          }
+        this.jwt_refresh = storedToken;
+      }
+      if (!this.jwt_access) {
+        try {
+          await this.refresh().toPromise();
+        } catch (error) {
+          console.error(error);
+          return "";
         }
-        return true;
-      }),
-    )
-  }
-
-  private verifyRefresh() {
-
-  }
-
-  private access() {
-
-  }
-
-  getToken() {
-    return this.jwt_access;
-  }
+      }
+      return this.jwt_access;
+    }),
+  )
 
   refresh() {
     var data = { refresh: this.jwt_refresh };
@@ -87,7 +70,6 @@ export class AuthService {
         if (res) {
           this.jwt_access = res.access;
           this.jwt_refresh = res.refresh;
-          let decoded = helper.decodeToken(res.refresh);
           let storageObs = from(this.storage.set("TOKEN_REFRESH", res.refresh));
           return storageObs;
         }
