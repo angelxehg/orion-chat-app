@@ -3,11 +3,15 @@
     <ion-menu contentId="main">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Orion Chat</ion-title>
+          <ion-buttons slot="start" class="{{ panel.viewMode == 'menu' ? 'ion-hide' : '' }}">
+            <ion-back-button defaultHref="app/home"></ion-back-button>
+          </ion-buttons>
+          <ion-title>{{ panel.title() }}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <app-main-menu></app-main-menu>
+        <app-main-menu class="{{ panel.viewMode != 'menu' ? 'ion-hide' : '' }}"></app-main-menu>
+        <app-channel-menu class="{{ panel.viewMode != 'channels' ? 'ion-hide' : '' }}"></app-channel-menu>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main">

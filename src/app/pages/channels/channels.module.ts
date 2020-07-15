@@ -1,12 +1,10 @@
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChannelsPage } from './channels.page';
 
 import { ChannelsPageRoutingModule } from './channels-routing.module';
-import { ChannelMenuComponent } from 'src/app/components/channel-menu/channel-menu.component';
 
 @NgModule({
   imports: [
@@ -15,6 +13,6 @@ import { ChannelMenuComponent } from 'src/app/components/channel-menu/channel-me
     FormsModule,
     ChannelsPageRoutingModule
   ],
-  declarations: [ChannelsPage, ChannelMenuComponent]
+  declarations: [ChannelsPage]
 })
 export class ChannelsPageModule { }
