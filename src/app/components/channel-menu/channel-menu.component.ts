@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { PanelService } from '../../services/panel.service';
 
 @Component({
-  selector: 'app-channels',
-  templateUrl: 'channels.page.html',
-  styleUrls: ['channels.page.scss']
+  selector: 'app-channel-menu',
+  templateUrl: './channel-menu.component.html',
+  styleUrls: ['./channel-menu.component.scss'],
 })
-export class ChannelsPage {
+export class ChannelMenuComponent {
 
   channels = [
     {
@@ -29,15 +28,10 @@ export class ChannelsPage {
     },
   ]
 
-  constructor(
-    public panel: PanelService
-  ) { }
-
-  ionViewWillEnter() {
-    this.panel.show('channels');
-  }
+  constructor() { }
 
   isUrlActive(url) {
     return window.location.pathname.includes(url);
   }
+
 }

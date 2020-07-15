@@ -1,0 +1,18 @@
+<ion-item-group>
+  <ion-item-divider>
+    <ion-label>My workspaces</ion-label>
+  </ion-item-divider>
+  <ion-menu-toggle auto-hide="false" *ngFor="let workspace of all()">
+    <ion-item routerDirection="root" routerLink="/app/workspaces/{{workspace.id}}" lines="none" detail="false" color="{{ isUrlActive('workspaces/' + workspace.id) ? 'primary' : '' }}">
+      <ion-label>
+        <h2>{{ workspace.title }}</h2>
+        <p>{{ workspace.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+</ion-item-group>
+<ion-fab horizontal="center" vertical="bottom" slot="fixed">
+  <ion-fab-button color="primary" routerLink="/app/workspaces/new">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

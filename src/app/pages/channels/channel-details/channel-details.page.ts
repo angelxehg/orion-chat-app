@@ -20,6 +20,7 @@ export class ChannelDetailsPage {
   }
 
   ionViewWillEnter() {
+    this.panel.show('channels', false);
     var param = this.activatedRoute.snapshot.paramMap.get('channel');
     if (!param) {
       if (window.location.pathname.includes("new")) {

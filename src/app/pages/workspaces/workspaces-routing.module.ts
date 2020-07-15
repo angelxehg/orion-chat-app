@@ -6,20 +6,14 @@ const routes: Routes = [
   {
     path: '',
     component: WorkspacesPage,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
-      },
-      {
-        path: 'new',
-        loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
-      },
-      {
-        path: ':workspace',
-        loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
-      }
-    ]
+  },
+  {
+    path: 'new',
+    loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
+  },
+  {
+    path: ':workspace',
+    loadChildren: () => import('./workspace-details/workspace-details.module').then(m => m.WorkspaceDetailsPageModule)
   }
 ];
 

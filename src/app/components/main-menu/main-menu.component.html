@@ -1,0 +1,11 @@
+<ion-item-group *ngFor="let group of pageGroups">
+  <ion-item-divider>
+    <ion-label>{{ group.title }}</ion-label>
+  </ion-item-divider>
+  <ion-menu-toggle auto-hide="false" *ngFor="let page of group.pages">
+    <ion-item routerDirection="root" [routerLink]="[page.url]" lines="none" detail="false" color="{{ isUrlActive(page.url) ? 'tertiary' : '' }}">
+      <ion-icon slot="start" [ios]="page.icon + '-sharp'" [md]="page.icon + '-sharp'"></ion-icon>
+      <ion-label>{{ page.title }}</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+</ion-item-group>

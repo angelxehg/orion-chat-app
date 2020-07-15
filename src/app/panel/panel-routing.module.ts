@@ -20,6 +20,14 @@ const routes: Routes = [
         loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
+        path: 'workspaces',
+        loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule),
+      },
+      {
+        path: 'channels',
+        loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule),
+      },
+      {
         path: 'search',
         loadChildren: () => import('../pages/search/search.module').then(m => m.SearchPageModule)
       },
@@ -36,6 +44,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
+        path: 'more',
+        loadChildren: () => import('../pages/more/more.module').then(m => m.MorePageModule)
+      },
+      {
         path: 'settings',
         loadChildren: () => import('../pages/settings/settings.module').then(m => m.SettingsPageModule)
       },
@@ -45,16 +57,6 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: 'workspaces',
-    loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule),
-    canActivate: [OrganizationGuard],
-  },
-  {
-    path: 'channels',
-    loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule),
-    canActivate: [OrganizationGuard],
   },
 ];
 

@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { PanelPageRoutingModule } from './panel-routing.module';
 
 import { PanelPage } from './panel.page';
+import { MainMenuComponent } from '../components/main-menu/main-menu.component';
+import { MainTabsComponent } from '../components/main-tabs/main-tabs.component';
+import { ChannelMenuComponent } from '../components/channel-menu/channel-menu.component';
+import { WorkspaceMenuComponent } from '../components/workspace-menu/workspace-menu.component';
 
 @NgModule({
   imports: [
@@ -15,6 +19,6 @@ import { PanelPage } from './panel.page';
     IonicModule,
     PanelPageRoutingModule
   ],
-  declarations: [PanelPage]
+  declarations: [PanelPage, MainMenuComponent, MainTabsComponent, ChannelMenuComponent, WorkspaceMenuComponent]
 })
-export class PanelPageModule {}
+export class PanelPageModule { }
