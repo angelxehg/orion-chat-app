@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
+        path: 'workspaces',
+        loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule),
+      },
+      {
         path: 'channels',
         loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule),
       },
@@ -53,11 +57,6 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: 'workspaces',
-    loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule),
-    canActivate: [OrganizationGuard],
   },
 ];
 

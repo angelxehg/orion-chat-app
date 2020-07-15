@@ -15,11 +15,15 @@ export class WorkspacesPage {
   ) { }
 
   ionViewWillEnter() {
-    this.panel.hide();
+    this.panel.show('workspaces');
     this.workspaces.fetch();
   }
 
   isUrlActive(url) {
     return window.location.pathname.includes(url);
+  }
+
+  all() {
+    return this.workspaces.all();
   }
 }

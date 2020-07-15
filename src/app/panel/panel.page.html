@@ -12,6 +12,7 @@
       <ion-content>
         <app-main-menu class="{{ panel.viewMode != 'menu' ? 'ion-hide' : '' }}"></app-main-menu>
         <app-channel-menu class="{{ panel.viewMode != 'channels' ? 'ion-hide' : '' }}"></app-channel-menu>
+        <app-workspace-menu class="{{ panel.viewMode != 'workspaces' ? 'ion-hide' : '' }}"></app-workspace-menu>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main">
