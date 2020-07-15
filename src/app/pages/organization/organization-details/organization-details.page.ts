@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Organization } from '../../../models/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { PageData } from '../../../models/page-data';
-import { isArray } from 'util';
 
 @Component({
   selector: 'app-organization-details',
@@ -28,7 +27,7 @@ export class OrganizationDetailsPage {
 
   ionViewWillEnter() {
     // Panel
-    this.panel.show();
+    this.panel.show('menu', false);
     // Configure mode
     this.clear();
     var param = this.route.snapshot.paramMap.get('organization');

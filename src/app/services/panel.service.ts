@@ -5,16 +5,17 @@ import { Injectable } from '@angular/core';
 })
 export class PanelService {
 
-  public hidden: boolean;
+  public panel: boolean;
+  public tabs: boolean;
 
-  public viewMode: string;
+  public current: string;
 
   constructor() {
     this.show();
   }
 
   title() {
-    switch (this.viewMode) {
+    switch (this.current) {
       case 'channels':
         return "Channels"
       case 'workspaces':
@@ -24,12 +25,14 @@ export class PanelService {
     }
   }
 
-  show(panel: string = 'menu') {
-    this.hidden = false;
-    this.viewMode = panel;
+  show(panel: string = 'menu', tabs: boolean = true) {
+    this.panel = true;
+    this.current = panel;
+    this.tabs = tabs;
   }
 
   hide() {
-    this.hidden = true;
+    this.panel = false;
+    this.tabs = false;
   }
 }

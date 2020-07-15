@@ -20,7 +20,7 @@ export class WorkspaceDetailsPage {
   }
 
   ionViewWillEnter() {
-    this.panel.show('workspaces');
+    this.panel.show('workspaces', false);
     var param = this.activatedRoute.snapshot.paramMap.get('workspace');
     if (!param) {
       if (window.location.pathname.includes("new")) {
