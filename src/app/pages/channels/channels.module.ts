@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ChannelsPage } from './channels.page';
 
 import { ChannelsPageRoutingModule } from './channels-routing.module';
+import { ChannelMenuComponent } from 'src/app/components/channel-menu/channel-menu.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { ChannelsPageRoutingModule } from './channels-routing.module';
     FormsModule,
     ChannelsPageRoutingModule
   ],
-  declarations: [ChannelsPage]
+  declarations: [ChannelsPage, ChannelMenuComponent]
 })
 export class ChannelsPageModule { }
