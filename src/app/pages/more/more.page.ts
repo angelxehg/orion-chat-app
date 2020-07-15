@@ -17,16 +17,19 @@ export class MorePage {
           title: 'Home',
           url: '/app/home',
           icon: 'home',
-        },
-        {
-          title: 'Workspaces',
-          url: '/app/workspaces',
-          icon: 'briefcase',
+          description: "Pin your favorite channels and workspaces"
         },
         {
           title: 'Channels',
           url: '/app/channels',
           icon: 'chatbubbles',
+          description: "Communicate with people through channels"
+        },
+        {
+          title: 'Workspaces',
+          url: '/app/workspaces',
+          icon: 'briefcase',
+          description: "Manage all your workspaces in one place"
         },
       ]
     },
@@ -38,11 +41,13 @@ export class MorePage {
           title: 'Search',
           url: '/app/search',
           icon: 'search',
+          description: "Find messages and files across the app"
         },
         {
           title: 'Files',
           url: '/app/files',
           icon: 'folder',
+          description: "Find and organize the files you need"
         },
       ]
     },
@@ -54,16 +59,19 @@ export class MorePage {
           title: 'Organization',
           url: '/app/organization',
           icon: 'people',
+          description: "Setup or create a new organization"
         },
         {
           title: 'Profile',
           url: '/app/profile',
           icon: 'person-circle',
+          description: "Setup your organization profile"
         },
         {
           title: 'Settings',
           url: '/app/settings',
           icon: 'cog',
+          description: "Change UI or log out"
         },
       ]
     }
