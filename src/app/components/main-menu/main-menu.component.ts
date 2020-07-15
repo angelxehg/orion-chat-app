@@ -17,15 +17,15 @@ export class MainMenuComponent {
           icon: 'home',
         },
         {
-          title: 'Workspaces',
-          url: '/app/workspaces',
-          icon: 'briefcase',
-        },
-        {
           title: 'Channels',
           url: '/app/channels',
           icon: 'chatbubbles',
         },
+        {
+          title: 'Workspaces',
+          url: '/app/workspaces',
+          icon: 'briefcase',
+        }
       ]
     },
     {

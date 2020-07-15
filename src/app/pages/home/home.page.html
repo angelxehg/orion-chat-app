@@ -1,8 +1,5 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title>
       Homepage
     </ion-title>
@@ -24,8 +21,7 @@
     <ion-grid>
       <ion-row *ngFor="let group of tileGroups" class="ion-align-items-stretch">
         <ion-col size="6" size-sm *ngFor="let tile of group.tiles">
-          <ion-card class="no-margin full-height" button="true" color="{{ tile.color }}" routerDirection="root"
-            [routerLink]="[tile.url]">
+          <ion-card class="no-margin full-height" button="true" color="{{ tile.color }}" routerDirection="root" [routerLink]="[tile.url]">
             <ion-card-header>
               <ion-icon size="medium" [ios]="tile.icon + '-outline'" [md]="tile.icon + '-sharp'"></ion-icon>
               <ion-card-title>{{ tile.title }}</ion-card-title>
