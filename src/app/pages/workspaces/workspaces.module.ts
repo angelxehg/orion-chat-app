@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { WorkspacesPage } from './workspaces.page';
 
 import { WorkspacesPageRoutingModule } from './workspaces-routing.module';
+import { WorkspaceMenuComponent } from 'src/app/components/workspace-menu/workspace-menu.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { WorkspacesPageRoutingModule } from './workspaces-routing.module';
     FormsModule,
     WorkspacesPageRoutingModule
   ],
-  declarations: [WorkspacesPage]
+  declarations: [WorkspacesPage, WorkspaceMenuComponent]
 })
 export class WorkspacesPageModule { }
