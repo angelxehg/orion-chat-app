@@ -23,7 +23,7 @@
         <ion-card *ngFor="let tile of tiles" class="setting-card" button="true" color="{{ tile.color }}" routerDirection="root" [routerLink]="[tile.url]">
           <ion-card-header>
             <ion-card-title>
-              <ion-icon [ios]="tile.icon + '-outline'" [md]="tile.icon + '-sharp'"></ion-icon>
+              <ion-icon [ios]="tile.icon + '-sharp'" [md]="tile.icon + '-sharp'"></ion-icon>
               {{ tile.title }}
             </ion-card-title>
           </ion-card-header>

@@ -4,7 +4,7 @@
   </ion-item-divider>
   <ion-menu-toggle auto-hide="false" *ngFor="let channel of channels">
     <ion-item routerDirection="root" routerLink="/app/channels/{{channel.id}}" lines="none" detail="false" color="{{ isUrlActive('channels/' + channel.id) ? 'success' : '' }}">
-      <ion-icon slot="start" [ios]="'people-outline'" [md]="'people-sharp'"></ion-icon>
+      <ion-icon slot="start" [ios]="'people-sharp'" [md]="'people-sharp'"></ion-icon>
       <ion-label>
         <h2>{{ channel.title }}</h2>
         <p>{{ channel.description }}</p>
