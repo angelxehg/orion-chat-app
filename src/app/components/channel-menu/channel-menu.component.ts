@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-channel-menu',
   templateUrl: './channel-menu.component.html',
   styleUrls: ['./channel-menu.component.scss'],
 })
-export class ChannelMenuComponent implements OnInit {
+export class ChannelMenuComponent {
 
   channels = [
     {
@@ -29,8 +29,6 @@ export class ChannelMenuComponent implements OnInit {
   ]
 
   constructor() { }
-
-  ngOnInit() { }
 
   isUrlActive(url) {
     return window.location.pathname.includes(url);

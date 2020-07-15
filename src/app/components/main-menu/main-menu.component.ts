@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { PanelService } from 'src/app/services/panel.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss'],
 })
-export class MainMenuComponent implements OnInit {
+export class MainMenuComponent {
 
   public pageGroups = [
     {
@@ -66,11 +65,7 @@ export class MainMenuComponent implements OnInit {
     }
   ]
 
-  constructor(
-    public panel: PanelService,
-  ) { }
-
-  ngOnInit() { }
+  constructor() { }
 
   isUrlActive(url) {
     return window.location.pathname.includes(url);
