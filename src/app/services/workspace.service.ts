@@ -62,6 +62,32 @@ export class WorkspaceService {
     );
   }
 
+  public create(workspace: Workspace) {
+    return this.org.selected.pipe(
+      switchMap(async found => {
+        return await this.http.post(`${environment.api_url}/organizations/${found.id}/workspaces/`, workspace).pipe(
+          switchMap(async (data: Workspace) => {
+            await this.forceFetch().toPromise();
+            return data;
+          })
+        ).toPromise();
+      })
+    );
+  }
+
+  public update(workspace: Workspace) {
+    return this.org.selected.pipe(
+      switchMap(async found => {
+        return await this.http.patch(`${environment.api_url}/organizations/${found.id}/workspaces/${workspace.id}/`, workspace).pipe(
+          switchMap(async (data: Workspace) => {
+            await this.forceFetch().toPromise();
+            return data;
+          })
+        ).toPromise();
+      })
+    );
+  }
+
   public all(): Array<Workspace> {
     return this.collection.getValue();
   }
