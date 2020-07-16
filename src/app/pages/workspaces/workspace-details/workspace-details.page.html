@@ -15,14 +15,24 @@
       <ion-title size="large">{{ page.title }}</ion-title>
     </ion-toolbar>
   </ion-header>
-  <div *ngIf="!page.empty">
-    <ion-item-divider>
-      <ion-label>
-        {{ page.description }}
-      </ion-label>
-    </ion-item-divider>
-  </div>
-  <div class="center-all" *ngIf="page.empty">
-    <h4 class="gray">{{ page.description }}</h4>
+  <ion-item-divider>
+    <ion-label>
+      {{ page.description }}
+    </ion-label>
+  </ion-item-divider>
+  <ion-item>
+    <ion-label position="floating">Title</ion-label>
+    <ion-input type="text" [(ngModel)]="workspace.title">
+    </ion-input>
+  </ion-item>
+  <ion-label color="danger" *ngIf="error.title">{{ error.title }}</ion-label>
+  <ion-item>
+    <ion-label position="floating">Description</ion-label>
+    <ion-textarea [(ngModel)]="workspace.description">
+    </ion-textarea>
+  </ion-item>
+  <ion-label color="danger" *ngIf="error.description">{{ error.description }}</ion-label>
+  <div class="ion-padding">
+    <ion-button expand="block" class="ion-no-margin" (click)="action()">{{ page.action }}</ion-button>
   </div>
 </ion-content>

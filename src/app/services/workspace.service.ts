@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { OrganizationService } from './organization.service';
 import { environment } from 'src/environments/environment';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { Workspace } from '../models/workspace';
 
 @Injectable({
@@ -19,6 +19,18 @@ export class WorkspaceService {
     private http: HttpClient,
     private org: OrganizationService
   ) { }
+
+  public find(workspaceID: number) {
+    return this.fetch().pipe(
+      map(data => {
+        var workspace = data.find(e => e.id == workspaceID);
+        if (!workspace) {
+          return null;
+        }
+        return workspace;
+      })
+    );
+  }
 
   public fetch() {
     if (!this.lastFetch) {
