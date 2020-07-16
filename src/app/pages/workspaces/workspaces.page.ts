@@ -11,12 +11,12 @@ export class WorkspacesPage {
 
   constructor(
     public panel: PanelService,
-    public workspaces: WorkspaceService
+    public wks: WorkspaceService
   ) { }
 
   ionViewWillEnter() {
     this.panel.show('workspaces');
-    this.workspaces.fetch().subscribe();
+    this.wks.fetch().subscribe();
   }
 
   isUrlActive(url) {
@@ -24,6 +24,6 @@ export class WorkspacesPage {
   }
 
   all() {
-    return this.workspaces.all();
+    return this.wks.all();
   }
 }

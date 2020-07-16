@@ -9,7 +9,7 @@ import { WorkspaceService } from 'src/app/services/workspace.service';
 export class WorkspaceMenuComponent {
 
   constructor(
-    private workspaces: WorkspaceService
+    private wks: WorkspaceService
   ) { }
 
   isUrlActive(url) {
@@ -17,6 +17,6 @@ export class WorkspaceMenuComponent {
   }
 
   all() {
-    return this.workspaces.all();
+    return this.wks.all();
   }
 }

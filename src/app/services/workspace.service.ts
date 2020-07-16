@@ -1,38 +1,56 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { OrganizationService } from './organization.service';
 import { environment } from 'src/environments/environment';
-import { tap, take, map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+import { Workspace } from '../models/workspace';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkspaceService {
 
-  public workspaces: Observable<any>;
-  private workspacesData = new BehaviorSubject(null);
+  private collection = new BehaviorSubject(null);
+
+  private lastFetch: number;
 
   constructor(
     private http: HttpClient,
     private org: OrganizationService
   ) { }
 
-  fetch() {
+  public fetch() {
+    if (!this.lastFetch) {
+      return this.forceFetch();
+    }
+    if ((new Date().getTime() - this.lastFetch) > 5000) {
+      return this.forceFetch();
+    }
+    return this.cacheFetch();
+  }
+
+  private cacheFetch() {
+    return new Observable<Workspace[]>(subscriber => {
+      subscriber.next(this.collection.getValue());
+    });
+  }
+
+  private forceFetch() {
     return this.org.selected.pipe(
-      map(found => {
-        var url = `${environment.api_url}/organizations/${found.id}/workspaces/`;
-        return this.http.get(url).subscribe({
-          next: (data) => {
-            this.workspacesData.next(data);
-          },
-          error: err => { }
-        });
+      switchMap(async found => {
+        return await this.http.get(`${environment.api_url}/organizations/${found.id}/workspaces/`).pipe(
+          switchMap(async (data: Array<Workspace>) => {
+            this.collection.next(data);
+            this.lastFetch = new Date().getTime();
+            return this.all();
+          })
+        ).toPromise();
       })
     );
   }
 
-  all() {
-    return this.workspacesData.getValue();
+  public all(): Array<Workspace> {
+    return this.collection.getValue();
   }
 }
