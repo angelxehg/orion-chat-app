@@ -87,7 +87,7 @@ export class OrganizationDetailsPage {
     this.org.update(this.organization).subscribe({
       next: async (updated) => {
         toast.dismiss().then(() => this.toast("Organization data updated!"));
-        this.router.navigateByUrl('/app/organization');
+        this.router.navigateByUrl('/app/home');
       },
       error: async (err) => {
         toast.dismiss().then(() => this.toast("Error updating data!"));

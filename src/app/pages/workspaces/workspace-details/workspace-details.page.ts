@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PanelService } from '../../../services/panel.service';
 import { PageData } from '../../../models/page-data';
+import { Workspace } from 'src/app/models/workspace';
+import { WorkspaceService } from 'src/app/services/workspace.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-workspace-details',
@@ -10,39 +13,90 @@ import { PageData } from '../../../models/page-data';
 })
 export class WorkspaceDetailsPage {
 
+  public workspace: Workspace;
+
   public page: PageData;
 
+  public error;
+
   constructor(
+    private wks: WorkspaceService,
     private activatedRoute: ActivatedRoute,
-    public panel: PanelService
+    public panel: PanelService,
+    private router: Router,
+    public toastController: ToastController,
   ) {
-    this.emptyMode();
+    this.clear();
+    this.createMode();
   }
 
   ionViewWillEnter() {
+    this.clear();
     this.panel.show('workspaces', false);
     var param = this.activatedRoute.snapshot.paramMap.get('workspace');
-    if (!param) {
-      if (window.location.pathname.includes("new")) {
-        // Create mode
-        this.createMode();
-      } else {
-        // Empty mode
-        this.emptyMode();
-      }
-    } else {
-      // Edit mode
+    if (param) {
       this.editMode();
+      var thisID = parseInt(param);
+      this.wks.find(thisID).subscribe({
+        next: (found) => {
+          this.workspace = Object.create(found);
+        }
+      });
+    } else {
+      this.createMode();
     }
   }
 
-  emptyMode() {
-    this.page = {
-      title: "Workspace Details",
-      description: "Create or select a workspace...",
-      action: "Empty",
-      empty: true
-    };
+  async action() {
+    this.clearError();
+    if (this.page.action == "Create") {
+      return this.create();
+    }
+    if (this.page.action == "Update") {
+      return this.update();
+    }
+  }
+
+  private async create() {
+    var toast = await this.toast("Creating Workspace data...");
+    this.wks.create(this.workspace).subscribe({
+      next: async (created) => {
+        toast.dismiss().then(() => this.toast("Workspace created!"));
+        this.router.navigateByUrl(`/app/workspaces/${created.id}`);
+      },
+      error: async (err) => {
+        toast.dismiss().then(() => this.toast("Error creating workspace!"));
+        if ('error' in err) {
+          this.error = err.error;
+        }
+        console.error(err);
+      }
+    });
+  }
+
+  private async update() {
+    var toast = await this.toast("Updating Workspace data...");
+    this.wks.update(this.workspace).subscribe({
+      next: async (updated) => {
+        toast.dismiss().then(() => this.toast("Workspace data updated!"));
+      },
+      error: async (err) => {
+        toast.dismiss().then(() => this.toast("Error updating data!"));
+        if ('error' in err) {
+          this.error = err.error;
+        }
+        console.error(err);
+      }
+    });
+  }
+
+  private async toast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 5000
+    });
+    toast.present();
+    return toast;
   }
 
   createMode() {
@@ -61,6 +115,24 @@ export class WorkspaceDetailsPage {
       action: "Update",
       empty: false
     };
+  }
+
+  clear() {
+    this.clearError();
+    this.workspace = {
+      id: 0,
+      title: "",
+      description: "",
+      admin_flag: false,
+      people: []
+    }
+  }
+
+  clearError() {
+    this.error = {
+      title: '',
+      description: ''
+    }
   }
 
 }
