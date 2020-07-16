@@ -22,17 +22,19 @@
   </ion-item-divider>
   <ion-item>
     <ion-label position="floating">Title</ion-label>
-    <ion-input type="text" [(ngModel)]="organization.title">
+    <ion-input autocorrect spellcheck type="text" [(ngModel)]="organization.title">
     </ion-input>
   </ion-item>
   <ion-label color="danger" *ngIf="error.title">{{ error.title }}</ion-label>
   <ion-item>
     <ion-label position="floating">Description</ion-label>
-    <ion-textarea [(ngModel)]="organization.description">
+    <ion-textarea autocorrect spellcheck autoGrow [(ngModel)]="organization.description">
     </ion-textarea>
   </ion-item>
   <ion-label color="danger" *ngIf="error.description">{{ error.description }}</ion-label>
-  <div class="ion-padding">
-    <ion-button expand="block" class="ion-no-margin" (click)="action()">{{ page.action }}</ion-button>
-  </div>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="success" (click)="action()">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

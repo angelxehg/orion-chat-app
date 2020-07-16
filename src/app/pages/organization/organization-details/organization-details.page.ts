@@ -65,7 +65,7 @@ export class OrganizationDetailsPage {
     var toast = await this.toast("Creating Organization data...");
     this.org.create(this.organization).subscribe({
       next: async (created) => {
-        toast.dismiss().then(() => this.toast("Organization created!"));
+        toast.dismiss().then(() => this.toast("Organization created!", 'success'));
         this.org.select(created.id).subscribe({
           next: (selected) => {
             this.router.navigateByUrl('/app/home');
@@ -73,7 +73,7 @@ export class OrganizationDetailsPage {
         });
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error creating organization!"));
+        toast.dismiss().then(() => this.toast("Error creating organization!", 'danger'));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -86,11 +86,11 @@ export class OrganizationDetailsPage {
     var toast = await this.toast("Updating Organization data...");
     this.org.update(this.organization).subscribe({
       next: async (updated) => {
-        toast.dismiss().then(() => this.toast("Organization data updated!"));
+        toast.dismiss().then(() => this.toast("Organization data updated!", 'success'));
         this.router.navigateByUrl('/app/home');
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error updating data!"));
+        toast.dismiss().then(() => this.toast("Error updating data!", 'danger'));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -99,10 +99,11 @@ export class OrganizationDetailsPage {
     });
   }
 
-  private async toast(message: string) {
+  private async toast(message: string, color: string = 'dark') {
     const toast = await this.toastController.create({
       message: message,
-      duration: 5000
+      duration: 2000,
+      color: color
     });
     toast.present();
     return toast;

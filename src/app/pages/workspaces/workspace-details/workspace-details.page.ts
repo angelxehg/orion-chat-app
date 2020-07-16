@@ -61,11 +61,11 @@ export class WorkspaceDetailsPage {
     var toast = await this.toast("Creating Workspace data...");
     this.wks.create(this.workspace).subscribe({
       next: async (created) => {
-        toast.dismiss().then(() => this.toast("Workspace created!"));
+        toast.dismiss().then(() => this.toast("Workspace created!", 'success'));
         this.router.navigateByUrl(`/app/workspaces/${created.id}`);
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error creating workspace!"));
+        toast.dismiss().then(() => this.toast("Error creating workspace!", 'danger'));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -78,10 +78,10 @@ export class WorkspaceDetailsPage {
     var toast = await this.toast("Updating Workspace data...");
     this.wks.update(this.workspace).subscribe({
       next: async (updated) => {
-        toast.dismiss().then(() => this.toast("Workspace data updated!"));
+        toast.dismiss().then(() => this.toast("Workspace data updated!", 'success'));
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error updating data!"));
+        toast.dismiss().then(() => this.toast("Error updating data!", 'danger'));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -90,10 +90,11 @@ export class WorkspaceDetailsPage {
     });
   }
 
-  private async toast(message: string) {
+  private async toast(message: string, color: string = 'dark') {
     const toast = await this.toastController.create({
       message: message,
-      duration: 5000
+      duration: 5000,
+      color: color
     });
     toast.present();
     return toast;
