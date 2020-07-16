@@ -1,36 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
-import { Platform, ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { map, switchMap, tap, take, catchError } from 'rxjs/operators';
+import { ToastController } from '@ionic/angular';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Organization } from '../models/organization';
-import { AuthService } from './auth.service';
-import { async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
 
-  private organizationData = new BehaviorSubject(null);
   private selectedID: number = null;
 
-  public organizations: Observable<any>;
   private collection = new BehaviorSubject(null);
 
   constructor(
     private storage: Storage,
     private http: HttpClient,
-    private plt: Platform,
+    private router: Router,
     public toastController: ToastController
-  ) {
-  }
+  ) { }
 
   public selected: Observable<number> = this.fetch().pipe(
-    switchMap(async () => {
+    switchMap(async (data) => {
       if (!this.selectedID) {
         var storedID = await this.storage.get("ORGANIZATION_ID")
         if (!storedID) {
@@ -38,23 +33,31 @@ export class OrganizationService {
         }
         this.selectedID = storedID;
       }
+      var selected = data.find(e => e.id == this.selectedID);
+      if (!selected) {
+        this.selectedID = null;
+        this.router.navigateByUrl('/app/organization');
+        return null;
+      }
       return this.selectedID;
     })
   );
 
-  current = {
-    get: (): number => {
-      return this.organizationData.getValue();
-    },
-    set: (organization: Organization): Observable<any> => {
-      this.organizationData.next(organization.id);
-      let storageObs = from(this.storage.set("ORGANIZATION_ID", organization.id));
-      this.selectedID = organization.id;
-      return storageObs;
-    }
+  public select(organizationID: number) {
+    return this.fetch().pipe(
+      switchMap(async (data) => {
+        var organization = data.find(e => e.id == organizationID);
+        if (!organization) {
+          return null;
+        }
+        await this.storage.set("ORGANIZATION_ID", organization.id);
+        this.selectedID = organization.id;
+        return organization;
+      })
+    )
   }
 
-  fetch() {
+  public fetch() {
     return this.http.get(`${environment.api_url}/organizations/`).pipe(
       switchMap(async (data: Array<Organization>) => {
         this.collection.next(data);
@@ -63,7 +66,7 @@ export class OrganizationService {
     );
   }
 
-  all(): Array<Organization> {
+  public all(): Array<Organization> {
     return this.collection.getValue();
   }
 }
