@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PanelService } from '../../../services/panel.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Organization } from '../../../models/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { PageData } from '../../../models/page-data';
@@ -23,6 +23,7 @@ export class OrganizationDetailsPage {
     private route: ActivatedRoute,
     private org: OrganizationService,
     public panel: PanelService,
+    private router: Router,
     public toastController: ToastController,
   ) {
     this.clear();
@@ -53,9 +54,29 @@ export class OrganizationDetailsPage {
 
   async action() {
     this.clearError();
+    if (this.page.action == "Create") {
+      return this.create();
+    }
     if (this.page.action == "Update") {
       return this.update();
     }
+  }
+
+  private async create() {
+    var toast = await this.toast("Creating Organization data...");
+    this.org.create(this.organization).subscribe({
+      next: async (created) => {
+        toast.dismiss().then(() => this.toast("Organization created!"));
+        this.router.navigateByUrl('/app/organization');
+      },
+      error: async (err) => {
+        toast.dismiss().then(() => this.toast("Error creating organization!"));
+        if ('error' in err) {
+          this.error = err.error;
+        }
+        console.error(err);
+      }
+    });
   }
 
   private async update() {
@@ -63,7 +84,7 @@ export class OrganizationDetailsPage {
     this.org.update(this.organization).subscribe({
       next: async (updated) => {
         toast.dismiss().then(() => this.toast("Organization data updated!"));
-        this.organization = Object.create(updated);
+        this.router.navigateByUrl('/app/organization');
       },
       error: async (err) => {
         toast.dismiss().then(() => this.toast("Error updating data!"));

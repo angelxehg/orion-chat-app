@@ -101,6 +101,15 @@ export class OrganizationService {
     );
   }
 
+  public create(organization: Organization) {
+    return this.http.post(`${environment.api_url}/organizations/`, organization).pipe(
+      switchMap(async (data: Organization) => {
+        await this.forceFetch().toPromise();
+        return data;
+      })
+    );
+  }
+
   public update(organization: Organization) {
     var id = organization.id;
     return this.http.patch(`${environment.api_url}/organizations/${id}/`, organization).pipe(
