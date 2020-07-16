@@ -38,10 +38,9 @@ export class OrganizationDetailsPage {
       // Edit mode
       this.editMode();
       var thisID = parseInt(param);
-      this.org.fetch().subscribe({
-        next: (data) => {
-          var selected = data.find(e => e.id == thisID);
-          this.organization = Object.create(selected);
+      this.org.find(thisID).subscribe({
+        next: (found) => {
+          this.organization = Object.create(found);
         }
       })
     }

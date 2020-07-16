@@ -3,7 +3,7 @@ import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Organization } from '../models/organization';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class OrganizationService {
 
-  private selectedID: number = null;
+  private organization: Organization = null;
 
   private collection = new BehaviorSubject(null);
 
@@ -22,39 +22,55 @@ export class OrganizationService {
     private http: HttpClient,
     private router: Router,
     public toastController: ToastController
-  ) { }
+  ) {
+    this.selected.subscribe();
+  }
 
-  public selected: Observable<number> = this.fetch().pipe(
+  public selected: Observable<Organization> = this.fetch().pipe(
     switchMap(async (data) => {
-      if (!this.selectedID) {
+      if (!this.organization) {
         var storedID = await this.storage.get("ORGANIZATION_ID")
         if (!storedID) {
-          return null;
+          return this.organization = null;
         }
-        this.selectedID = storedID;
+        return this.organization = await this.select(storedID).toPromise();
       }
-      var selected = data.find(e => e.id == this.selectedID);
-      if (!selected) {
-        this.selectedID = null;
+      this.organization = data.find(e => e.id == this.organization.id);
+      if (!this.organization) {
         this.router.navigateByUrl('/app/organization');
-        return null;
+        this.organization = null;
       }
-      return this.selectedID;
+      return this.organization;
     })
   );
 
+  public current() {
+    return this.organization;
+  }
+
   public select(organizationID: number) {
-    return this.fetch().pipe(
-      switchMap(async (data) => {
-        var organization = data.find(e => e.id == organizationID);
+    return this.find(organizationID).pipe(
+      switchMap(async (organization) => {
         if (!organization) {
           return null;
         }
         await this.storage.set("ORGANIZATION_ID", organization.id);
-        this.selectedID = organization.id;
+        this.organization = organization;
         return organization;
       })
-    )
+    );
+  }
+
+  public find(organizationID: number) {
+    return this.fetch().pipe(
+      map(data => {
+        var organization = data.find(e => e.id == organizationID);
+        if (!organization) {
+          return null;
+        }
+        return organization;
+      })
+    );
   }
 
   public fetch() {

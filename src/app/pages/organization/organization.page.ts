@@ -20,8 +20,8 @@ export class OrganizationPage {
     this.panel.hide();
     this.org.fetch().subscribe();
     this.org.selected.subscribe({
-      next: (value) => {
-        this.selected = value;
+      next: (found) => {
+        this.selected = found.id;
       }
     })
   }

@@ -20,8 +20,8 @@ export class WorkspaceService {
 
   fetch() {
     return this.org.selected.pipe(
-      map(selectedID => {
-        var url = `${environment.api_url}/organizations/${selectedID}/workspaces/`;
+      map(found => {
+        var url = `${environment.api_url}/organizations/${found.id}/workspaces/`;
         return this.http.get(url).subscribe({
           next: (data) => {
             this.workspacesData.next(data);

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { OrganizationService } from './organization.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,18 +11,22 @@ export class PanelService {
 
   public current: string;
 
-  constructor() {
+  constructor(
+    private org: OrganizationService
+  ) {
     this.show();
   }
 
   title() {
     switch (this.current) {
       case 'channels':
-        return "Channels"
+        return "Channels";
       case 'workspaces':
-        return "Workspaces"
+        return "Workspaces";
       default:
-        return "Orion Chat"
+        var current = this.org.current();
+        var extra = current ? ' | ' + current.title : '';
+        return "Orion Chat" + extra;
     }
   }
 
