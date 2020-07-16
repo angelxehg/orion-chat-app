@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Organization } from '../../../models/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { PageData } from '../../../models/page-data';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-organization-details',
@@ -16,12 +17,16 @@ export class OrganizationDetailsPage {
 
   public page: PageData;
 
+  public error;
+
   constructor(
     private route: ActivatedRoute,
     private org: OrganizationService,
     public panel: PanelService,
+    public toastController: ToastController,
   ) {
     this.clear();
+
     this.createMode();
   }
 
@@ -46,6 +51,39 @@ export class OrganizationDetailsPage {
     }
   }
 
+  async action() {
+    this.clearError();
+    if (this.page.action == "Update") {
+      return this.update();
+    }
+  }
+
+  private async update() {
+    var toast = await this.toast("Updating Organization data...");
+    this.org.update(this.organization).subscribe({
+      next: async (updated) => {
+        toast.dismiss().then(() => this.toast("Organization data updated!"));
+        this.organization = Object.create(updated);
+      },
+      error: async (err) => {
+        toast.dismiss().then(() => this.toast("Error updating data!"));
+        if ('error' in err) {
+          this.error = err.error;
+        }
+        console.error(err);
+      }
+    });
+  }
+
+  private async toast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 5000
+    });
+    toast.present();
+    return toast;
+  }
+
   createMode() {
     this.page = {
       title: "Create organization",
@@ -65,12 +103,20 @@ export class OrganizationDetailsPage {
   }
 
   clear() {
+    this.clearError();
     this.organization = {
       id: 0,
       title: "",
       description: "",
       admin_flag: false,
       people: []
+    }
+  }
+
+  clearError() {
+    this.error = {
+      title: '',
+      description: ''
     }
   }
 }

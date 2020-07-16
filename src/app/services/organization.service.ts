@@ -101,6 +101,17 @@ export class OrganizationService {
     );
   }
 
+  public update(organization: Organization) {
+    var id = organization.id;
+    return this.http.patch(`${environment.api_url}/organizations/${id}/`, organization).pipe(
+      switchMap(async (data: Organization) => {
+        await this.forceFetch().toPromise();
+        await this.selected.toPromise();
+        return data;
+      })
+    );
+  }
+
   public all(): Array<Organization> {
     return this.collection.getValue();
   }
