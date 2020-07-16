@@ -15,7 +15,7 @@ export class WorkspaceDetailsPage {
 
   public workspace: Workspace;
 
-  public page: PageData;
+  private mode: string;
 
   public error;
 
@@ -27,7 +27,36 @@ export class WorkspaceDetailsPage {
     public toastController: ToastController,
   ) {
     this.clear();
-    this.createMode();
+    this.mode = 'Create';
+  }
+
+  get title() {
+    if (this.mode == 'Read') {
+      return this.workspace.title;
+    }
+    return this.mode + " workspace";
+  }
+
+  get description() {
+    if (this.mode == 'Read') {
+      return this.workspace.title + " workspace data";
+    }
+    if (this.mode == 'Update') {
+      return "Update workspace data";
+    }
+    return "Create a new workspace";
+  }
+
+  get createMode() {
+    return this.mode == 'Create';
+  }
+
+  get readMode() {
+    return this.mode == 'Read';
+  }
+
+  get updateMode() {
+    return this.mode == 'Update';
   }
 
   ionViewWillEnter() {
@@ -35,7 +64,7 @@ export class WorkspaceDetailsPage {
     this.panel.show('workspaces', false);
     var param = this.activatedRoute.snapshot.paramMap.get('workspace');
     if (param) {
-      this.editMode();
+      this.mode = 'Read';
       var thisID = parseInt(param);
       this.wks.find(thisID).subscribe({
         next: (found) => {
@@ -43,17 +72,31 @@ export class WorkspaceDetailsPage {
         }
       });
     } else {
-      this.createMode();
+      this.mode = 'Create';
     }
   }
 
-  async action() {
+  public edit() {
+    this.mode = 'Update';
+  }
+
+  public cancel() {
     this.clearError();
-    if (this.page.action == "Create") {
-      return this.create();
+    if (this.createMode) {
+      this.router.navigateByUrl(`/app/workspaces`);
     }
-    if (this.page.action == "Update") {
-      return this.update();
+    if (this.updateMode) {
+      this.mode = 'Read';
+    }
+  }
+
+  public save() {
+    this.clearError();
+    if (this.createMode) {
+      this.create();
+    }
+    if (this.updateMode) {
+      this.update();
     }
   }
 
@@ -61,11 +104,11 @@ export class WorkspaceDetailsPage {
     var toast = await this.toast("Creating Workspace data...");
     this.wks.create(this.workspace).subscribe({
       next: async (created) => {
-        toast.dismiss().then(() => this.toast("Workspace created!", 'success'));
+        toast.dismiss().then(() => this.toast("Workspace created!", 'success', true));
         this.router.navigateByUrl(`/app/workspaces/${created.id}`);
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error creating workspace!", 'danger'));
+        toast.dismiss().then(() => this.toast("Error creating workspace!", 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -78,10 +121,11 @@ export class WorkspaceDetailsPage {
     var toast = await this.toast("Updating Workspace data...");
     this.wks.update(this.workspace).subscribe({
       next: async (updated) => {
-        toast.dismiss().then(() => this.toast("Workspace data updated!", 'success'));
+        toast.dismiss().then(() => this.toast("Workspace data updated!", 'success', true));
+        this.mode = 'Read';
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error updating data!", 'danger'));
+        toast.dismiss().then(() => this.toast("Error updating data!", 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -90,32 +134,19 @@ export class WorkspaceDetailsPage {
     });
   }
 
-  private async toast(message: string, color: string = 'dark') {
+  private async toast(message: string, color: string = 'dark', dismiss: boolean = false) {
+    var buttons = !dismiss ? [] : [{
+      text: 'Close',
+      role: 'cancel'
+    }]
     const toast = await this.toastController.create({
       message: message,
       duration: 5000,
-      color: color
+      color: color,
+      buttons: buttons
     });
     toast.present();
     return toast;
-  }
-
-  createMode() {
-    this.page = {
-      title: "Create a workspace",
-      description: "Create a new workspace",
-      action: "Create",
-      empty: false
-    };
-  }
-
-  editMode() {
-    this.page = {
-      title: "Edit workspace",
-      description: "Update workspace data",
-      action: "Update",
-      empty: false
-    };
   }
 
   clear() {
