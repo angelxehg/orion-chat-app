@@ -21,7 +21,9 @@ export class OrganizationPage {
     this.org.fetch().subscribe();
     this.org.selected.subscribe({
       next: (found) => {
-        this.selected = found.id;
+        if (found) {
+          this.selected = found.id;
+        }
       }
     })
   }

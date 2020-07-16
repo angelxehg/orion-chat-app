@@ -25,7 +25,7 @@ export class OrganizationGuard implements CanActivate {
       return true;
     }
     var path = next.routeConfig.path;
-    if (path.includes("organization") || path.includes("settings")) {
+    if (path.includes("organization") || path.includes("settings") || path.includes("new")) {
       return true;
     }
     return this.org.selected.pipe(

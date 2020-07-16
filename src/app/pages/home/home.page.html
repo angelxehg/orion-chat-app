@@ -15,6 +15,28 @@
   <ion-item-group>
     <ion-item-divider>
       <ion-label>
+        My organization
+      </ion-label>
+    </ion-item-divider>
+    <ion-grid>
+      <ion-row class="ion-align-items-stretch">
+        <ion-card *ngIf="organization" class="setting-card" color="tertiary" routerDirection="root">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon [ios]="'people-sharp'" [md]="'people-sharp'"></ion-icon>
+              {{ organization.title }}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ organization.description }}
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>
         Pinned items
       </ion-label>
     </ion-item-divider>

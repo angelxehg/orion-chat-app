@@ -27,7 +27,6 @@ export class OrganizationDetailsPage {
     public toastController: ToastController,
   ) {
     this.clear();
-
     this.createMode();
   }
 
@@ -67,7 +66,11 @@ export class OrganizationDetailsPage {
     this.org.create(this.organization).subscribe({
       next: async (created) => {
         toast.dismiss().then(() => this.toast("Organization created!"));
-        this.router.navigateByUrl('/app/organization');
+        this.org.select(created.id).subscribe({
+          next: (selected) => {
+            this.router.navigateByUrl('/app/home');
+          }
+        });
       },
       error: async (err) => {
         toast.dismiss().then(() => this.toast("Error creating organization!"));
