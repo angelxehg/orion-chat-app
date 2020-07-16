@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { PanelService } from '../../../services/panel.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Organization } from '../../../models/organization';
 import { OrganizationService } from 'src/app/services/organization.service';
 import { PageData } from '../../../models/page-data';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-organization-details',
@@ -16,10 +17,14 @@ export class OrganizationDetailsPage {
 
   public page: PageData;
 
+  public error;
+
   constructor(
     private route: ActivatedRoute,
     private org: OrganizationService,
     public panel: PanelService,
+    private router: Router,
+    public toastController: ToastController,
   ) {
     this.clear();
     this.createMode();
@@ -38,13 +43,69 @@ export class OrganizationDetailsPage {
       // Edit mode
       this.editMode();
       var thisID = parseInt(param);
-      this.org.fetch().subscribe({
-        next: (data) => {
-          var selected = data.find(e => e.id == thisID);
-          this.organization = Object.create(selected);
+      this.org.find(thisID).subscribe({
+        next: (found) => {
+          this.organization = Object.create(found);
         }
       })
     }
+  }
+
+  async action() {
+    this.clearError();
+    if (this.page.action == "Create") {
+      return this.create();
+    }
+    if (this.page.action == "Update") {
+      return this.update();
+    }
+  }
+
+  private async create() {
+    var toast = await this.toast("Creating Organization data...");
+    this.org.create(this.organization).subscribe({
+      next: async (created) => {
+        toast.dismiss().then(() => this.toast("Organization created!"));
+        this.org.select(created.id).subscribe({
+          next: (selected) => {
+            this.router.navigateByUrl('/app/home');
+          }
+        });
+      },
+      error: async (err) => {
+        toast.dismiss().then(() => this.toast("Error creating organization!"));
+        if ('error' in err) {
+          this.error = err.error;
+        }
+        console.error(err);
+      }
+    });
+  }
+
+  private async update() {
+    var toast = await this.toast("Updating Organization data...");
+    this.org.update(this.organization).subscribe({
+      next: async (updated) => {
+        toast.dismiss().then(() => this.toast("Organization data updated!"));
+        this.router.navigateByUrl('/app/organization');
+      },
+      error: async (err) => {
+        toast.dismiss().then(() => this.toast("Error updating data!"));
+        if ('error' in err) {
+          this.error = err.error;
+        }
+        console.error(err);
+      }
+    });
+  }
+
+  private async toast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 5000
+    });
+    toast.present();
+    return toast;
   }
 
   createMode() {
@@ -66,12 +127,20 @@ export class OrganizationDetailsPage {
   }
 
   clear() {
+    this.clearError();
     this.organization = {
       id: 0,
       title: "",
       description: "",
       admin_flag: false,
       people: []
+    }
+  }
+
+  clearError() {
+    this.error = {
+      title: '',
+      description: ''
     }
   }
 }

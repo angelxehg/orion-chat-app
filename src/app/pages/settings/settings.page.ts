@@ -17,7 +17,7 @@ export class SettingsPage {
 
   public target = "";
 
-  public version = "0.7.2";
+  public version = "0.7.3";
 
   constructor(
     public auth: AuthService,

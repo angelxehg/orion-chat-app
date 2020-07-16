@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { PanelService } from '../../services/panel.service';
+import { OrganizationService } from 'src/app/services/organization.service';
+import { Organization } from 'src/app/models/organization';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,8 @@ import { PanelService } from '../../services/panel.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
+
+  public organization: Organization;
 
   public tiles = [
     {
@@ -24,11 +28,17 @@ export class HomePage {
   ];
 
   constructor(
-    public panel: PanelService
+    public panel: PanelService,
+    public org: OrganizationService
   ) { }
 
   ionViewWillEnter() {
     this.panel.show();
+    this.org.selected.subscribe({
+      next: (found) => {
+        this.organization = Object.create(found);
+      }
+    })
   }
 
 }

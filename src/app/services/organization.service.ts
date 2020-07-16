@@ -1,76 +1,127 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
-import { Platform, ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, from, of } from 'rxjs';
-import { map, switchMap, tap, take, catchError } from 'rxjs/operators';
+import { ToastController } from '@ionic/angular';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Organization } from '../models/organization';
-import { AuthService } from './auth.service';
-import { async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
 
-  public organization: Observable<any>;
-  private organizationData = new BehaviorSubject(null);
+  private organization: Organization = null;
 
-  public organizations: Observable<any>;
-  private organizationsData = new BehaviorSubject(null);
+  private collection = new BehaviorSubject(null);
+
+  private lastFetch: number;
 
   constructor(
-    private auth: AuthService,
     private storage: Storage,
     private http: HttpClient,
-    private plt: Platform,
     private router: Router,
     public toastController: ToastController
   ) {
-    this.organization = this.load();
-    this.organizations = this.fetch();
+    this.selected.subscribe();
   }
 
-  load() {
-    let platformObs = from(this.plt.ready());
-    return this.organization = platformObs.pipe(
-      switchMap(() => {
-        return from(this.storage.get("ORGANIZATION_ID"));
-      }),
-      map(organization_id => {
-        if (organization_id) {
-          this.organizationData.next(organization_id);
-          return organization_id;
-        } else {
+  public selected: Observable<Organization> = this.fetch().pipe(
+    switchMap(async (data) => {
+      if (!this.organization) {
+        var storedID = await this.storage.get("ORGANIZATION_ID")
+        if (!storedID) {
+          return this.organization = null;
+        }
+        return this.organization = await this.select(storedID).toPromise();
+      }
+      this.organization = data.find(e => e.id == this.organization.id);
+      if (!this.organization) {
+        this.router.navigateByUrl('/app/organization');
+        this.organization = null;
+      }
+      return this.organization;
+    })
+  );
+
+  public current() {
+    return this.organization;
+  }
+
+  public select(organizationID: number) {
+    return this.find(organizationID).pipe(
+      switchMap(async (organization) => {
+        if (!organization) {
           return null;
         }
+        await this.storage.set("ORGANIZATION_ID", organization.id);
+        this.organization = organization;
+        return organization;
       })
     );
   }
 
-  current = {
-    get: (): number => {
-      return this.organizationData.getValue();
-    },
-    set: (organization: Organization): Observable<any> => {
-      this.organizationData.next(organization.id);
-      let storageObs = from(this.storage.set("ORGANIZATION_ID", organization.id));
-      return storageObs;
-    }
+  public find(organizationID: number) {
+    return this.fetch().pipe(
+      map(data => {
+        var organization = data.find(e => e.id == organizationID);
+        if (!organization) {
+          return null;
+        }
+        return organization;
+      })
+    );
   }
 
-  fetch() {
+  public fetch() {
+    if (!this.lastFetch) {
+      return this.forceFetch();
+    }
+    if ((new Date().getTime() - this.lastFetch) > 5000) {
+      return this.forceFetch();
+    }
+    return this.cacheFetch();
+  }
+
+  private cacheFetch() {
+    return new Observable<Organization[]>(subscriber => {
+      subscriber.next(this.collection.getValue());
+    });
+  }
+
+  private forceFetch() {
     return this.http.get(`${environment.api_url}/organizations/`).pipe(
       switchMap(async (data: Array<Organization>) => {
-        this.organizationsData.next(data);
+        this.collection.next(data);
+        this.lastFetch = new Date().getTime();
         return this.all();
       })
     );
   }
 
-  all(): Array<Organization> {
-    return this.organizationsData.getValue();
+  public create(organization: Organization) {
+    return this.http.post(`${environment.api_url}/organizations/`, organization).pipe(
+      switchMap(async (data: Organization) => {
+        await this.forceFetch().toPromise();
+        return data;
+      })
+    );
+  }
+
+  public update(organization: Organization) {
+    var id = organization.id;
+    return this.http.patch(`${environment.api_url}/organizations/${id}/`, organization).pipe(
+      switchMap(async (data: Organization) => {
+        await this.forceFetch().toPromise();
+        await this.selected.toPromise();
+        return data;
+      })
+    );
+  }
+
+  public all(): Array<Organization> {
+    return this.collection.getValue();
   }
 }

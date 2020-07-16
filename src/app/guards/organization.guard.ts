@@ -25,12 +25,12 @@ export class OrganizationGuard implements CanActivate {
       return true;
     }
     var path = next.routeConfig.path;
-    if (path.includes("organization") || path.includes("settings")) {
+    if (path.includes("organization") || path.includes("settings") || path.includes("new")) {
       return true;
     }
-    return this.org.organization.pipe(
-      map((organization) => {
-        if (!organization) {
+    return this.org.selected.pipe(
+      map((found) => {
+        if (!found) {
           this.toast("Please select an Organization");
           this.router.navigateByUrl('/app/organization');
           return false;

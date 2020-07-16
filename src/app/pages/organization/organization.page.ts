@@ -19,9 +19,11 @@ export class OrganizationPage {
   ionViewWillEnter() {
     this.panel.hide();
     this.org.fetch().subscribe();
-    this.org.organization.subscribe({
-      next: (value) => {
-        this.selected = value;
+    this.org.selected.subscribe({
+      next: (found) => {
+        if (found) {
+          this.selected = found.id;
+        }
       }
     })
   }

@@ -16,7 +16,7 @@ export class WorkspacesPage {
 
   ionViewWillEnter() {
     this.panel.show('workspaces');
-    this.workspaces.fetch();
+    this.workspaces.fetch().subscribe();
   }
 
   isUrlActive(url) {

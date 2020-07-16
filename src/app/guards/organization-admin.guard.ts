@@ -19,11 +19,12 @@ export class OrganizationAdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     var id = parseInt(next.paramMap.get("organization"));
-    return this.org.fetch().pipe(
-      map(data => {
-        var current = data.find(e => e.id == id);
-        this.org.current.set(current).subscribe();
-        if (!current.admin_flag) {
+    return this.org.select(id).pipe(
+      map(organization => {
+        if (!organization) {
+          return false;
+        }
+        if (!organization.admin_flag) {
           this.router.navigateByUrl('/app/home');
           return false;
         }
