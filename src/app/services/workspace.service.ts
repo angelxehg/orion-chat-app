@@ -19,10 +19,9 @@ export class WorkspaceService {
   ) { }
 
   fetch() {
-    return this.org.organization.pipe(
-      take(1),
-      map(org => {
-        var url = `${environment.api_url}/organizations/${org}/workspaces/`;
+    return this.org.selected.pipe(
+      map(selectedID => {
+        var url = `${environment.api_url}/organizations/${selectedID}/workspaces/`;
         return this.http.get(url).subscribe({
           next: (data) => {
             this.workspacesData.next(data);
@@ -30,7 +29,7 @@ export class WorkspaceService {
           error: err => { }
         });
       })
-    ).subscribe();
+    );
   }
 
   all() {

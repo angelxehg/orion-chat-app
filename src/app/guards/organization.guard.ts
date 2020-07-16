@@ -28,9 +28,9 @@ export class OrganizationGuard implements CanActivate {
     if (path.includes("organization") || path.includes("settings")) {
       return true;
     }
-    return this.org.organization.pipe(
-      map((organization) => {
-        if (!organization) {
+    return this.org.selected.pipe(
+      map((selectedID) => {
+        if (!selectedID) {
           this.toast("Please select an Organization");
           this.router.navigateByUrl('/app/organization');
           return false;
