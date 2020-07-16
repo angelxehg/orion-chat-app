@@ -15,7 +15,7 @@ export class OrganizationDetailsPage {
 
   public organization: Organization;
 
-  public page: PageData;
+  private mode: string;
 
   public error;
 
@@ -27,7 +27,36 @@ export class OrganizationDetailsPage {
     public toastController: ToastController,
   ) {
     this.clear();
-    this.createMode();
+    this.mode = 'Create';
+  }
+
+  get title() {
+    if (this.mode == 'Read') {
+      return this.organization.title;
+    }
+    return this.mode + " organization";
+  }
+
+  get description() {
+    if (this.mode == 'Read') {
+      return this.organization.title + " organization data";
+    }
+    if (this.mode == 'Update') {
+      return "Update organization data";
+    }
+    return "Create a new organization";
+  }
+
+  get createMode() {
+    return this.mode == 'Create';
+  }
+
+  get readMode() {
+    return this.mode == 'Read';
+  }
+
+  get updateMode() {
+    return this.mode == 'Update';
   }
 
   ionViewWillEnter() {
@@ -36,28 +65,40 @@ export class OrganizationDetailsPage {
     // Configure mode
     this.clear();
     var param = this.route.snapshot.paramMap.get('organization');
-    if (!param) {
-      // New mode
-      this.createMode();
-    } else {
-      // Edit mode
-      this.editMode();
+    if (param) {
+      this.mode = 'Read';
       var thisID = parseInt(param);
       this.org.find(thisID).subscribe({
         next: (found) => {
           this.organization = Object.create(found);
         }
       })
+    } else {
+      this.mode = 'Create';
     }
   }
 
-  async action() {
+  public edit() {
+    this.mode = 'Update';
+  }
+
+  public cancel() {
     this.clearError();
-    if (this.page.action == "Create") {
-      return this.create();
+    if (this.createMode) {
+      this.router.navigateByUrl(`/app/organization`);
     }
-    if (this.page.action == "Update") {
-      return this.update();
+    if (this.updateMode) {
+      this.mode = 'Read';
+    }
+  }
+
+  public save() {
+    this.clearError();
+    if (this.createMode) {
+      this.create();
+    }
+    if (this.updateMode) {
+      this.update();
     }
   }
 
@@ -65,7 +106,7 @@ export class OrganizationDetailsPage {
     var toast = await this.toast("Creating Organization data...");
     this.org.create(this.organization).subscribe({
       next: async (created) => {
-        toast.dismiss().then(() => this.toast("Organization created!"));
+        toast.dismiss().then(() => this.toast("Organization created!", 'success', true));
         this.org.select(created.id).subscribe({
           next: (selected) => {
             this.router.navigateByUrl('/app/home');
@@ -73,7 +114,7 @@ export class OrganizationDetailsPage {
         });
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error creating organization!"));
+        toast.dismiss().then(() => this.toast("Error creating organization!", 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -86,11 +127,11 @@ export class OrganizationDetailsPage {
     var toast = await this.toast("Updating Organization data...");
     this.org.update(this.organization).subscribe({
       next: async (updated) => {
-        toast.dismiss().then(() => this.toast("Organization data updated!"));
+        toast.dismiss().then(() => this.toast("Organization data updated!", 'success', true));
         this.router.navigateByUrl('/app/home');
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error updating data!"));
+        toast.dismiss().then(() => this.toast("Error updating data!", 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -99,42 +140,24 @@ export class OrganizationDetailsPage {
     });
   }
 
-  private async toast(message: string) {
+  private async toast(message: string, color: string = 'dark', dismiss: boolean = false) {
+    var buttons = !dismiss ? [] : [{
+      text: 'Close',
+      role: 'cancel'
+    }]
     const toast = await this.toastController.create({
       message: message,
-      duration: 5000
+      duration: 5000,
+      color: color,
+      buttons: buttons
     });
     toast.present();
     return toast;
   }
 
-  createMode() {
-    this.page = {
-      title: "Create organization",
-      description: "Create a new organization",
-      action: "Create",
-      empty: false
-    };
-  }
-
-  editMode() {
-    this.page = {
-      title: "Edit organization",
-      description: "Update organization data",
-      action: "Update",
-      empty: false
-    };
-  }
-
   clear() {
     this.clearError();
-    this.organization = {
-      id: 0,
-      title: "",
-      description: "",
-      admin_flag: false,
-      people: []
-    }
+    this.organization = new Organization();
   }
 
   clearError() {
