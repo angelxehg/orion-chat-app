@@ -119,13 +119,7 @@ export class WorkspaceDetailsPage {
 
   clear() {
     this.clearError();
-    this.workspace = {
-      id: 0,
-      title: "",
-      description: "",
-      admin_flag: false,
-      people: []
-    }
+    this.workspace = new Workspace();
   }
 
   clearError() {

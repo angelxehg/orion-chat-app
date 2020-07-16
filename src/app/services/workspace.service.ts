@@ -50,8 +50,8 @@ export class WorkspaceService {
 
   private forceFetch() {
     return this.org.selected.pipe(
-      switchMap(async found => {
-        return await this.http.get(`${environment.api_url}/organizations/${found.id}/workspaces/`).pipe(
+      switchMap(async organization => {
+        return await this.http.get(`${environment.api_url}/organizations/${organization.id}/workspaces/`).pipe(
           switchMap(async (data: Array<Workspace>) => {
             this.collection.next(data);
             this.lastFetch = new Date().getTime();
@@ -64,8 +64,8 @@ export class WorkspaceService {
 
   public create(workspace: Workspace) {
     return this.org.selected.pipe(
-      switchMap(async found => {
-        return await this.http.post(`${environment.api_url}/organizations/${found.id}/workspaces/`, workspace).pipe(
+      switchMap(async organization => {
+        return await this.http.post(`${environment.api_url}/organizations/${organization.id}/workspaces/`, workspace).pipe(
           switchMap(async (data: Workspace) => {
             await this.forceFetch().toPromise();
             return data;
@@ -77,8 +77,8 @@ export class WorkspaceService {
 
   public update(workspace: Workspace) {
     return this.org.selected.pipe(
-      switchMap(async found => {
-        return await this.http.patch(`${environment.api_url}/organizations/${found.id}/workspaces/${workspace.id}/`, workspace).pipe(
+      switchMap(async organization => {
+        return await this.http.patch(`${environment.api_url}/organizations/${organization.id}/workspaces/${workspace.id}/`, workspace).pipe(
           switchMap(async (data: Workspace) => {
             await this.forceFetch().toPromise();
             return data;

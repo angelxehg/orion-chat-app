@@ -128,13 +128,7 @@ export class OrganizationDetailsPage {
 
   clear() {
     this.clearError();
-    this.organization = {
-      id: 0,
-      title: "",
-      description: "",
-      admin_flag: false,
-      people: []
-    }
+    this.organization = new Organization();
   }
 
   clearError() {
