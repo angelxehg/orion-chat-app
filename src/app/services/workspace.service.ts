@@ -88,6 +88,19 @@ export class WorkspaceService {
     );
   }
 
+  public remove(workspace: Workspace) {
+    return this.org.selected.pipe(
+      switchMap(async organization => {
+        return await this.http.delete(`${environment.api_url}/organizations/${organization.id}/workspaces/${workspace.id}/`).pipe(
+          switchMap(async () => {
+            await this.forceFetch().toPromise();
+            return true;
+          })
+        ).toPromise();
+      })
+    );
+  }
+
   public all(): Array<Workspace> {
     return this.collection.getValue();
   }

@@ -32,8 +32,13 @@
     </ion-textarea>
   </ion-item>
   <ion-label color="danger" *ngIf="error.description">{{ error.description }}</ion-label>
+  <ion-fab *ngIf="updateMode" horizontal="start" vertical="bottom" slot="fixed">
+    <ion-fab-button size="small" color="danger" (click)="delete()">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-fab *ngIf="!readMode" horizontal="center" vertical="bottom" slot="fixed">
-    <ion-fab-button size="small" color="light" (click)="cancel()">
+    <ion-fab-button size="small" color="dark" (click)="cancel()">
       <ion-icon name="close"></ion-icon>
     </ion-fab-button>
   </ion-fab>

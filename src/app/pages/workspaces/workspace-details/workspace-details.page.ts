@@ -4,7 +4,7 @@ import { PanelService } from '../../../services/panel.service';
 import { PageData } from '../../../models/page-data';
 import { Workspace } from 'src/app/models/workspace';
 import { WorkspaceService } from 'src/app/services/workspace.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-workspace-details',
@@ -25,6 +25,7 @@ export class WorkspaceDetailsPage {
     public panel: PanelService,
     private router: Router,
     public toastController: ToastController,
+    public alertController: AlertController
   ) {
     this.clear();
     this.mode = 'Create';
@@ -100,6 +101,29 @@ export class WorkspaceDetailsPage {
     }
   }
 
+  public async delete() {
+    if (!this.updateMode) {
+      return
+    }
+    const alert = await this.alertController.create({
+      header: 'Remove this workspace?',
+      message: 'All workspace data will be removed',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Remove',
+          handler: () => {
+            this.remove();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   private async create() {
     var toast = await this.toast("Creating Workspace data...");
     this.wks.create(this.workspace).subscribe({
@@ -129,6 +153,20 @@ export class WorkspaceDetailsPage {
         if ('error' in err) {
           this.error = err.error;
         }
+        console.error(err);
+      }
+    });
+  }
+
+  private async remove() {
+    var toast = await this.toast("Removing workspace...", 'warning');
+    this.wks.remove(this.workspace).subscribe({
+      next: async () => {
+        toast.dismiss().then(() => this.toast("Workspace removed!", 'success', true));
+        this.router.navigateByUrl(`/app/workspaces`);
+      },
+      error: async (err) => {
+        toast.dismiss().then(() => this.toast("Error removing workspace!", 'danger', true));
         console.error(err);
       }
     });
