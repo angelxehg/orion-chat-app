@@ -17,6 +17,8 @@ export class OrganizationService {
 
   private collection = new BehaviorSubject(null);
 
+  private lastFetch: number;
+
   constructor(
     private storage: Storage,
     private http: HttpClient,
@@ -74,9 +76,26 @@ export class OrganizationService {
   }
 
   public fetch() {
+    if (!this.lastFetch) {
+      return this.forceFetch();
+    }
+    if ((new Date().getTime() - this.lastFetch) > 5000) {
+      return this.forceFetch();
+    }
+    return this.cacheFetch();
+  }
+
+  private cacheFetch() {
+    return new Observable<Organization[]>(subscriber => {
+      subscriber.next(this.collection.getValue());
+    });
+  }
+
+  private forceFetch() {
     return this.http.get(`${environment.api_url}/organizations/`).pipe(
       switchMap(async (data: Array<Organization>) => {
         this.collection.next(data);
+        this.lastFetch = new Date().getTime();
         return this.all();
       })
     );
