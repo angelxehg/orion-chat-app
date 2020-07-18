@@ -2,11 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { IonContent, ToastController, AlertController } from '@ionic/angular';
 import { Channel } from 'src/app/models/channel';
 import { Message } from 'src/app/models/message';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PanelService } from 'src/app/services/panel.service';
 import { ChannelService } from 'src/app/services/channel.service';
-import { MessageService } from 'src/app/services/message.service';
-import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-channel-chat',
@@ -29,13 +27,11 @@ export class ChannelChatPage {
     private activatedRoute: ActivatedRoute,
     public panel: PanelService,
     public chn: ChannelService,
-    public msg: MessageService,
     public toastController: ToastController,
     public alertController: AlertController
   ) {
     this.clear();
     this.clearMsg();
-    this.history = this.msg.all();
   }
 
   loadMessages(requested: number) {
@@ -84,18 +80,23 @@ export class ChannelChatPage {
     }
   }
 
-  scrollToBottom() {
-    this.chatContent.scrollToBottom(500);
+  scrollToBottom(wait: boolean = false) {
+    if (wait) {
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 1000);
+    } else {
+      this.chatContent.scrollToBottom(500);
+    }
   }
 
   sendMessage() {
-    this.chatContent.scrollToBottom(500);
+    this.scrollToBottom();
     this.clearMsg();
   }
 
   ionViewWillEnter() {
     this.clear();
-    this.loadMessages(30);
     this.panel.show('channels', false);
     var param = this.activatedRoute.snapshot.paramMap.get('channel');
     if (param) {
@@ -103,16 +104,17 @@ export class ChannelChatPage {
       this.chn.find(thisID).subscribe({
         next: (found) => {
           this.channel = Object.create(found);
-          this.scrollToBottom();
+          this.history = this.channel.history;
+          this.loadMessages(30);
+          this.scrollToBottom(true);
         }
       });
-    } else {
-      this.chn.fetch().subscribe();
     }
   }
 
   clear() {
     this.channel = new Channel();
+    this.history = [];
     this.loaded = [];
     this.clearMsg();
   }

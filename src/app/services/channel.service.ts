@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { OrganizationService } from './organization.service';
 import { switchMap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Message } from '../models/message';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,19 @@ export class ChannelService {
     private org: OrganizationService
   ) { }
 
+  private messageMockup() {
+    var messages: Array<Message> = [];
+    for (let i = 1; i <= 100; i++) {
+      var msg = {
+        id: i,
+        content: `Message #${i} with generated content. This is a message with generated content.`,
+        mine_flag: Math.floor(Math.random() * 2) == 1
+      }
+      messages.push(msg);
+    }
+    return messages;
+  }
+
   public find(channelID: number) {
     return this.fetch().pipe(
       map(data => {
@@ -27,6 +41,7 @@ export class ChannelService {
         if (!channel) {
           return null;
         }
+        channel.history = this.messageMockup();
         return channel;
       })
     );
