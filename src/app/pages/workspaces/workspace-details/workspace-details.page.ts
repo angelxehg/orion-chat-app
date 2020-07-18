@@ -74,6 +74,7 @@ export class WorkspaceDetailsPage {
       });
     } else {
       this.mode = 'Create';
+      this.wks.fetch().subscribe();
     }
   }
 

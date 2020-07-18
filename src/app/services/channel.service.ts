@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Channel } from '../models/channel';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { OrganizationService } from './organization.service';
+import { switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,31 +13,41 @@ export class ChannelService {
 
   private collection = new BehaviorSubject(null);
 
-  constructor() {
-    var mockup = [
-      {
-        id: 1,
-        title: "Channel 1",
-        description: "Channel 1 from Workspace 1",
-        admin_flag: false,
-        people: []
-      },
-      {
-        id: 2,
-        title: "Channel 2",
-        description: "Channel 2 from Workspace 2",
-        admin_flag: false,
-        people: []
-      },
-      {
-        id: 3,
-        title: "Channel 3",
-        description: "Channel 3 from Workspace 3",
-        admin_flag: false,
-        people: []
-      },
-    ]
-    this.collection.next(mockup);
+  private lastFetch: number;
+
+  constructor(
+    private http: HttpClient,
+    private org: OrganizationService
+  ) { }
+
+  public fetch() {
+    if (!this.lastFetch) {
+      return this.forceFetch();
+    }
+    if ((new Date().getTime() - this.lastFetch) > 5000) {
+      return this.forceFetch();
+    }
+    return this.cacheFetch();
+  }
+
+  private cacheFetch() {
+    return new Observable<Channel[]>(subscriber => {
+      subscriber.next(this.collection.getValue());
+    });
+  }
+
+  private forceFetch() {
+    return this.org.selected.pipe(
+      switchMap(async organization => {
+        return await this.http.get(`${environment.api_url}/organizations/${organization.id}/channels/`).pipe(
+          switchMap(async (data: Array<Channel>) => {
+            this.collection.next(data);
+            this.lastFetch = new Date().getTime();
+            return this.all();
+          })
+        ).toPromise();
+      })
+    );
   }
 
   public all(): Array<Channel> {

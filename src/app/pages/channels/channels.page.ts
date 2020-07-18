@@ -16,6 +16,7 @@ export class ChannelsPage {
 
   ionViewWillEnter() {
     this.panel.show('channels');
+    this.chn.fetch().subscribe();
   }
 
   isUrlActive(url) {
