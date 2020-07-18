@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="ion-hide-md-up">
+      <ion-back-button defaultHref="app/channels"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{ title }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/app/channels/{{channel.id}}/info">
+        <ion-icon slot="icon-only" name="information-circle-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" #chatContent offset-bottom>
+  <ion-header collapse="condense">
+    <ion-toolbar color="{{ !readMode ? 'primary' : '' }}">
+      <ion-title size="large">{{ title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-infinite-scroll position="top" threshold="100px" (ionInfinite)="loadMessages($event)">
+    <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-grid class="ion-no-margin ion-no-padding">
+    <ion-row *ngFor="let msg of shownMessages()">
+      <ion-col class="{{ msg.mine_flag ? 'self-message' : 'other-message' }}">
+        <ion-card color="{{ msg.mine_flag ? 'success' : 'light' }}">
+          <ion-card-content>{{ msg.content }}</ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+    <ion-fab-button size="small" color="dark" (click)="scrollToBottom()">
+      <ion-icon name="chevron-down"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-textarea autocorrect spellcheck autoGrow [(ngModel)]="newMessage.content" placeholder="Write new message...">
+    </ion-textarea>
+    <ion-buttons slot="end">
+      <ion-button (click)="sendMessage()">
+        <ion-icon slot="end" name="send"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

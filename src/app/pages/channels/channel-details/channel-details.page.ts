@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PanelService } from '../../../services/panel.service';
-import { PageData } from '../../../models/page-data';
 import { ChannelService } from 'src/app/services/channel.service';
 import { Channel } from 'src/app/models/channel';
-import { ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController, IonContent } from '@ionic/angular';
+import { Message } from 'src/app/models/message';
 
 @Component({
   selector: 'app-channel-details',
@@ -29,6 +29,7 @@ export class ChannelDetailsPage {
   ) {
     this.clear();
     this.mode = 'Create';
+
   }
 
   get title() {
@@ -77,7 +78,6 @@ export class ChannelDetailsPage {
       this.chn.fetch().subscribe();
     }
   }
-
 
   public edit() {
     this.mode = 'Update';
