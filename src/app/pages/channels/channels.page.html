@@ -12,11 +12,14 @@
       <ion-title size="large">Channels</ion-title>
     </ion-toolbar>
   </ion-header>
+  <div class="center-all ion-hide-md-down">
+    <h4 class="gray">Create or select a channel...</h4>
+  </div>
   <ion-item-group class="ion-hide-md-up">
     <ion-item-divider>
       <ion-label>My channels</ion-label>
     </ion-item-divider>
-    <ion-item *ngFor="let channel of channels" routerDirection="root" routerLink="/app/channels/{{channel.id}}" lines="none" detail="false" color="{{ isUrlActive('channels/' + channel.id) ? 'success' : '' }}">
+    <ion-item *ngFor="let channel of all()" routerDirection="root" routerLink="/app/channels/{{channel.id}}" lines="none" detail="false" color="{{ isUrlActive('channels/' + channel.id) ? 'success' : '' }}">
       <ion-icon slot="start" [ios]="'people-sharp'" [md]="'people-sharp'"></ion-icon>
       <ion-label>
         <h2>{{ channel.title }}</h2>

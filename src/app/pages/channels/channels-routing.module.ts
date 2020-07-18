@@ -13,8 +13,12 @@ const routes: Routes = [
   },
   {
     path: ':channel',
+    loadChildren: () => import('./channel-chat/channel-chat.module').then(m => m.ChannelChatPageModule)
+  },
+  {
+    path: ':channel/info',
     loadChildren: () => import('./channel-details/channel-details.module').then(m => m.ChannelDetailsPageModule)
-  }
+  },
 ];
 
 @NgModule({
