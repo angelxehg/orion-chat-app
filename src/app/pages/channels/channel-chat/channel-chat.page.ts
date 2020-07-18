@@ -5,6 +5,8 @@ import { Message } from 'src/app/models/message';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PanelService } from 'src/app/services/panel.service';
 import { ChannelService } from 'src/app/services/channel.service';
+import { MessageService } from 'src/app/services/message.service';
+import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-channel-chat',
@@ -19,26 +21,42 @@ export class ChannelChatPage {
 
   public newMessage: Message;
 
-  public messages: Array<Message> = [];
+  public history: Array<Message> = [];
+
+  public loaded: Array<Message> = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public panel: PanelService,
     public chn: ChannelService,
-    private router: Router,
+    public msg: MessageService,
     public toastController: ToastController,
     public alertController: AlertController
   ) {
     this.clear();
     this.clearMsg();
-    for (let i = 1; i <= 20; i++) {
-      var msg = {
-        id: i,
-        content: `Message ${i} with generated content. This is a message with generated content.`,
-        mine_flag: i % 2 == 0
-      }
-      this.messages.push(msg);
+    this.history = this.msg.all();
+  }
+
+  loadMessages(requested: number) {
+    var current = this.loaded.length;
+    var available = this.history.length;
+    var remaining = available - current;
+    if (remaining < requested) {
+      requested = remaining
     }
+    if (requested <= 0) {
+      return false;
+    }
+    var end = 0 - current;
+    var start = end - requested;
+    if (end == 0) {
+      var piece = this.history.slice(start);
+    } else {
+      var piece = this.history.slice(start, end);
+    }
+    this.loaded = piece.concat(this.loaded);
+    return requested != remaining;
   }
 
   clearMsg() {
@@ -53,26 +71,15 @@ export class ChannelChatPage {
     return this.channel.title;
   }
 
-  shownMessages() {
-    return this.messages.reverse();
+  all() {
+    return this.loaded;
   }
 
-  async loadMessages(event) {
-    var l = this.messages.length;
-    if (l < 100) {
-      console.log('Loading data...');
-      for (let i = l + 1; i <= l + 20; i++) {
-        var msg = {
-          id: i,
-          content: `Message ${i} with generated content. This is a message with generated content.`,
-          mine_flag: i % 2 == 0
-        }
-        this.messages.push(msg);
-      }
+  async infiniteLoad(event) {
+    var res = this.loadMessages(15);
+    if (res) {
       event.target.complete();
-      console.log('Done');
     } else {
-      console.log('No More Data');
       event.target.disabled = true;
     }
   }
@@ -88,6 +95,7 @@ export class ChannelChatPage {
 
   ionViewWillEnter() {
     this.clear();
+    this.loadMessages(30);
     this.panel.show('channels', false);
     var param = this.activatedRoute.snapshot.paramMap.get('channel');
     if (param) {
@@ -105,6 +113,8 @@ export class ChannelChatPage {
 
   clear() {
     this.channel = new Channel();
+    this.loaded = [];
+    this.clearMsg();
   }
 
 }
