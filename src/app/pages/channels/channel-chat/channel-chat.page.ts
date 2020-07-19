@@ -5,6 +5,7 @@ import { Message } from 'src/app/models/message';
 import { ActivatedRoute } from '@angular/router';
 import { PanelService } from 'src/app/services/panel.service';
 import { ChannelService } from 'src/app/services/channel.service';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-channel-chat',
@@ -27,6 +28,7 @@ export class ChannelChatPage {
     private activatedRoute: ActivatedRoute,
     public panel: PanelService,
     public chn: ChannelService,
+    public msg: MessageService,
     public toastController: ToastController,
     public alertController: AlertController
   ) {
@@ -84,7 +86,7 @@ export class ChannelChatPage {
     if (wait) {
       setTimeout(() => {
         this.scrollToBottom();
-      }, 1000);
+      }, 2500);
     } else {
       this.chatContent.scrollToBottom(500);
     }
@@ -101,10 +103,10 @@ export class ChannelChatPage {
     var param = this.activatedRoute.snapshot.paramMap.get('channel');
     if (param) {
       var thisID = parseInt(param);
-      this.chn.find(thisID).subscribe({
+      this.msg.find(thisID).subscribe({
         next: (found) => {
-          this.channel = Object.create(found);
-          this.history = this.channel.history;
+          this.channel = Object.create(found.channel);
+          this.history = Object.create(found.history);
           this.loadMessages(30);
           this.scrollToBottom(true);
         }
