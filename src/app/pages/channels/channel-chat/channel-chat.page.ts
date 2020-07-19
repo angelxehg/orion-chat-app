@@ -93,8 +93,19 @@ export class ChannelChatPage {
   }
 
   sendMessage() {
-    this.scrollToBottom();
-    this.clearMsg();
+    debugger;
+    this.msg.send(this.newMessage, this.channel).subscribe({
+      next: async (sent) => {
+        debugger;
+        this.loaded.push(sent);
+        console.log("Message sent!");
+        this.scrollToBottom();
+        this.clearMsg();
+      },
+      error: async (err) => {
+        console.error(err);
+      }
+    });
   }
 
   ionViewWillEnter() {

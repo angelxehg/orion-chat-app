@@ -70,6 +70,21 @@ export class MessageService {
     );
   }
 
+  public send(message: Message, channel: Channel) {
+    return this.org.selected.pipe(
+      switchMap(async organization => {
+        return await this.http.post(`${environment.api_url}/organizations/${organization.id}/channels/${channel.id}/messages/`, message).pipe(
+          switchMap(async (data: Message) => {
+            debugger;
+            var history: MessageHistory = this.collection.find(e => e.id == channel.id);
+            history.history.push(data);
+            return data;
+          })
+        ).toPromise();
+      })
+    );
+  }
+
   private messageMockup() {
     var messages: Array<Message> = [];
     var limit = Math.floor(Math.random() * 100);
