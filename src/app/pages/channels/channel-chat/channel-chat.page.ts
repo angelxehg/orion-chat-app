@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PanelService } from 'src/app/services/panel.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { MessageService } from 'src/app/services/message.service';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-channel-chat',
@@ -23,6 +24,8 @@ export class ChannelChatPage {
   public history: Array<Message> = [];
 
   public loaded: Array<Message> = [];
+
+  private subscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -93,12 +96,8 @@ export class ChannelChatPage {
   }
 
   sendMessage() {
-    debugger;
     this.msg.send(this.newMessage, this.channel).subscribe({
       next: async (sent) => {
-        debugger;
-        this.loaded.push(sent);
-        console.log("Message sent!");
         this.scrollToBottom();
         this.clearMsg();
       },
@@ -116,13 +115,35 @@ export class ChannelChatPage {
       var thisID = parseInt(param);
       this.msg.find(thisID).subscribe({
         next: (found) => {
-          this.channel = Object.create(found.channel);
-          this.history = Object.create(found.history);
+          this.channel = found.channel;
+          this.history = found.history;
+          const source = interval(5000);
+          this.subscription = source.subscribe(() => this.constantFetch());
           this.loadMessages(30);
           this.scrollToBottom(true);
         }
       });
     }
+  }
+
+  constantFetch() {
+    this.msg.find(this.channel.id).subscribe({
+      next: (found) => {
+        this.history = found.history;
+        var lastMsg = this.loaded.slice(-1)[0];
+        if (lastMsg) {
+          var index = this.history.findIndex(e => e.id == lastMsg.id) + 1;
+          var piece = this.history.slice(index);
+          if (piece.length > 0) {
+            this.loaded = this.loaded.concat(piece);
+          }
+        }
+      }
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
   clear() {

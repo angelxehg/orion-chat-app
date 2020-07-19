@@ -37,7 +37,7 @@ export class MessageService {
     if (!foundHistory) {
       return this.forceFetch(channel);
     }
-    if ((new Date().getTime() - foundHistory.lastFetch) > 10000) {
+    if ((new Date().getTime() - foundHistory.lastFetch) > 1000) {
       return this.forceFetch(channel);
     }
     return new Observable<MessageHistory>(subscriber => {
@@ -75,7 +75,6 @@ export class MessageService {
       switchMap(async organization => {
         return await this.http.post(`${environment.api_url}/organizations/${organization.id}/channels/${channel.id}/messages/`, message).pipe(
           switchMap(async (data: Message) => {
-            debugger;
             var history: MessageHistory = this.collection.find(e => e.id == channel.id);
             history.history.push(data);
             return data;
