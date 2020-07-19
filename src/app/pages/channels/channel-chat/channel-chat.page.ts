@@ -61,11 +61,7 @@ export class ChannelChatPage {
   }
 
   clearMsg() {
-    this.newMessage = {
-      id: 0,
-      content: "",
-      mine_flag: false
-    }
+    this.newMessage = new Message();
   }
 
   get title() {
