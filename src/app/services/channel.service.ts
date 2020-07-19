@@ -21,29 +21,9 @@ export class ChannelService {
     private org: OrganizationService
   ) { }
 
-  private messageMockup() {
-    var messages: Array<Message> = [];
-    for (let i = 1; i <= 100; i++) {
-      var msg = {
-        id: i,
-        content: `Message #${i} with generated content. This is a message with generated content.`,
-        mine_flag: Math.floor(Math.random() * 2) == 1
-      }
-      messages.push(msg);
-    }
-    return messages;
-  }
-
   public find(channelID: number) {
     return this.fetch().pipe(
-      map(data => {
-        var channel = data.find(e => e.id == channelID);
-        if (!channel) {
-          return null;
-        }
-        channel.history = this.messageMockup();
-        return channel;
-      })
+      map(data => data.find(e => e.id == channelID))
     );
   }
 

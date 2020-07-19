@@ -28,7 +28,10 @@
     <ion-row *ngFor="let msg of all()">
       <ion-col class="{{ msg.mine_flag ? 'self-message' : 'other-message' }}">
         <ion-card color="{{ msg.mine_flag ? 'success' : 'light' }}">
-          <ion-card-content>{{ msg.content }}</ion-card-content>
+          <ion-card-content>
+            {{ msg.content }}
+            <ion-text *ngIf="!msg.mine_flag" color="primary"><i><br />@{{ msg.author_name }}</i></ion-text>
+          </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>

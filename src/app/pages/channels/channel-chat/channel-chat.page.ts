@@ -5,6 +5,8 @@ import { Message } from 'src/app/models/message';
 import { ActivatedRoute } from '@angular/router';
 import { PanelService } from 'src/app/services/panel.service';
 import { ChannelService } from 'src/app/services/channel.service';
+import { MessageService } from 'src/app/services/message.service';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-channel-chat',
@@ -23,10 +25,13 @@ export class ChannelChatPage {
 
   public loaded: Array<Message> = [];
 
+  private subscription: Subscription;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     public panel: PanelService,
     public chn: ChannelService,
+    public msg: MessageService,
     public toastController: ToastController,
     public alertController: AlertController
   ) {
@@ -56,11 +61,7 @@ export class ChannelChatPage {
   }
 
   clearMsg() {
-    this.newMessage = {
-      id: 0,
-      content: "",
-      mine_flag: false
-    }
+    this.newMessage = new Message();
   }
 
   get title() {
@@ -84,15 +85,22 @@ export class ChannelChatPage {
     if (wait) {
       setTimeout(() => {
         this.scrollToBottom();
-      }, 1000);
+      }, 2500);
     } else {
       this.chatContent.scrollToBottom(500);
     }
   }
 
   sendMessage() {
-    this.scrollToBottom();
-    this.clearMsg();
+    this.msg.send(this.newMessage, this.channel).subscribe({
+      next: async (sent) => {
+        this.scrollToBottom();
+        this.clearMsg();
+      },
+      error: async (err) => {
+        console.error(err);
+      }
+    });
   }
 
   ionViewWillEnter() {
@@ -101,15 +109,37 @@ export class ChannelChatPage {
     var param = this.activatedRoute.snapshot.paramMap.get('channel');
     if (param) {
       var thisID = parseInt(param);
-      this.chn.find(thisID).subscribe({
+      this.msg.find(thisID).subscribe({
         next: (found) => {
-          this.channel = Object.create(found);
-          this.history = this.channel.history;
+          this.channel = found.channel;
+          this.history = found.history;
+          const source = interval(5000);
+          this.subscription = source.subscribe(() => this.constantFetch());
           this.loadMessages(30);
           this.scrollToBottom(true);
         }
       });
     }
+  }
+
+  constantFetch() {
+    this.msg.find(this.channel.id).subscribe({
+      next: (found) => {
+        this.history = found.history;
+        var lastMsg = this.loaded.slice(-1)[0];
+        if (lastMsg) {
+          var index = this.history.findIndex(e => e.id == lastMsg.id) + 1;
+          var piece = this.history.slice(index);
+          if (piece.length > 0) {
+            this.loaded = this.loaded.concat(piece);
+          }
+        }
+      }
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
   clear() {
