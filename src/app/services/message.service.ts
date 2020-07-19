@@ -83,18 +83,4 @@ export class MessageService {
       })
     );
   }
-
-  private messageMockup() {
-    var messages: Array<Message> = [];
-    var limit = Math.floor(Math.random() * 100);
-    for (let i = 1; i <= limit; i++) {
-      var msg = {
-        id: i,
-        content: `Message #${i} with generated content. This is a message with generated content.`,
-        mine_flag: Math.floor(Math.random() * 2) == 1
-      }
-      messages.push(msg);
-    }
-    return messages;
-  }
 }
