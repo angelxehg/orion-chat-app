@@ -4,6 +4,8 @@ Orion Hybrid Chat application
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/752d12e0-e2e7-44b1-996d-5821c59053ce/deploy-status)](https://app.netlify.com/sites/orion-chat/deploys)
 
+- Install sources `npm install`
+
 - Run application in browser `ionic serve`
 
 ## Build (Android)
@@ -15,6 +17,10 @@ Orion Hybrid Chat application
 - Open Android Studio `ionic cap open android`
 
 ## Build (Electron)
+
+- Install electron sources `cd electron` && `npm install`
+
+- Return to app directory `cd ..`
 
 - Compile sources for Electron `npm run build:electron`
 
