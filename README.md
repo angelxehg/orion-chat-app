@@ -4,6 +4,8 @@ Orion Hybrid Chat application
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/752d12e0-e2e7-44b1-996d-5821c59053ce/deploy-status)](https://app.netlify.com/sites/orion-chat/deploys)
 
+- Install sources `npm install`
+
 - Run application in browser `ionic serve`
 
 ## Build (Android)
@@ -26,7 +28,9 @@ Orion Hybrid Chat application
 
 Requires `electron-installer-windows` and `electron-packager` installed globally
 
-- Build for Windows `npm run electron:windows`
+- Install electron sources `cd electron` && `npm install`
+
+- Build for Windows `cd ..` && `npm run electron:windows`
 
 - Create Windows package `npm run electron:windows:exe`
 

@@ -28,12 +28,13 @@ const menuTemplateDev = [
   },
 ];
 
-async function createWindow () {
+async function createWindow() {
   // Define our main window size
   mainWindow = new BrowserWindow({
     height: 920,
     width: 1600,
     show: false,
+    icon: __dirname + '/favicon.png',
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'node_modules', '@capacitor', 'electron', 'dist', 'electron-bridge.js')
@@ -49,7 +50,7 @@ async function createWindow () {
     mainWindow.webContents.openDevTools();
   }
 
-  if(useSplashScreen) {
+  if (useSplashScreen) {
     splashScreen = new CapacitorSplashScreen(mainWindow);
     splashScreen.init();
   } else {
