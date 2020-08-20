@@ -18,6 +18,10 @@ Orion Hybrid Chat application
 
 ## Build (Electron)
 
+- Install electron sources `cd electron` && `npm install`
+
+- Return to app directory `cd ..`
+
 - Compile sources for Electron `npm run build:electron`
 
 - Copy sources to electron `ionic cap sync --no-build`
@@ -28,9 +32,7 @@ Orion Hybrid Chat application
 
 Requires `electron-installer-windows` and `electron-packager` installed globally
 
-- Install electron sources `cd electron` && `npm install`
-
-- Build for Windows `cd ..` && `npm run electron:windows`
+- Build for Windows `npm run electron:windows`
 
 - Create Windows package `npm run electron:windows:exe`
 
