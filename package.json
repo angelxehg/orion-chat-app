@@ -1,12 +1,18 @@
 {
-  "name": "orion-chat-app",
+  "name": "tomatoe-chat",
+  "description": "Aplicación de mensajería organizada en canales. Es una evolución de Orion Chat.",
   "version": "1.0.0",
+  "homepage": "https://orion.angelxehg.com/",
   "author": {
     "name": "Angel Hurtado",
     "email": "contact@angelxehg.com",
     "url": "https://angelxehg.github.io/"
   },
-  "homepage": "https://ionicframework.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angelxehg/tomatoe-chat.git"
+  },
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
@@ -22,7 +28,6 @@
     "electron:windows": "electron-packager ./electron orion-chat-app --overwrite --platform=win32 --arch=x64 --out=dist",
     "electron:windows:exe": "electron-installer-windows --src dist/orion-chat-app-win32-x64/ --dest dist/installers/ --arch amd64"
   },
-  "private": true,
   "dependencies": {
     "@angular-devkit/build-angular": "~0.901.5",
     "@angular/cli": "~9.1.5",
@@ -75,6 +80,5 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0"
-  },
-  "description": "An Ionic project"
+  }
 }

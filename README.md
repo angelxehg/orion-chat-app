@@ -1,45 +1,74 @@
-# Orion Chat App
+# Tomatoe Chat
 
-Orion Hybrid Chat application
+![Logo Aplicación](./src/assets/icon/favicon.png)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/752d12e0-e2e7-44b1-996d-5821c59053ce/deploy-status)](https://app.netlify.com/sites/orion-chat/deploys)
+Aplicación de mensajería organizada en canales. Es una evolución de Orion Chat. Disponible para [Web](https://orion.angelxehg.com) y [Android](https://github.com/angelxehg/tomatoe-chat/releases)
 
-- Install sources `npm install`
+- [Repositorio API](https://github.com/angelxehg/tomatoe-chat-api)
 
-- Run application in browser `ionic serve`
+## Instalación
 
-## Build (Android)
+Use estos comandos para instalar la aplicación:
 
-- Compile sources `ionic build --prod`
+- Instalar Ionic CLI: `npm install -g @ionic/cli`
 
-- Copy sources to android `ionic cap sync --no-build`
+- Clonar el repositorio: `git clone https://github.com/angelxehg/tomatoe-chat.git`
 
-- Open Android Studio `ionic cap open android`
+- Instalar dependencias: `cd tomatoe-chat` & `npm install`
 
-## Build (Electron)
+- Iniciar servidor: `ionic serve`
 
-- Install electron sources `cd electron` && `npm install`
+## Instalación en Dispositivos
 
-- Return to app directory `cd ..`
+Compilar y probar aplicación en dispositivos:
 
-- Compile sources for Electron `npm run build:electron`
+- Compilar assets con Ionic: `ionic build --prod`
 
-- Copy sources to electron `ionic cap sync --no-build`
+<!-- - Ejecutar Jetifier (solo Android): `npx jetify` -->
 
-- Open Electron version `ionic cap open electron`
+- Copiar assets y actualizar plugins:
 
-### Windows Package
+  - Android: `npx cap sync android`
 
-Requires `electron-installer-windows` and `electron-packager` installed globally
+  - iOS: `npx cap sync ios`
 
-- Build for Windows `npm run electron:windows`
+- Abrir IDE y compilar (Se abrirá Android Studio u Xcode):
 
-- Create Windows package `npm run electron:windows:exe`
+  - Android: `npx cap open android`
 
-### Debian Package
+  - iOS: `npx cap open ios`
 
-Requires `electron-installer-debian` and `electron-packager` installed globally
+## Tests y calidad
 
-- Build for Linux `npm run electron:linux`
+Use estos comandos para ejecutar pruebas y verificar calidad del código:
 
-- Create Debian package `npm run electron:linux:deb`
+- Code linting: `ng lint`
+
+- Unit testing: `ng test` (headless `ng test --configuration=ci`)
+
+- E2E testing: `ng e2e` (headless `ng e2e --configuration=ci`)
+
+## VSCode debug
+
+Configure VSCode para poder hacer debug:
+
+- Iniciar servidor sin abrir navegador: `ionic serve --no-open`
+
+- Crea el archivo `.vscode/launch.json` con el siguiente contenido:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Launch Chrome",
+      "url": "http://localhost:8100",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}
+```
+
+- Lanza desde el menú de Debug en VSCode
