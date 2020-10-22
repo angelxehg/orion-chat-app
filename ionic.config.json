@@ -2,7 +2,5 @@
   "name": "Orion Chat",
   "integrations": {
     "capacitor": {}
-  },
-  "type": "angular",
-  "id": "22dbab85"
+  }
 }
