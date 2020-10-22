@@ -10,72 +10,72 @@ export class MorePage {
 
   public pageGroups = [
     {
-      title: "Main",
-      color: "primary",
+      title: 'Main',
+      color: 'primary',
       pages: [
         {
           title: 'Home',
           url: '/app/home',
           icon: 'home',
-          description: "Pin your favorite channels and workspaces"
+          description: 'Pin your favorite channels and workspaces'
         },
         {
           title: 'Channels',
           url: '/app/channels',
           icon: 'chatbubbles',
-          description: "Communicate with people through channels"
+          description: 'Communicate with people through channels'
         },
         {
           title: 'Workspaces',
           url: '/app/workspaces',
           icon: 'briefcase',
-          description: "Manage all your workspaces in one place"
+          description: 'Manage all your workspaces in one place'
         },
       ]
     },
     {
-      title: "Features",
-      color: "success",
+      title: 'Features',
+      color: 'success',
       pages: [
         {
           title: 'Search',
           url: '/app/search',
           icon: 'search',
-          description: "Find messages and files across the app"
+          description: 'Find messages and files across the app'
         },
         {
           title: 'Files',
           url: '/app/files',
           icon: 'folder',
-          description: "Find and organize the files you need"
+          description: 'Find and organize the files you need'
         },
       ]
     },
     {
-      title: "Configuration",
-      color: "tertiary",
+      title: 'Configuration',
+      color: 'tertiary',
       pages: [
         {
           title: 'Organization',
           url: '/app/organization',
           icon: 'people',
-          description: "Setup or create a new organization"
+          description: 'Setup or create a new organization'
         },
         {
           title: 'Profile',
           url: '/app/profile',
           icon: 'person-circle',
-          description: "Setup your organization profile"
+          description: 'Setup your organization profile'
         },
         {
           title: 'Settings',
           url: '/app/settings',
           icon: 'cog',
-          description: "Change UI or log out"
+          description: 'Change UI or log out'
         },
       ]
     }
-  ]
+  ];
 
   constructor(
     public panel: PanelService

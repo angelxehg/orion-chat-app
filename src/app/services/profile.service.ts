@@ -23,12 +23,12 @@ export class ProfileService {
         return new Profile();
       }
       if (!this.profile) {
-        var storedName = await this.storage.get("PROFILE_NAME")
+        let storedName = await this.storage.get('PROFILE_NAME');
         if (!storedName) {
-          storedName = "";
+          storedName = '';
         }
         this.profile = {
-          'name': storedName
+          name: storedName
         };
       }
       return this.profile;
@@ -38,12 +38,10 @@ export class ProfileService {
   public update(newProfile: Profile) {
     return this.current.pipe(
       switchMap(async () => {
-        await this.storage.set("PROFILE_NAME", newProfile.name);
+        await this.storage.set('PROFILE_NAME', newProfile.name);
         this.profile = newProfile;
         return this.profile;
       })
-    )
-
+    );
   }
-
 }

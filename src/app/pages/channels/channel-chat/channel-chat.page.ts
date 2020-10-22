@@ -15,7 +15,7 @@ import { interval, Subscription } from 'rxjs';
 })
 export class ChannelChatPage {
 
-  @ViewChild("chatContent") chatContent: IonContent;
+  @ViewChild('chatContent') chatContent: IonContent;
 
   public channel: Channel;
 
@@ -40,24 +40,25 @@ export class ChannelChatPage {
   }
 
   loadMessages(requested: number) {
-    var current = this.loaded.length;
-    var available = this.history.length;
-    var remaining = available - current;
+    const current = this.loaded.length;
+    const available = this.history.length;
+    const remaining = available - current;
     if (remaining < requested) {
-      requested = remaining
+      requested = remaining;
     }
     if (requested <= 0) {
       return false;
     }
-    var end = 0 - current;
-    var start = end - requested;
-    if (end == 0) {
-      var piece = this.history.slice(start);
+    const end = 0 - current;
+    const start = end - requested;
+    let piece = [];
+    if (end === 0) {
+      piece = this.history.slice(start);
     } else {
-      var piece = this.history.slice(start, end);
+      piece = this.history.slice(start, end);
     }
     this.loaded = piece.concat(this.loaded);
-    return requested != remaining;
+    return requested !== remaining;
   }
 
   clearMsg() {
@@ -73,7 +74,7 @@ export class ChannelChatPage {
   }
 
   async infiniteLoad(event) {
-    var res = this.loadMessages(15);
+    const res = this.loadMessages(15);
     if (res) {
       event.target.complete();
     } else {
@@ -106,9 +107,9 @@ export class ChannelChatPage {
   ionViewWillEnter() {
     this.clear();
     this.panel.show('channels', false);
-    var param = this.activatedRoute.snapshot.paramMap.get('channel');
+    const param = this.activatedRoute.snapshot.paramMap.get('channel');
     if (param) {
-      var thisID = parseInt(param);
+      const thisID = parseInt(param, 10);
       this.msg.find(thisID).subscribe({
         next: (found) => {
           this.channel = found.channel;
@@ -126,10 +127,10 @@ export class ChannelChatPage {
     this.msg.find(this.channel.id).subscribe({
       next: (found) => {
         this.history = found.history;
-        var lastMsg = this.loaded.slice(-1)[0];
+        const lastMsg = this.loaded.slice(-1)[0];
         if (lastMsg) {
-          var index = this.history.findIndex(e => e.id == lastMsg.id) + 1;
-          var piece = this.history.slice(index);
+          const index = this.history.findIndex(e => e.id === lastMsg.id) + 1;
+          const piece = this.history.slice(index);
           if (piece.length > 0) {
             this.loaded = this.loaded.concat(piece);
           }

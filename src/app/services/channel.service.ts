@@ -23,7 +23,7 @@ export class ChannelService {
 
   public find(channelID: number) {
     return this.fetch().pipe(
-      map(data => data.find(e => e.id == channelID))
+      map(data => data.find(e => e.id === channelID))
     );
   }
 

@@ -25,6 +25,6 @@ export class OrganizationPage {
           this.selected = found.id;
         }
       }
-    })
+    });
   }
 }

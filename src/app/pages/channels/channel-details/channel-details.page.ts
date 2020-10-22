@@ -33,41 +33,41 @@ export class ChannelDetailsPage {
   }
 
   get title() {
-    if (this.mode == 'Read') {
+    if (this.mode === 'Read') {
       return this.channel.title;
     }
-    return this.mode + " channel";
+    return this.mode + ' channel';
   }
 
   get description() {
-    if (this.mode == 'Read') {
-      return this.channel.title + " channel data";
+    if (this.mode === 'Read') {
+      return this.channel.title + ' channel data';
     }
-    if (this.mode == 'Update') {
-      return "Update channel data";
+    if (this.mode === 'Update') {
+      return 'Update channel data';
     }
-    return "Create a new channel";
+    return 'Create a new channel';
   }
 
   get createMode() {
-    return this.mode == 'Create';
+    return this.mode === 'Create';
   }
 
   get readMode() {
-    return this.mode == 'Read';
+    return this.mode === 'Read';
   }
 
   get updateMode() {
-    return this.mode == 'Update';
+    return this.mode === 'Update';
   }
 
   ionViewWillEnter() {
     this.clear();
     this.panel.show('channels', false);
-    var param = this.activatedRoute.snapshot.paramMap.get('channel');
+    const param = this.activatedRoute.snapshot.paramMap.get('channel');
     if (param) {
       this.mode = 'Read';
-      var thisID = parseInt(param);
+      const thisID = parseInt(param, 10);
       this.chn.find(thisID).subscribe({
         next: (found) => {
           this.channel = Object.create(found);
@@ -105,7 +105,7 @@ export class ChannelDetailsPage {
 
   public async delete() {
     if (!this.updateMode) {
-      return
+      return;
     }
     const alert = await this.alertController.create({
       header: 'Remove this channel?',
@@ -127,14 +127,14 @@ export class ChannelDetailsPage {
   }
 
   private async create() {
-    var toast = await this.toast("Creating Channel data...");
+    const toast = await this.toast('Creating Channel data...');
     this.chn.create(this.channel).subscribe({
       next: async (created) => {
-        toast.dismiss().then(() => this.toast("Channel created!", 'success', true));
+        toast.dismiss().then(() => this.toast('Channel created!', 'success', true));
         this.router.navigateByUrl(`/app/channels/${created.id}`);
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error creating channel!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error creating channel!', 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -144,14 +144,14 @@ export class ChannelDetailsPage {
   }
 
   private async update() {
-    var toast = await this.toast("Updating Channel data...");
+    const toast = await this.toast('Updating Channel data...');
     this.chn.update(this.channel).subscribe({
       next: async (updated) => {
-        toast.dismiss().then(() => this.toast("Channel data updated!", 'success', true));
+        toast.dismiss().then(() => this.toast('Channel data updated!', 'success', true));
         this.mode = 'Read';
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error updating data!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error updating data!', 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -161,29 +161,29 @@ export class ChannelDetailsPage {
   }
 
   private async remove() {
-    var toast = await this.toast("Removing channel...", 'warning');
+    const toast = await this.toast('Removing channel...', 'warning');
     this.chn.remove(this.channel).subscribe({
       next: async () => {
-        toast.dismiss().then(() => this.toast("Channel removed!", 'success', true));
+        toast.dismiss().then(() => this.toast('Channel removed!', 'success', true));
         this.router.navigateByUrl(`/app/channels`);
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error removing channel!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error removing channel!', 'danger', true));
         console.error(err);
       }
     });
   }
 
   private async toast(message: string, color: string = 'dark', dismiss: boolean = false) {
-    var buttons = !dismiss ? [] : [{
+    const buttons = !dismiss ? [] : [{
       text: 'Close',
       role: 'cancel'
-    }]
+    }];
     const toast = await this.toastController.create({
-      message: message,
+      message,
       duration: 5000,
-      color: color,
-      buttons: buttons
+      color,
+      buttons
     });
     toast.present();
     return toast;
@@ -198,6 +198,6 @@ export class ChannelDetailsPage {
     this.error = {
       title: '',
       description: ''
-    }
+    };
   }
 }

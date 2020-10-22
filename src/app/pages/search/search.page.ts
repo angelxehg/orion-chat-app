@@ -22,34 +22,34 @@ export class SearchPage {
   ) { }
 
   ionViewWillEnter() {
-    this.criteria = "";
+    this.criteria = '';
     this.panel.show();
   }
 
   public async search() {
-    var toast = await this.toast("Searching...");
+    const toast = await this.toast('Searching...');
     this.sch.find(this.criteria).subscribe({
       next: async (results) => {
-        toast.dismiss().then(() => this.toast("Search complete!", 'success', true));
+        toast.dismiss().then(() => this.toast('Search complete!', 'success', true));
         this.results = results;
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error searching!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error searching!', 'danger', true));
         console.error(err);
       }
-    })
+    });
   }
 
   private async toast(message: string, color: string = 'dark', dismiss: boolean = false) {
-    var buttons = !dismiss ? [] : [{
+    const buttons = !dismiss ? [] : [{
       text: 'Close',
       role: 'cancel'
-    }]
+    }];
     const toast = await this.toastController.create({
-      message: message,
+      message,
       duration: 5000,
-      color: color,
-      buttons: buttons
+      color,
+      buttons
     });
     toast.present();
     return toast;

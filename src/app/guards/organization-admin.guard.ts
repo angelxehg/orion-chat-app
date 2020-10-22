@@ -18,7 +18,7 @@ export class OrganizationAdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    var id = parseInt(next.paramMap.get("organization"));
+    const id = parseInt(next.paramMap.get('organization'), 10);
     return this.org.select(id).pipe(
       map(organization => {
         if (!organization) {

@@ -20,13 +20,13 @@ export class PanelService {
   title() {
     switch (this.current) {
       case 'channels':
-        return "Channels";
+        return 'Channels';
       case 'workspaces':
-        return "Workspaces";
+        return 'Workspaces';
       default:
-        var current = this.org.current();
-        var extra = current ? ' | ' + current.title : '';
-        return "Orion Chat" + extra;
+        const current = this.org.current();
+        const extra = current ? ' | ' + current.title : '';
+        return 'Orion Chat' + extra;
     }
   }
 

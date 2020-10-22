@@ -33,7 +33,7 @@ export class LoginPage {
 
   async login() {
     const toast = await this.toastController.create({
-      message: "Attempting to log in...",
+      message: 'Attempting to log in...',
       duration: 5000
     });
     toast.present();
@@ -57,7 +57,7 @@ export class LoginPage {
         if (err.error) {
           this.error = err.error;
         }
-        if (err.status == 401) {
+        if (err.status === 401) {
           this.error.credentials = err.error.detail;
         }
       }
