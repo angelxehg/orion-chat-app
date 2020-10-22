@@ -95,8 +95,8 @@ jobs:
       - name: Install dependencies
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm install
-      - name: Run Jetifier
-        run: npx jetify
+      # - name: Run Jetifier
+      #   run: npx jetify
       - name: Capacitor Sync
         run: npx cap sync android
       - name: Make gradlew executable
