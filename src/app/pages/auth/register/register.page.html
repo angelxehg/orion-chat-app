@@ -9,7 +9,7 @@
       <ion-col size="12" size-sm="8" size-md="6" size-lg="4" size-xl="3">
         <ion-card class="bottom-margin">
           <ion-card-header>
-            <ion-card-title class="ion-text-center">Register into Orion Chat</ion-card-title>
+            <ion-card-title class="ion-text-center">Register into Tomatoe Chat</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <ion-list lines="full" class="ion-no-margin ion-no-padding">
@@ -33,7 +33,8 @@
               <ion-label color="danger" *ngIf="error.password">{{ error.password }}</ion-label>
               <ion-item>
                 <ion-label position="stacked">Confirm password</ion-label>
-                <ion-input type="password" placeholder="Confirm password" name="re_password" [(ngModel)]="credentials.re_password">
+                <ion-input type="password" placeholder="Confirm password" name="re_password"
+                  [(ngModel)]="credentials.re_password">
                 </ion-input>
               </ion-item>
             </ion-list>
