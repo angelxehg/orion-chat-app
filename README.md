@@ -4,7 +4,7 @@
 
 Aplicación de mensajería organizada en canales. Es una evolución de Orion Chat. Disponible para [Web](https://orion.angelxehg.com) y [Android](https://github.com/angelxehg/tomatoe-chat/releases)
 
-- [Repositorio API](https://github.com/angelxehg/tomatoe-chat-api)
+- [Repositorio API Antigua](https://github.com/angelxehg/tomatoe-chat-api)
 
 ## Instalación
 
