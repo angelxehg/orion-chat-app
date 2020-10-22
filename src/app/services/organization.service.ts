@@ -31,13 +31,13 @@ export class OrganizationService {
   public selected: Observable<Organization> = this.fetch().pipe(
     switchMap(async (data) => {
       if (!this.organization) {
-        var storedID = await this.storage.get("ORGANIZATION_ID")
+        const storedID = await this.storage.get('ORGANIZATION_ID');
         if (!storedID) {
           return this.organization = null;
         }
         return this.organization = await this.select(storedID).toPromise();
       }
-      this.organization = data.find(e => e.id == this.organization.id);
+      this.organization = data.find(e => e.id === this.organization.id);
       if (!this.organization) {
         this.router.navigateByUrl('/app/organization');
         this.organization = null;
@@ -56,7 +56,7 @@ export class OrganizationService {
         if (!organization) {
           return null;
         }
-        await this.storage.set("ORGANIZATION_ID", organization.id);
+        await this.storage.set('ORGANIZATION_ID', organization.id);
         this.organization = organization;
         return organization;
       })
@@ -66,7 +66,7 @@ export class OrganizationService {
   public find(organizationID: number) {
     return this.fetch().pipe(
       map(data => {
-        var organization = data.find(e => e.id == organizationID);
+        const organization = data.find(e => e.id === organizationID);
         if (!organization) {
           return null;
         }
@@ -111,7 +111,7 @@ export class OrganizationService {
   }
 
   public update(organization: Organization) {
-    var id = organization.id;
+    const id = organization.id;
     return this.http.patch(`${environment.api_url}/organizations/${id}/`, organization).pipe(
       switchMap(async (data: Organization) => {
         await this.forceFetch().toPromise();

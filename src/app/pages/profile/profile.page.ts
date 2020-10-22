@@ -22,25 +22,25 @@ export class ProfilePage {
   ) { }
 
   get title() {
-    if (this.mode == 'Update') {
-      return "Update profile";
+    if (this.mode === 'Update') {
+      return 'Update profile';
     }
-    return "My profile";
+    return 'My profile';
   }
 
   get description() {
-    if (this.mode == 'Update') {
-      return "Update profile data";
+    if (this.mode === 'Update') {
+      return 'Update profile data';
     }
-    return "My profile data";
+    return 'My profile data';
   }
 
   get readMode() {
-    return this.mode == 'Read';
+    return this.mode === 'Read';
   }
 
   get updateMode() {
-    return this.mode == 'Update';
+    return this.mode === 'Update';
   }
 
   ionViewWillEnter() {
@@ -70,15 +70,15 @@ export class ProfilePage {
   }
 
   private async update() {
-    var toast = await this.toast("Updating Profile data...");
+    const toast = await this.toast('Updating Profile data...');
     this.pro.update(this.profile).subscribe({
       next: async (updated) => {
-        toast.dismiss().then(() => this.toast("Profile updated!", 'success', true));
+        toast.dismiss().then(() => this.toast('Profile updated!', 'success', true));
         this.mode = 'Read';
         this.profile = updated;
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error updating profile!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error updating profile!', 'danger', true));
         console.error(err);
       }
     });
@@ -86,15 +86,15 @@ export class ProfilePage {
   }
 
   private async toast(message: string, color: string = 'dark', dismiss: boolean = false) {
-    var buttons = !dismiss ? [] : [{
+    const buttons = !dismiss ? [] : [{
       text: 'Close',
       role: 'cancel'
-    }]
+    }];
     const toast = await this.toastController.create({
-      message: message,
+      message,
       duration: 5000,
-      color: color,
-      buttons: buttons
+      color,
+      buttons
     });
     toast.present();
     return toast;

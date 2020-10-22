@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate, CanLoad {
         }
         return true;
       })
-    )
+    );
   }
 
   canLoad(
@@ -42,7 +42,7 @@ export class AuthGuard implements CanActivate, CanLoad {
         }
         return true;
       })
-    )
+    );
   }
 
 }

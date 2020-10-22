@@ -14,16 +14,16 @@ export class HomePage {
 
   public tiles = [
     {
-      title: "All workspaces",
-      url: "/app/workspaces",
-      icon: "briefcase",
-      color: "primary",
+      title: 'All workspaces',
+      url: '/app/workspaces',
+      icon: 'briefcase',
+      color: 'primary',
     },
     {
-      title: "All channels",
-      url: "/app/channels",
-      icon: "chatbubbles",
-      color: "success",
+      title: 'All channels',
+      url: '/app/channels',
+      icon: 'chatbubbles',
+      color: 'success',
     },
   ];
 
@@ -38,7 +38,7 @@ export class HomePage {
       next: (found) => {
         this.organization = Object.create(found);
       }
-    })
+    });
   }
 
 }

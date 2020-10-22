@@ -23,7 +23,7 @@ export class WorkspaceService {
   public find(workspaceID: number) {
     return this.fetch().pipe(
       map(data => {
-        var workspace = data.find(e => e.id == workspaceID);
+        const workspace = data.find(e => e.id === workspaceID);
         if (!workspace) {
           return null;
         }

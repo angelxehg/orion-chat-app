@@ -32,41 +32,41 @@ export class WorkspaceDetailsPage {
   }
 
   get title() {
-    if (this.mode == 'Read') {
+    if (this.mode === 'Read') {
       return this.workspace.title;
     }
-    return this.mode + " workspace";
+    return this.mode + ' workspace';
   }
 
   get description() {
-    if (this.mode == 'Read') {
-      return this.workspace.title + " workspace data";
+    if (this.mode === 'Read') {
+      return this.workspace.title + ' workspace data';
     }
-    if (this.mode == 'Update') {
-      return "Update workspace data";
+    if (this.mode === 'Update') {
+      return 'Update workspace data';
     }
-    return "Create a new workspace";
+    return 'Create a new workspace';
   }
 
   get createMode() {
-    return this.mode == 'Create';
+    return this.mode === 'Create';
   }
 
   get readMode() {
-    return this.mode == 'Read';
+    return this.mode === 'Read';
   }
 
   get updateMode() {
-    return this.mode == 'Update';
+    return this.mode === 'Update';
   }
 
   ionViewWillEnter() {
     this.clear();
     this.panel.show('workspaces', false);
-    var param = this.activatedRoute.snapshot.paramMap.get('workspace');
+    const param = this.activatedRoute.snapshot.paramMap.get('workspace');
     if (param) {
       this.mode = 'Read';
-      var thisID = parseInt(param);
+      const thisID = parseInt(param, 10);
       this.wks.find(thisID).subscribe({
         next: (found) => {
           this.workspace = Object.create(found);
@@ -104,7 +104,7 @@ export class WorkspaceDetailsPage {
 
   public async delete() {
     if (!this.updateMode) {
-      return
+      return;
     }
     const alert = await this.alertController.create({
       header: 'Remove this workspace?',
@@ -126,14 +126,14 @@ export class WorkspaceDetailsPage {
   }
 
   private async create() {
-    var toast = await this.toast("Creating Workspace data...");
+    const toast = await this.toast('Creating Workspace data...');
     this.wks.create(this.workspace).subscribe({
       next: async (created) => {
-        toast.dismiss().then(() => this.toast("Workspace created!", 'success', true));
+        toast.dismiss().then(() => this.toast('Workspace created!', 'success', true));
         this.router.navigateByUrl(`/app/workspaces/${created.id}`);
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error creating workspace!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error creating workspace!', 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -143,14 +143,14 @@ export class WorkspaceDetailsPage {
   }
 
   private async update() {
-    var toast = await this.toast("Updating Workspace data...");
+    const toast = await this.toast('Updating Workspace data...');
     this.wks.update(this.workspace).subscribe({
       next: async (updated) => {
-        toast.dismiss().then(() => this.toast("Workspace data updated!", 'success', true));
+        toast.dismiss().then(() => this.toast('Workspace data updated!', 'success', true));
         this.mode = 'Read';
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error updating data!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error updating data!', 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -160,29 +160,29 @@ export class WorkspaceDetailsPage {
   }
 
   private async remove() {
-    var toast = await this.toast("Removing workspace...", 'warning');
+    const toast = await this.toast('Removing workspace...', 'warning');
     this.wks.remove(this.workspace).subscribe({
       next: async () => {
-        toast.dismiss().then(() => this.toast("Workspace removed!", 'success', true));
+        toast.dismiss().then(() => this.toast('Workspace removed!', 'success', true));
         this.router.navigateByUrl(`/app/workspaces`);
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error removing workspace!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error removing workspace!', 'danger', true));
         console.error(err);
       }
     });
   }
 
   private async toast(message: string, color: string = 'dark', dismiss: boolean = false) {
-    var buttons = !dismiss ? [] : [{
+    const buttons = !dismiss ? [] : [{
       text: 'Close',
       role: 'cancel'
-    }]
+    }];
     const toast = await this.toastController.create({
-      message: message,
+      message,
       duration: 5000,
-      color: color,
-      buttons: buttons
+      color,
+      buttons
     });
     toast.present();
     return toast;
@@ -197,7 +197,7 @@ export class WorkspaceDetailsPage {
     this.error = {
       title: '',
       description: ''
-    }
+    };
   }
 
 }

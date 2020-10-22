@@ -1,7 +1,7 @@
 export class BaseModel {
-    id: number = 0;
-    title: string = "";
-    description: string = "";
-    admin_flag: boolean = false;
+    id: 0;
+    title: '';
+    description: '';
+    admin_flag: false;
     people: Array<number> = [];
 }

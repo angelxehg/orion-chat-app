@@ -9,7 +9,7 @@ export class MainMenuComponent {
 
   public pageGroups = [
     {
-      title: "Main",
+      title: 'Main',
       pages: [
         {
           title: 'Home',
@@ -29,7 +29,7 @@ export class MainMenuComponent {
       ]
     },
     {
-      title: "Features",
+      title: 'Features',
       pages: [
         {
           title: 'Search',
@@ -44,7 +44,7 @@ export class MainMenuComponent {
       ]
     },
     {
-      title: "Configuration",
+      title: 'Configuration',
       pages: [
         {
           title: 'Organization',
@@ -63,7 +63,7 @@ export class MainMenuComponent {
         },
       ]
     }
-  ]
+  ];
 
   constructor() { }
 

@@ -31,32 +31,32 @@ export class OrganizationDetailsPage {
   }
 
   get title() {
-    if (this.mode == 'Read') {
+    if (this.mode === 'Read') {
       return this.organization.title;
     }
-    return this.mode + " organization";
+    return this.mode + ' organization';
   }
 
   get description() {
-    if (this.mode == 'Read') {
-      return this.organization.title + " organization data";
+    if (this.mode === 'Read') {
+      return this.organization.title + ' organization data';
     }
-    if (this.mode == 'Update') {
-      return "Update organization data";
+    if (this.mode === 'Update') {
+      return 'Update organization data';
     }
-    return "Create a new organization";
+    return 'Create a new organization';
   }
 
   get createMode() {
-    return this.mode == 'Create';
+    return this.mode === 'Create';
   }
 
   get readMode() {
-    return this.mode == 'Read';
+    return this.mode === 'Read';
   }
 
   get updateMode() {
-    return this.mode == 'Update';
+    return this.mode === 'Update';
   }
 
   ionViewWillEnter() {
@@ -64,15 +64,15 @@ export class OrganizationDetailsPage {
     this.panel.show('menu', false);
     // Configure mode
     this.clear();
-    var param = this.route.snapshot.paramMap.get('organization');
+    const param = this.route.snapshot.paramMap.get('organization');
     if (param) {
       this.mode = 'Read';
-      var thisID = parseInt(param);
+      const thisID = parseInt(param, 0);
       this.org.find(thisID).subscribe({
         next: (found) => {
           this.organization = Object.create(found);
         }
-      })
+      });
     } else {
       this.mode = 'Create';
     }
@@ -103,10 +103,10 @@ export class OrganizationDetailsPage {
   }
 
   private async create() {
-    var toast = await this.toast("Creating Organization data...");
+    const toast = await this.toast('Creating Organization data...');
     this.org.create(this.organization).subscribe({
       next: async (created) => {
-        toast.dismiss().then(() => this.toast("Organization created!", 'success', true));
+        toast.dismiss().then(() => this.toast('Organization created!', 'success', true));
         this.org.select(created.id).subscribe({
           next: (selected) => {
             this.router.navigateByUrl('/app/home');
@@ -114,7 +114,7 @@ export class OrganizationDetailsPage {
         });
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error creating organization!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error creating organization!', 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -124,14 +124,14 @@ export class OrganizationDetailsPage {
   }
 
   private async update() {
-    var toast = await this.toast("Updating Organization data...");
+    const toast = await this.toast('Updating Organization data...');
     this.org.update(this.organization).subscribe({
       next: async (updated) => {
-        toast.dismiss().then(() => this.toast("Organization data updated!", 'success', true));
+        toast.dismiss().then(() => this.toast('Organization data updated!', 'success', true));
         this.router.navigateByUrl('/app/home');
       },
       error: async (err) => {
-        toast.dismiss().then(() => this.toast("Error updating data!", 'danger', true));
+        toast.dismiss().then(() => this.toast('Error updating data!', 'danger', true));
         if ('error' in err) {
           this.error = err.error;
         }
@@ -141,15 +141,15 @@ export class OrganizationDetailsPage {
   }
 
   private async toast(message: string, color: string = 'dark', dismiss: boolean = false) {
-    var buttons = !dismiss ? [] : [{
+    const buttons = !dismiss ? [] : [{
       text: 'Close',
       role: 'cancel'
-    }]
+    }];
     const toast = await this.toastController.create({
-      message: message,
+      message,
       duration: 5000,
-      color: color,
-      buttons: buttons
+      color,
+      buttons
     });
     toast.present();
     return toast;
@@ -164,6 +164,6 @@ export class OrganizationDetailsPage {
     this.error = {
       title: '',
       description: ''
-    }
+    };
   }
 }

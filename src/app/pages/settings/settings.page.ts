@@ -15,9 +15,9 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
-  public target = "";
+  public target = '';
 
-  public version = "2.0.0-alpha.1";
+  public version = '2.0.0-alpha.1';
 
   constructor(
     public auth: AuthService,

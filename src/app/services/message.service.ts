@@ -33,7 +33,7 @@ export class MessageService {
   }
 
   private fetch(channel: Channel) {
-    var foundHistory: MessageHistory = this.collection.find(e => e.id == channel.id);
+    const foundHistory: MessageHistory = this.collection.find(e => e.id === channel.id);
     if (!foundHistory) {
       return this.forceFetch(channel);
     }
@@ -50,17 +50,17 @@ export class MessageService {
       switchMap(async organization => {
         return await this.http.get(`${environment.api_url}/organizations/${organization.id}/channels/${channel.id}/messages/`).pipe(
           switchMap(async (data: Array<Message>) => {
-            var history: MessageHistory = this.collection.find(e => e.id == channel.id);
+            let history: MessageHistory = this.collection.find(e => e.id === channel.id);
             if (history) {
               history.lastFetch = new Date().getTime();
               history.history = data;
             } else {
               history = {
                 id: channel.id,
-                channel: channel,
+                channel,
                 lastFetch: new Date().getTime(),
                 history: data
-              }
+              };
               this.collection.push(history);
             }
             return history;
@@ -73,9 +73,10 @@ export class MessageService {
   public send(message: Message, channel: Channel) {
     return this.org.selected.pipe(
       switchMap(async organization => {
-        return await this.http.post(`${environment.api_url}/organizations/${organization.id}/channels/${channel.id}/messages/`, message).pipe(
+        const url = `${environment.api_url}/organizations/${organization.id}/channels/${channel.id}/messages/`;
+        return await this.http.post(url, message).pipe(
           switchMap(async (data: Message) => {
-            var history: MessageHistory = this.collection.find(e => e.id == channel.id);
+            const history: MessageHistory = this.collection.find(e => e.id === channel.id);
             history.history.push(data);
             return data;
           })

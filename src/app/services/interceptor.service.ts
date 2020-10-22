@@ -20,7 +20,7 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   skipRequest(request: HttpRequest<any>) {
-    var skip = false;
+    let skip = false;
     this.skip.forEach(url => {
       if (request.url.includes(url)) {
         return skip = true;
@@ -37,16 +37,15 @@ export class InterceptorService implements HttpInterceptor {
     return this.auth.token.pipe(
       switchMap(async token => {
         if (!token) {
-          console.error("No token! canceling request!");
+          console.error('No token! canceling request!');
           return EMPTY.toPromise();
         }
         request = req.clone({
           setHeaders: { authorization: `Bearer ${token}` }
         });
-        var handle = await next.handle(request).toPromise();
+        const handle = await next.handle(request).toPromise();
         return handle;
       })
     );
   }
-
 }

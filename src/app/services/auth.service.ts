@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable, from, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TokenResponse } from '../models/token-response';
@@ -16,8 +16,8 @@ const helper = new JwtHelperService();
 })
 export class AuthService {
 
-  private jwt_access = "";
-  private jwt_refresh = "";
+  private jwtAccess = '';
+  private jwtRefresh = '';
 
   constructor(
     private storage: Storage,
@@ -25,40 +25,36 @@ export class AuthService {
     private plt: Platform,
     private router: Router,
     public toastController: ToastController
-  ) {
-    if (!environment.production) {
-      console.info("Using local API: " + environment.api_url);
-    }
-  }
+  ) { }
 
   public token: Observable<string> = from(this.plt.ready()).pipe(
     switchMap(async () => {
-      if (!this.jwt_refresh) {
-        var storedToken = await this.storage.get("TOKEN_REFRESH"); // Get token from storage
+      if (!this.jwtRefresh) {
+        const storedToken = await this.storage.get('TOKEN_REFRESH'); // Get token from storage
         if (!storedToken) {
-          return "";
+          return '';
         }
-        this.jwt_refresh = storedToken;
+        this.jwtRefresh = storedToken;
       }
-      if (!this.jwt_access) {
+      if (!this.jwtAccess) {
         try {
           await this.refresh().toPromise();
         } catch (error) {
           console.error(error);
-          return "";
+          return '';
         }
       }
-      return this.jwt_access;
+      return this.jwtAccess;
     }),
-  )
+  );
 
   refresh() {
-    var data = { refresh: this.jwt_refresh };
+    const data = { refresh: this.jwtRefresh };
     return this.http.post(`${environment.api_url}/auth/jwt/refresh/`, data).pipe(
       switchMap(async (res: TokenResponse) => {
-        this.jwt_access = res.access;
-        this.jwt_refresh = res.refresh;
-        await this.storage.set("TOKEN_REFRESH", this.jwt_refresh);
+        this.jwtAccess = res.access;
+        this.jwtRefresh = res.refresh;
+        await this.storage.set('TOKEN_REFRESH', this.jwtRefresh);
         return true;
       })
     );
@@ -68,9 +64,9 @@ export class AuthService {
     return this.http.post(`${environment.api_url}/auth/jwt/create/`, credentials).pipe(
       tap(async (res: TokenResponse) => {
         if (res) {
-          this.jwt_access = res.access;
-          this.jwt_refresh = res.refresh;
-          let storageObs = from(this.storage.set("TOKEN_REFRESH", res.refresh));
+          this.jwtAccess = res.access;
+          this.jwtRefresh = res.refresh;
+          const storageObs = from(this.storage.set('TOKEN_REFRESH', res.refresh));
           return storageObs;
         }
         return of(null);
@@ -85,15 +81,15 @@ export class AuthService {
   logout() {
     this.storage.clear().then(() => {
       this.router.navigateByUrl('/login');
-      this.jwt_access = "";
-      this.jwt_refresh = "";
-      this.toast("Session closed. Please log in again")
+      this.jwtAccess = '';
+      this.jwtRefresh = '';
+      this.toast('Session closed. Please log in again');
     });
   }
 
-  async toast(message) {
+  async toast(message: string) {
     const toast = await this.toastController.create({
-      message: message,
+      message,
       duration: 2000
     });
     toast.present();

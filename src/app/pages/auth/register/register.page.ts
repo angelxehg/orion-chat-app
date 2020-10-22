@@ -37,7 +37,7 @@ export class RegisterPage {
 
   async register() {
     const toast = await this.toastController.create({
-      message: "Attempting to log in...",
+      message: 'Attempting to log in...',
       duration: 5000
     });
     toast.present();
@@ -58,7 +58,7 @@ export class RegisterPage {
           re_password: ''
         };
         const toast2 = await this.toastController.create({
-          message: "Register successful. Please log in",
+          message: 'Register successful. Please log in',
           duration: 2000
         });
         toast2.present();
@@ -70,7 +70,7 @@ export class RegisterPage {
         if (err.error) {
           this.error = err.error;
         }
-        if (err.status == 401) {
+        if (err.status === 401) {
           this.error.credentials = err.error.detail;
         }
       }

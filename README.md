@@ -4,7 +4,7 @@
 
 Aplicación de mensajería organizada en canales. Es una evolución de Orion Chat. Disponible para [Web](https://orion.angelxehg.com) y [Android](https://github.com/angelxehg/tomatoe-chat/releases)
 
-- [Repositorio API](https://github.com/angelxehg/tomatoe-chat-api)
+- [Repositorio API Antigua](https://github.com/angelxehg/tomatoe-chat-api)
 
 ## Instalación
 
@@ -48,7 +48,13 @@ Use estos comandos para ejecutar pruebas y verificar calidad del código:
 
 - E2E testing: `ng e2e` (headless `ng e2e --configuration=ci`)
 
-## VSCode debug
+## Configurar Visual Studio Code
+
+Instale las siguientes extensiones si va a trabajar en el código:
+
+- [TSLint](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin)
+
+- [npm](https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script)
 
 Configure VSCode para poder hacer debug:
 
