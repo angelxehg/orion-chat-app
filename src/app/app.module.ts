@@ -11,7 +11,6 @@ import { AppComponent } from './app.component';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgxElectronModule } from 'ngx-electron';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { InterceptorService } from './services/interceptor.service';
@@ -26,7 +25,6 @@ import { ThemeService } from './services/theme.service';
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     HttpClientModule,
-    NgxElectronModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
