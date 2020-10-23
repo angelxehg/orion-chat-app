@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TomatoeChatGroup } from 'src/app/models/chat';
+import { ChatsService } from 'src/app/services/chats.service';
 import { PanelService } from 'src/app/services/panel.service';
 
 @Component({
@@ -9,26 +11,12 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class ChatsPage {
 
-  itemGroups: TomatoeChatGroup[] = [
-    {
-      title: 'Mis conversaciones',
-      items: [
-        {
-          title: 'Conversación 1'
-        },
-        {
-          title: 'Conversación 2'
-        },
-        {
-          title: 'Conversación 3'
-        }
-      ]
-    }
-  ];
+  items: Observable<TomatoeChatGroup[]> = this.chats.observable;
 
-  constructor(public panel: PanelService) { }
+  constructor(private chats: ChatsService, public panel: PanelService) { }
 
   ionViewWillEnter() {
     this.panel.show('chats');
+    this.chats.mock();
   }
 }
