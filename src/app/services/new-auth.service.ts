@@ -5,9 +5,12 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class NewAuthService {
-  private loggedIn = false;
+
+  private loggedIn = true;
 
   constructor(private router: Router) { }
+
+  public isLoggedIn = () => this.loggedIn;
 
   public loginWithEmail() {
     this.loggedIn = true;
@@ -23,7 +26,7 @@ export class NewAuthService {
 
   public logout() {
     this.loggedIn = false;
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/landing');
     return true;
   }
 }

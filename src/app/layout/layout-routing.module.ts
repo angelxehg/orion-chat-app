@@ -5,7 +5,7 @@ import { LayoutPage } from './layout.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app/home',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/app/home',
+        redirectTo: 'home',
         pathMatch: 'full'
       }
     ]
