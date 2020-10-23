@@ -8,16 +8,13 @@ const { StatusBar, SplashScreen } = Plugins;
 @Injectable({
   providedIn: 'root'
 })
-export class ThemeService {
+export class SettingsService {
 
   private darkMode = false;
 
-  constructor(
-    private storage: Storage,
-    private toast: ToastController
-  ) { }
+  constructor(private storage: Storage, private toast: ToastController) { }
 
-  public loadFromStorage() {
+  public load() {
     if (Capacitor.isPluginAvailable('StatusBar')) {
       StatusBar.setOverlaysWebView({ overlay: false });
     }
@@ -62,5 +59,4 @@ export class ThemeService {
   public modeStr = () => this.darkMode ? 'oscuro' : 'claro';
 
   public inverseModeStr = () => this.darkMode ? 'claro' : 'oscuro';
-
 }

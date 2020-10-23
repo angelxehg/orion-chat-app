@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { ToastController } from '@ionic/angular';
 import { PanelService } from '../../services/panel.service';
 import { Plugins } from '@capacitor/core';
-import { ThemeService } from 'src/app/services/theme.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 const { Browser } = Plugins;
 
@@ -20,17 +19,17 @@ export class SettingsPage {
 
   constructor(
     private auth: AuthService,
-    private theme: ThemeService,
+    private settings: SettingsService,
     private panel: PanelService
   ) { }
 
-  toggleTheme = () => this.theme.toggle();
+  toggleTheme = () => this.settings.toggle();
 
-  inverseTheme = () => this.theme.inverseModeStr();
+  inverseTheme = () => this.settings.inverseModeStr();
 
-  themeIcon = () => this.theme.icon();
+  themeIcon = () => this.settings.icon();
 
-  themeColor = () => this.theme.color();
+  themeColor = () => this.settings.color();
 
   ionViewWillEnter() {
     this.panel.show();

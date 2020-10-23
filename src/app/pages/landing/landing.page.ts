@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
-import { ThemeService } from 'src/app/services/theme.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-landing',
@@ -18,13 +18,13 @@ export class LandingPage {
     speed: 400
   };
 
-  constructor(private router: Router, private theme: ThemeService) { }
+  constructor(private router: Router, private settings: SettingsService) { }
 
-  toggleTheme = () => this.theme.toggle();
+  toggleTheme = () => this.settings.toggle();
 
-  themeIcon = () => this.theme.icon();
+  themeIcon = () => this.settings.icon();
 
-  themeColor = () => this.theme.color();
+  themeColor = () => this.settings.color();
 
   ionViewDidEnter() {
     this.activeIndex();
