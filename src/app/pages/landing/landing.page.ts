@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
+import { NewAuthService } from 'src/app/services/new-auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
@@ -18,7 +18,11 @@ export class LandingPage {
     speed: 400
   };
 
-  constructor(private router: Router, private settings: SettingsService) { }
+  constructor(private auth: NewAuthService, private settings: SettingsService) { }
+
+  login = () => this.auth.loginWithEmail();
+
+  register = () => this.auth.registerWithEmail();
 
   toggleTheme = () => this.settings.toggleTheme();
 
@@ -36,14 +40,6 @@ export class LandingPage {
     this.slides.getActiveIndex().then((index: number) => {
       this.currentSlide = index;
     });
-  }
-
-  login() {
-    this.router.navigateByUrl('/app', { skipLocationChange: true });
-  }
-
-  register() {
-    this.router.navigateByUrl('/app', { skipLocationChange: true });
   }
 
 }

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { PanelService } from '../../services/panel.service';
 import { Plugins } from '@capacitor/core';
 import { SettingsService } from 'src/app/services/settings.service';
+import { NewAuthService } from 'src/app/services/new-auth.service';
 
 const { Browser } = Plugins;
 
@@ -18,7 +18,7 @@ export class SettingsPage {
   version = '2.0.0-alpha.3';
 
   constructor(
-    private auth: AuthService,
+    private auth: NewAuthService,
     private settings: SettingsService,
     private panel: PanelService
   ) { }
@@ -33,9 +33,7 @@ export class SettingsPage {
     this.panel.show();
   }
 
-  logout() {
-    this.auth.logout();
-  }
+  logout = () => this.auth.logout();
 
   openRepo() {
     Browser.open({ url: 'https://github.com/angelxehg/tomatoe-chat#readme' });
