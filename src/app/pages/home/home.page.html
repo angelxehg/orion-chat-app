@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Homepage
+      Inicio
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,13 +9,13 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Homepage</ion-title>
+      <ion-title size="large">Inicio</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-item-group>
     <ion-item-divider>
       <ion-label>
-        My organization
+        Paleta de colores
       </ion-label>
     </ion-item-divider>
     <ion-grid>
@@ -26,45 +26,6 @@
           </ion-card-content>
         </ion-card>
       </ion-row>
-      <ion-row class="ion-align-items-stretch">
-        <ion-card *ngIf="organization" class="setting-card" button="true" color="tertiary" routerDirection="root"
-          routerLink="/app/organization/{{ organization.id }}">
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon [ios]="'people-sharp'" [md]="'people-sharp'"></ion-icon>
-              {{ organization.title }}
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            {{ organization.description }}
-          </ion-card-content>
-        </ion-card>
-      </ion-row>
     </ion-grid>
   </ion-item-group>
-  <ion-item-group>
-    <ion-item-divider>
-      <ion-label>
-        Pinned items
-      </ion-label>
-    </ion-item-divider>
-    <ion-grid>
-      <ion-row class="ion-align-items-stretch">
-        <ion-card *ngFor="let tile of tiles" class="setting-card" button="true" color="{{ tile.color }}"
-          routerDirection="root" [routerLink]="[tile.url]">
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon [ios]="tile.icon + '-sharp'" [md]="tile.icon + '-sharp'"></ion-icon>
-              {{ tile.title }}
-            </ion-card-title>
-          </ion-card-header>
-        </ion-card>
-      </ion-row>
-    </ion-grid>
-  </ion-item-group>
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button color="tertiary">
-      <ion-icon name="cog"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>
