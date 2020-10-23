@@ -29,6 +29,6 @@ export class ChatsPage {
   constructor(public panel: PanelService) { }
 
   ionViewWillEnter() {
-    this.panel.show('channels');
+    this.panel.show('chats');
   }
 }

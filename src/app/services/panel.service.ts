@@ -104,10 +104,10 @@ export class PanelService {
 
   title() {
     switch (this.current) {
-      case 'channels':
-        return 'Channels';
-      case 'workspaces':
-        return 'Workspaces';
+      case 'chats':
+        return 'Conversaciones';
+      case 'spaces':
+        return 'Espacios';
       default:
         return 'Tomatoe Chat';
     }
@@ -118,10 +118,10 @@ export class PanelService {
     this.current = panel;
     this.tabs = tabs;
     switch (this.current) {
-      case 'channels':
+      case 'chats':
         this.items = this.defaultChats;
         break;
-      case 'workspaces':
+      case 'spaces':
         this.items = this.defaultSpaces;
         break;
       default:

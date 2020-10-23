@@ -29,6 +29,6 @@ export class SpacesPage {
   constructor(public panel: PanelService) { }
 
   ionViewWillEnter() {
-    this.panel.show('workspaces');
+    this.panel.show('spaces');
   }
 }
