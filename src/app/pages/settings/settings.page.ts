@@ -14,13 +14,13 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
-  public version = '2.0.0-alpha.1';
+  protected version = '2.0.0-alpha.1';
 
   constructor(
-    public auth: AuthService,
-    public theme: ThemeService,
-    public toastController: ToastController,
-    public panel: PanelService
+    protected auth: AuthService,
+    protected theme: ThemeService,
+    protected toastController: ToastController,
+    protected panel: PanelService
   ) { }
 
   ionViewWillEnter() {

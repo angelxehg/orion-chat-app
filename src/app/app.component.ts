@@ -16,15 +16,17 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private swUpdate: SwUpdate
+    private swUpdate: SwUpdate,
+    private theme: ThemeService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.theme.loadFromStorage();
+      // this.statusBar.styleDefault();
+      // this.splashScreen.hide();
       if (this.swUpdate.isEnabled) {
         this.swUpdate.available.subscribe(() => {
           if (confirm('Hay una nueva versión disponible. ¿Cargar nueva versión?')) {

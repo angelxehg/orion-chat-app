@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-auth',
@@ -17,7 +18,7 @@ export class AuthPage {
     speed: 400
   };
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, protected theme: ThemeService) { }
 
   ionViewDidEnter() {
     this.activeIndex();
