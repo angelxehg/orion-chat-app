@@ -7,7 +7,7 @@ import { LayoutPage } from './layout.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app/home',
+    redirectTo: '/app/chats',
     pathMatch: 'full'
   },
   {

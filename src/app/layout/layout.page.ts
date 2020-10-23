@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.page.html',
   styleUrls: ['./layout.page.scss'],
 })
-export class LayoutPage implements OnInit {
+export class LayoutPage {
 
   constructor() { }
 
-  ngOnInit() {
+  activeIcon(tab: string, icon: string) {
+    if (window.location.pathname.includes(tab)) {
+      return icon;
+    }
+    return `${icon}-outline`;
   }
 
 }

@@ -2,28 +2,23 @@
   <ion-tab-bar slot="bottom">
     <!-- Home tab -->
     <ion-tab-button tab="home">
-      <ion-icon name="home"></ion-icon>
-      <ion-label>Inicio</ion-label>
+      <ion-icon [name]="activeIcon('home', 'home')"></ion-icon>
     </ion-tab-button>
     <!-- Chats tab -->
     <ion-tab-button tab="chats">
-      <ion-icon name="chatbubbles"></ion-icon>
-      <ion-label>Chats</ion-label>
+      <ion-icon [name]="activeIcon('chats', 'chatbubbles')"></ion-icon>
     </ion-tab-button>
     <!-- Spaces tab -->
     <ion-tab-button tab="spaces">
-      <ion-icon name="briefcase"></ion-icon>
-      <ion-label>Espacios</ion-label>
+      <ion-icon [name]="activeIcon('spaces', 'file-tray-full')"></ion-icon>
     </ion-tab-button>
     <!-- Files tab -->
     <ion-tab-button tab="files">
-      <ion-icon name="folder"></ion-icon>
-      <ion-label>Archivos</ion-label>
+      <ion-icon [name]="activeIcon('files', 'documents')"></ion-icon>
     </ion-tab-button>
     <!-- Settings tab -->
     <ion-tab-button tab="settings">
-      <ion-icon name="cog"></ion-icon>
-      <ion-label>Configuración</ion-label>
+      <ion-icon [name]="activeIcon('settings', 'cog')"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
