@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PanelService } from '../../services/panel.service';
 import { Plugins } from '@capacitor/core';
 import { SettingsService } from 'src/app/services/settings.service';
-import { NewAuthService } from 'src/app/services/new-auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 const { Browser } = Plugins;
@@ -17,7 +17,7 @@ export class SettingsPage {
   version = environment.version;
 
   constructor(
-    private auth: NewAuthService,
+    private auth: AuthService,
     private settings: SettingsService,
     private panel: PanelService
   ) { }

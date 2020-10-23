@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
-import { NewAuthService } from 'src/app/services/new-auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class LandingPage {
     speed: 400
   };
 
-  constructor(private auth: NewAuthService, private settings: SettingsService) { }
+  constructor(private auth: AuthService, private settings: SettingsService) { }
 
   login = () => this.auth.loginWithEmail();
 
