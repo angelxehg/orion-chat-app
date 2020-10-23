@@ -22,22 +22,22 @@ export class SpacesService {
   mock() {
     this.items = [
       {
-        title: 'Mis conversaciones',
+        title: 'Mis espacios',
         items: [
           {
-            title: 'Conversación 1'
+            title: 'Espacio 1'
           },
           {
-            title: 'Conversación 2'
+            title: 'Espacio 2'
           },
           {
-            title: 'Conversación 3'
+            title: 'Espacio 3'
           },
           {
-            title: 'Conversación 4'
+            title: 'Espacio 4'
           },
           {
-            title: 'Conversación 5'
+            title: 'Espacio 5'
           }
         ]
       }
