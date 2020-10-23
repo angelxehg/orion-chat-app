@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'chats',
-        loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule),
+        loadChildren: () => import('../pages/chats/chats.module').then(m => m.ChatsPageModule)
       },
       {
         path: 'files',

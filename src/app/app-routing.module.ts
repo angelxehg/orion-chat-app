@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'landing',
     loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingPageModule),
     canActivate: [NoAuthGuard]
-  },
+  }
 ];
 @NgModule({
   imports: [
