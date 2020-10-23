@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-auth',
@@ -7,10 +9,33 @@ import { Component } from '@angular/core';
 })
 export class AuthPage {
 
+  @ViewChild('slides', { static: true }) slides: IonSlides;
+
+  currentSlide = 0;
+
   slideOpts = {
     speed: 400
   };
 
-  constructor() { }
+  constructor(private router: Router) { }
 
+  ionViewDidEnter() {
+    this.activeIndex();
+  }
+
+  slideChanged = (e: any) => this.activeIndex();
+
+  activeIndex() {
+    this.slides.getActiveIndex().then((index: number) => {
+      this.currentSlide = index;
+    });
+  }
+
+  login() {
+    this.router.navigateByUrl('/app', { skipLocationChange: true });
+  }
+
+  register() {
+    this.router.navigateByUrl('/app', { skipLocationChange: true });
+  }
 }
