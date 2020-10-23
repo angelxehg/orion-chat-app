@@ -20,11 +20,11 @@ const routes: Routes = [
         loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
-        path: 'workspaces',
+        path: 'spaces',
         loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule),
       },
       {
-        path: 'channels',
+        path: 'chats',
         loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule),
       },
       {
