@@ -18,7 +18,13 @@ export class AuthPage {
     speed: 400
   };
 
-  constructor(private router: Router, protected theme: ThemeService) { }
+  constructor(private router: Router, private theme: ThemeService) { }
+
+  toggleTheme = () => this.theme.toggle();
+
+  themeIcon = () => this.theme.icon();
+
+  themeColor = () => this.theme.color();
 
   ionViewDidEnter() {
     this.activeIndex();

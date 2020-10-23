@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { Plugins, PluginRegistry, Capacitor, StatusBarStyle } from '@capacitor/core';
+import { Plugins, Capacitor, StatusBarStyle } from '@capacitor/core';
 
-const { StatusBar } = Plugins;
+const { StatusBar, SplashScreen } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,9 @@ export class ThemeService {
   public loadFromStorage() {
     if (Capacitor.isPluginAvailable('StatusBar')) {
       StatusBar.setOverlaysWebView({ overlay: false });
+    }
+    if (Capacitor.isPluginAvailable('SplashScreen')) {
+      SplashScreen.hide();
     }
     this.storage.get('THEME_MODE').then(mode => {
       if (!mode || mode === 'light') {

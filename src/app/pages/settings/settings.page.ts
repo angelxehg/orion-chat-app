@@ -14,14 +14,15 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
-  protected version = '2.0.0-alpha.1';
+  version = '2.0.0-alpha.1';
 
   constructor(
-    protected auth: AuthService,
-    protected theme: ThemeService,
-    protected toastController: ToastController,
-    protected panel: PanelService
+    private auth: AuthService,
+    private theme: ThemeService,
+    private panel: PanelService
   ) { }
+
+  toggleTheme = () => this.theme.toggle();
 
   ionViewWillEnter() {
     this.panel.show();
