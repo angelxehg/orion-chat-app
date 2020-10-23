@@ -1,6 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { of } from 'rxjs';
+
+export const AuthStorageMock: any = {
+  get: (param) => {
+    if (param === 'MOCK_SESSION') {
+      return of('dark').toPromise();
+    }
+    return of('').toPromise();
+  },
+  set: (param, value) => {
+    return of(value).toPromise();
+  }
+};
+
+export const AuthServiceMock = {
+  isLoggedIn: () => of(true).toPromise(),
+  loginWithEmail: () => of(true).toPromise(),
+  registerWithEmail: () => of(true).toPromise(),
+  logout: () => of(true).toPromise(),
+};
 
 @Injectable({
   providedIn: 'root'

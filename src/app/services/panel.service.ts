@@ -1,6 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { MenuGroup } from '../models/menu';
+
+export const PanelServiceMock = {
+  title: () => 'Page',
+  show: (panel: string = 'menu', tabs: boolean = true) => { },
+  hide: () => { },
+  panel: false,
+  tabs: false,
+  current: '',
+  menuItems: of([])
+};
 
 @Injectable({
   providedIn: 'root'
