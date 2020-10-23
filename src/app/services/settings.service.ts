@@ -5,16 +5,21 @@ import { Plugins, Capacitor, StatusBarStyle } from '@capacitor/core';
 
 const { StatusBar, SplashScreen } = Plugins;
 
+interface ThemeOptions {
+  mode: string;
+  silent?: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
 
-  private darkMode = false;
+  private themeMode = 'dark';
 
   constructor(private storage: Storage, private toast: ToastController) { }
 
-  public load() {
+  public loadTheme() {
     if (Capacitor.isPluginAvailable('StatusBar')) {
       StatusBar.setOverlaysWebView({ overlay: false });
     }
@@ -22,21 +27,22 @@ export class SettingsService {
       SplashScreen.hide();
     }
     this.storage.get('THEME_MODE').then(mode => {
-      if (!mode || mode === 'light') {
-        return this.setDark(false, true);
+      if (!mode || mode === 'dark') {
+        return this.setTheme({ mode: 'dark', silent: true });
       }
-      return this.setDark(true, true);
+      return this.setTheme({ mode: 'light', silent: true });
     });
   }
 
-  private setDark(enableDark: boolean = true, silent: boolean = false) {
-    this.darkMode = enableDark;
-    this.storage.set('THEME_MODE', enableDark ? 'dark' : 'light').then();
-    document.body.classList.toggle('dark', enableDark);
+  public setTheme(options: ThemeOptions) {
+    const { mode, silent } = options;
+    this.themeMode = mode;
+    this.storage.set('THEME_MODE', mode).then();
+    document.body.classList.toggle('dark', mode === 'dark');
     if (Capacitor.isPluginAvailable('StatusBar')) {
-      const statusBarColor = enableDark ? '#000000' : '#ffffff';
+      const statusBarColor = mode === 'dark' ? '#000000' : '#ffffff';
       StatusBar.setBackgroundColor({ color: statusBarColor });
-      if (enableDark) {
+      if (mode === 'dark') {
         StatusBar.setStyle({ style: StatusBarStyle.Dark });
       } else {
         StatusBar.setStyle({ style: StatusBarStyle.Light });
@@ -44,19 +50,18 @@ export class SettingsService {
     }
     if (!silent) {
       this.toast.create({
-        message: `Cambiando a tema <b>${this.modeStr()}</b>`,
+        message: `Cambiando a tema <b>${mode}</b>`,
         duration: 1000
       }).then(toast => toast.present());
     }
   }
 
-  public toggle = () => this.darkMode ? this.setDark(false) : this.setDark();
+  public isDarkTheme = () => this.themeMode === 'dark';
 
-  public icon = () => this.darkMode ? 'moon' : 'sunny';
-
-  public color = () => this.darkMode ? 'tertiary' : 'warning';
-
-  public modeStr = () => this.darkMode ? 'oscuro' : 'claro';
-
-  public inverseModeStr = () => this.darkMode ? 'claro' : 'oscuro';
+  public toggleTheme() {
+    if (this.isDarkTheme()) {
+      return this.setTheme({ mode: 'light' });
+    }
+    return this.setTheme({ mode: 'dark' });
+  }
 }

@@ -23,13 +23,11 @@ export class SettingsPage {
     private panel: PanelService
   ) { }
 
-  toggleTheme = () => this.settings.toggle();
+  toggleTheme = () => this.settings.toggleTheme();
 
-  inverseTheme = () => this.settings.inverseModeStr();
+  get themeIcon() { return this.settings.isDarkTheme() ? 'moon' : 'sunny'; }
 
-  themeIcon = () => this.settings.icon();
-
-  themeColor = () => this.settings.color();
+  get themeColor() { return this.settings.isDarkTheme() ? 'tertiary' : 'warning'; }
 
   ionViewWillEnter() {
     this.panel.show();
@@ -41,9 +39,5 @@ export class SettingsPage {
 
   openRepo() {
     Browser.open({ url: 'https://github.com/angelxehg/tomatoe-chat#readme' });
-  }
-
-  forceDarkChanged($event) {
-    this.theme.toggle();
   }
 }

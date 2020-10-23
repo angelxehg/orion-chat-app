@@ -20,7 +20,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.settings.load();
+      this.settings.loadTheme();
       if (this.swUpdate.isEnabled) {
         this.swUpdate.available.subscribe(() => {
           if (confirm('Hay una nueva versión disponible. ¿Cargar nueva versión?')) {

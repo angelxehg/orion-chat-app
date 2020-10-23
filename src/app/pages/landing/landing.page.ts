@@ -20,11 +20,11 @@ export class LandingPage {
 
   constructor(private router: Router, private settings: SettingsService) { }
 
-  toggleTheme = () => this.settings.toggle();
+  toggleTheme = () => this.settings.toggleTheme();
 
-  themeIcon = () => this.settings.icon();
+  get themeIcon() { return this.settings.isDarkTheme() ? 'moon' : 'sunny'; }
 
-  themeColor = () => this.settings.color();
+  get themeColor() { return this.settings.isDarkTheme() ? 'tertiary' : 'warning'; }
 
   ionViewDidEnter() {
     this.activeIndex();
