@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'spaces',
-        loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule),
+        loadChildren: () => import('../pages/spaces/spaces.module').then(m => m.SpacesPageModule)
       },
       {
         path: 'chats',
