@@ -16,7 +16,7 @@ export class SettingsPage {
 
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger'];
 
-  version = '2.0.0-alpha.2';
+  version = '2.0.0-alpha.3';
 
   constructor(
     private auth: AuthService,
