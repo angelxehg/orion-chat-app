@@ -13,12 +13,12 @@ export class NoAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const logged = this.auth.isLoggedIn();
-    console.log(logged);
-    if (logged) {
-      this.router.navigateByUrl('/app/home');
-      return false;
-    }
-    return true;
+    return this.auth.isLoggedIn().then(logged => {
+      if (logged) {
+        this.router.navigateByUrl('/app/home');
+        return false;
+      }
+      return true;
+    });
   }
 }
