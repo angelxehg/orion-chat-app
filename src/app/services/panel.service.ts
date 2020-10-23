@@ -46,6 +46,52 @@ export class PanelService {
     }
   ];
 
+  private defaultChats: MenuGroup[] = [
+    {
+      title: 'Conversaciones',
+      items: [
+        {
+          title: 'Conversación 1',
+          url: '/app/chats/1',
+          icon: 'home',
+        },
+        {
+          title: 'Conversación 2',
+          url: '/app/chats/2',
+          icon: 'home',
+        },
+        {
+          title: 'Conversación 3',
+          url: '/app/chats/3',
+          icon: 'home',
+        },
+      ]
+    }
+  ];
+
+  private defaultSpaces: MenuGroup[] = [
+    {
+      title: 'Espacios',
+      items: [
+        {
+          title: 'Espacio 1',
+          url: '/app/spaces/1',
+          icon: 'home',
+        },
+        {
+          title: 'Espacio 2',
+          url: '/app/spaces/2',
+          icon: 'home',
+        },
+        {
+          title: 'Espacio 3',
+          url: '/app/spaces/3',
+          icon: 'home',
+        },
+      ]
+    }
+  ];
+
   private items: MenuGroup[] = [];
   private items$ = new Subject<MenuGroup[]>();
 
@@ -76,13 +122,18 @@ export class PanelService {
     this.panel = true;
     this.current = panel;
     this.tabs = tabs;
-    if (this.current === 'menu') {
-      this.items = this.defaultMenu;
-      this.items$.next(this.items);
-    } else {
-      this.items = [];
-      this.items$.next(this.items);
+    switch (this.current) {
+      case 'channels':
+        this.items = this.defaultChats;
+        break;
+      case 'workspaces':
+        this.items = this.defaultSpaces;
+        break;
+      default:
+        this.items = this.defaultMenu;
+        break;
     }
+    this.items$.next(this.items);
   }
 
   hide() {

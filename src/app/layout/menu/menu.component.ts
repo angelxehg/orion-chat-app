@@ -14,8 +14,4 @@ export class MenuComponent {
 
   constructor(private panel: PanelService) { }
 
-  isUrlActive(url) {
-    return window.location.pathname.includes(url);
-  }
-
 }
