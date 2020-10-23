@@ -9,11 +9,4 @@ export class LayoutPage {
 
   constructor() { }
 
-  activeIcon(tab: string, icon: string) {
-    if (window.location.pathname.includes(tab)) {
-      return icon;
-    }
-    return `${icon}-outline`;
-  }
-
 }
