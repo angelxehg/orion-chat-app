@@ -8,6 +8,7 @@ import { LayoutPageRoutingModule } from './layout-routing.module';
 
 import { LayoutPage } from './layout.page';
 import { TabsComponent } from './tabs/tabs.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { TabsComponent } from './tabs/tabs.component';
   ],
   declarations: [
     LayoutPage,
-    TabsComponent
+    TabsComponent,
+    MenuComponent
   ]
 })
 export class LayoutPageModule { }
