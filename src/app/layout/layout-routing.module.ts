@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OrganizationGuard } from '../guards/organization.guard';
-
 import { LayoutPage } from './layout.page';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app/chats',
+    redirectTo: '/app/home',
     pathMatch: 'full'
   },
   {
@@ -36,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/app/chats',
+        redirectTo: '/app/home',
         pathMatch: 'full'
       }
     ]
