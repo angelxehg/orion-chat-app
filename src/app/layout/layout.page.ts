@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { PanelService } from '../services/panel.service';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.page.html',
   styleUrls: ['./layout.page.scss'],
 })
-export class LayoutPage implements OnInit {
+export class LayoutPage {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor(public panel: PanelService) { }
 
 }

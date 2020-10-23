@@ -14,7 +14,9 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
-  version = '2.0.0-alpha.2';
+  colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger'];
+
+  version = '2.0.0-alpha.3';
 
   constructor(
     private auth: AuthService,
@@ -23,6 +25,12 @@ export class SettingsPage {
   ) { }
 
   toggleTheme = () => this.theme.toggle();
+
+  inverseTheme = () => this.theme.inverseModeStr();
+
+  themeIcon = () => this.theme.icon();
+
+  themeColor = () => this.theme.color();
 
   ionViewWillEnter() {
     this.panel.show();
