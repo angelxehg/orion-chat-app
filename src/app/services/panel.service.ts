@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MenuGroup } from '../models/menu';
-import { OrganizationService } from './organization.service';
 
 @Injectable({
   providedIn: 'root'
@@ -97,9 +96,7 @@ export class PanelService {
 
   public menuItems = this.items$.asObservable();
 
-  constructor(
-    private org: OrganizationService
-  ) {
+  constructor() {
     this.show();
     this.items = this.defaultMenu;
     this.items$.next(this.items);
@@ -112,9 +109,7 @@ export class PanelService {
       case 'workspaces':
         return 'Workspaces';
       default:
-        const current = this.org.current();
-        const extra = current ? ' | ' + current.title : '';
-        return 'Tomatoe Chat' + extra;
+        return 'Tomatoe Chat';
     }
   }
 
