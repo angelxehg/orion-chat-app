@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
-import { ThemeService } from '../services/theme.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.page.html',
-  styleUrls: ['./auth.page.scss'],
+  selector: 'app-landing',
+  templateUrl: './landing.page.html',
+  styleUrls: ['./landing.page.scss'],
 })
-export class AuthPage {
+export class LandingPage {
 
   @ViewChild('slides', { static: true }) slides: IonSlides;
 
@@ -45,4 +45,5 @@ export class AuthPage {
   register() {
     this.router.navigateByUrl('/app', { skipLocationChange: true });
   }
+
 }
