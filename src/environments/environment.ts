@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://127.0.0.1:8000/api/v1'
+  api_url: 'http://127.0.0.1:8000/api/v1',
+  version: '2.0.0-alpha.4'
 };
 
 /*
