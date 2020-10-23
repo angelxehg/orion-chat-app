@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { AuthService, AuthServiceMock } from 'src/app/services/auth.service';
+import { PanelService, PanelServiceMock } from 'src/app/services/panel.service';
+import { SettingsService, SettingsServiceMock } from 'src/app/services/settings.service';
 
 import { SettingsPage } from './settings.page';
 
@@ -10,7 +13,12 @@ describe('SettingsPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SettingsPage],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [
+        { provide: AuthService, useValue: AuthServiceMock },
+        { provide: SettingsService, useValue: SettingsServiceMock },
+        { provide: PanelService, useValue: PanelServiceMock }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsPage);

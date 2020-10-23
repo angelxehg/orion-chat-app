@@ -18,11 +18,11 @@ const routes: Routes = [
       },
       {
         path: 'spaces',
-        loadChildren: () => import('../pages/workspaces/workspaces.module').then(m => m.WorkspacesPageModule),
+        loadChildren: () => import('../pages/spaces/spaces.module').then(m => m.SpacesPageModule)
       },
       {
         path: 'chats',
-        loadChildren: () => import('../pages/channels/channels.module').then(m => m.ChannelsPageModule),
+        loadChildren: () => import('../pages/chats/chats.module').then(m => m.ChatsPageModule)
       },
       {
         path: 'files',

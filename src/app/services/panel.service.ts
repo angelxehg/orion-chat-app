@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { MenuGroup } from '../models/menu';
-import { OrganizationService } from './organization.service';
+
+export const PanelServiceMock = {
+  title: () => 'Page',
+  show: (panel: string = 'menu', tabs: boolean = true) => { },
+  hide: () => { },
+  panel: false,
+  tabs: false,
+  current: '',
+  menuItems: of([])
+};
 
 @Injectable({
   providedIn: 'root'
@@ -97,9 +106,7 @@ export class PanelService {
 
   public menuItems = this.items$.asObservable();
 
-  constructor(
-    private org: OrganizationService
-  ) {
+  constructor() {
     this.show();
     this.items = this.defaultMenu;
     this.items$.next(this.items);
@@ -107,14 +114,12 @@ export class PanelService {
 
   title() {
     switch (this.current) {
-      case 'channels':
-        return 'Channels';
-      case 'workspaces':
-        return 'Workspaces';
+      case 'chats':
+        return 'Conversaciones';
+      case 'spaces':
+        return 'Espacios';
       default:
-        const current = this.org.current();
-        const extra = current ? ' | ' + current.title : '';
-        return 'Tomatoe Chat' + extra;
+        return 'Tomatoe Chat';
     }
   }
 
@@ -123,10 +128,10 @@ export class PanelService {
     this.current = panel;
     this.tabs = tabs;
     switch (this.current) {
-      case 'channels':
+      case 'chats':
         this.items = this.defaultChats;
         break;
-      case 'workspaces':
+      case 'spaces':
         this.items = this.defaultSpaces;
         break;
       default:

@@ -2,22 +2,22 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { PanelService, PanelServiceMock } from 'src/app/services/panel.service';
 
-import { FilesPage } from './files.page';
+import { ChatsPage } from './chats.page';
 
-describe('FilesPage', () => {
-  let component: FilesPage;
-  let fixture: ComponentFixture<FilesPage>;
+describe('ChatsPage', () => {
+  let component: ChatsPage;
+  let fixture: ComponentFixture<ChatsPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FilesPage],
+      declarations: [ChatsPage],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: PanelService, useValue: PanelServiceMock }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FilesPage);
+    fixture = TestBed.createComponent(ChatsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

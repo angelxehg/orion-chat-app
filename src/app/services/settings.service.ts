@@ -2,8 +2,28 @@ import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Plugins, Capacitor, StatusBarStyle } from '@capacitor/core';
+import { of } from 'rxjs';
 
 const { StatusBar, SplashScreen } = Plugins;
+
+export const SettingsStorageMock: any = {
+  get: (param) => {
+    if (param === 'THEME_MODE') {
+      return of('dark').toPromise();
+    }
+    return of('').toPromise();
+  },
+  set: (param, value) => {
+    return of(value).toPromise();
+  }
+};
+
+export const SettingsServiceMock = {
+  loadTheme: () => { },
+  setTheme: () => { },
+  isDarkTheme: () => true,
+  toggleTheme: () => { },
+};
 
 interface ThemeOptions {
   mode: string;

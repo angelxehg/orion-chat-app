@@ -1,12 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { Storage } from '@ionic/storage';
 
-import { SettingsService } from './settings.service';
+import { SettingsService, SettingsStorageMock } from './settings.service';
 
 describe('SettingsService', () => {
   let service: SettingsService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Storage, useValue: SettingsStorageMock }
+      ]
+    });
     service = TestBed.inject(SettingsService);
   });
 
