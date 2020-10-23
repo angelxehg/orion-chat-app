@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PanelService } from '../services/panel.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,6 +8,6 @@ import { Component } from '@angular/core';
 })
 export class LayoutPage {
 
-  constructor() { }
+  constructor(public panel: PanelService) { }
 
 }
