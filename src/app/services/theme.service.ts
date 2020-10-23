@@ -59,6 +59,8 @@ export class ThemeService {
 
   public color = () => this.darkMode ? 'tertiary' : 'warning';
 
-  private modeStr = () => this.darkMode ? 'oscuro' : 'claro';
+  public modeStr = () => this.darkMode ? 'oscuro' : 'claro';
+
+  public inverseModeStr = () => this.darkMode ? 'claro' : 'oscuro';
 
 }
