@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OrganizationGuard } from './organization.guard';
+import { NoAuthGuard } from './no-auth.guard';
 
-describe('OrganizationGuard', () => {
-  let guard: OrganizationGuard;
+describe('NoAuthGuard', () => {
+  let guard: NoAuthGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(OrganizationGuard);
+    guard = TestBed.inject(NoAuthGuard);
   });
 
   it('should be created', () => {

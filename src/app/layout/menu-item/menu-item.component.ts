@@ -12,8 +12,9 @@ export class MenuItemComponent {
 
   constructor() { }
 
-  isUrlActive(url) {
-    return window.location.pathname.includes(url);
+  activeColor(url) {
+    const active = window.location.pathname.includes(url);
+    return active ? 'primary' : '';
   }
 
 }

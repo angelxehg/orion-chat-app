@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { ToastController } from '@ionic/angular';
 import { PanelService } from '../../services/panel.service';
 import { Plugins } from '@capacitor/core';
-import { ThemeService } from 'src/app/services/theme.service';
+import { SettingsService } from 'src/app/services/settings.service';
+import { NewAuthService } from 'src/app/services/new-auth.service';
 
 const { Browser } = Plugins;
 
@@ -16,35 +15,27 @@ export class SettingsPage {
 
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger'];
 
-  version = '2.0.0-alpha.3';
+  version = '2.0.0-alpha.4';
 
   constructor(
-    private auth: AuthService,
-    private theme: ThemeService,
+    private auth: NewAuthService,
+    private settings: SettingsService,
     private panel: PanelService
   ) { }
 
-  toggleTheme = () => this.theme.toggle();
+  toggleTheme = () => this.settings.toggleTheme();
 
-  inverseTheme = () => this.theme.inverseModeStr();
+  get themeIcon() { return this.settings.isDarkTheme() ? 'moon' : 'sunny'; }
 
-  themeIcon = () => this.theme.icon();
-
-  themeColor = () => this.theme.color();
+  get themeColor() { return this.settings.isDarkTheme() ? 'tertiary' : 'warning'; }
 
   ionViewWillEnter() {
     this.panel.show();
   }
 
-  logout() {
-    this.auth.logout();
-  }
+  logout = () => this.auth.logout();
 
   openRepo() {
     Browser.open({ url: 'https://github.com/angelxehg/tomatoe-chat#readme' });
-  }
-
-  forceDarkChanged($event) {
-    this.theme.toggle();
   }
 }
