@@ -27,7 +27,7 @@
     </ion-slide>
     <ion-slide>
       <ion-card>
-        <ion-icon class="big-icon" name="enter"></ion-icon>
+        <ion-icon class="big-icon" name="enter" color="success"></ion-icon>
         <ion-card-header>
           <ion-card-title>Inicia sesión en Tomatoe Chat</ion-card-title>
         </ion-card-header>
@@ -51,17 +51,17 @@
   </ion-slides>
   <!-- Fab buttons -->
   <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" (click)="toggleTheme()">
+    <ion-fab-button size="small" color="light" (click)="toggleTheme()">
       <ion-icon [name]="themeIcon()" [color]="themeColor()"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button size="small" *ngIf="currentSlide !== 0" (click)="slides.slidePrev()">
+    <ion-fab-button size="small" color="light" *ngIf="currentSlide !== 0" (click)="slides.slidePrev()">
       <ion-icon name="chevron-back"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" *ngIf="currentSlide !== 3" (click)="slides.slideNext()">
+    <ion-fab-button size="small" color="light" *ngIf="currentSlide !== 3" (click)="slides.slideNext()">
       <ion-icon name="chevron-forward"></ion-icon>
     </ion-fab-button>
   </ion-fab>

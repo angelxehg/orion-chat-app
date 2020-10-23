@@ -10,6 +10,8 @@ import { Organization } from 'src/app/models/organization';
 })
 export class HomePage {
 
+  colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger'];
+
   public organization: Organization;
 
   public tiles = [

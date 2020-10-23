@@ -20,7 +20,15 @@
     </ion-item-divider>
     <ion-grid>
       <ion-row class="ion-align-items-stretch">
-        <ion-card *ngIf="organization" class="setting-card" button="true" color="tertiary" routerDirection="root" routerLink="/app/organization/{{ organization.id }}">
+        <ion-card *ngFor="let color of colors" class="setting-card" [color]="color">
+          <ion-card-content style="padding: 10px;">
+            Color {{ color }}
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      <ion-row class="ion-align-items-stretch">
+        <ion-card *ngIf="organization" class="setting-card" button="true" color="tertiary" routerDirection="root"
+          routerLink="/app/organization/{{ organization.id }}">
           <ion-card-header>
             <ion-card-title>
               <ion-icon [ios]="'people-sharp'" [md]="'people-sharp'"></ion-icon>
@@ -42,7 +50,8 @@
     </ion-item-divider>
     <ion-grid>
       <ion-row class="ion-align-items-stretch">
-        <ion-card *ngFor="let tile of tiles" class="setting-card" button="true" color="{{ tile.color }}" routerDirection="root" [routerLink]="[tile.url]">
+        <ion-card *ngFor="let tile of tiles" class="setting-card" button="true" color="{{ tile.color }}"
+          routerDirection="root" [routerLink]="[tile.url]">
           <ion-card-header>
             <ion-card-title>
               <ion-icon [ios]="tile.icon + '-sharp'" [md]="tile.icon + '-sharp'"></ion-icon>
