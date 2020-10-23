@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { MenuGroup } from '../models/menu';
 import { OrganizationService } from './organization.service';
 
 @Injectable({
@@ -11,10 +13,50 @@ export class PanelService {
 
   public current: string;
 
+  private defaultMenu: MenuGroup[] = [
+    {
+      title: 'Secciones',
+      items: [
+        {
+          title: 'Inicio',
+          url: '/app/home',
+          icon: 'home',
+        },
+        {
+          title: 'Chats',
+          url: '/app/chats',
+          icon: 'chatbubbles',
+        },
+        {
+          title: 'Espacios',
+          url: '/app/spaces',
+          icon: 'file-tray-full',
+        },
+        {
+          title: 'Archivos',
+          url: '/app/files',
+          icon: 'documents',
+        },
+        {
+          title: 'Configuración',
+          url: '/app/settings',
+          icon: 'cog',
+        },
+      ]
+    }
+  ];
+
+  private items: MenuGroup[] = [];
+  private items$ = new Subject<MenuGroup[]>();
+
+  public menuItems = this.items$.asObservable();
+
   constructor(
     private org: OrganizationService
   ) {
     this.show();
+    this.items = this.defaultMenu;
+    this.items$.next(this.items);
   }
 
   title() {
@@ -34,6 +76,13 @@ export class PanelService {
     this.panel = true;
     this.current = panel;
     this.tabs = tabs;
+    if (this.current === 'menu') {
+      this.items = this.defaultMenu;
+      this.items$.next(this.items);
+    } else {
+      this.items = [];
+      this.items$.next(this.items);
+    }
   }
 
   hide() {
