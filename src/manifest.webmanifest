@@ -1,7 +1,7 @@
 {
-  "name": "Orion Chat",
-  "short_name": "orion-chat-app",
-  "theme_color": "#1976d2",
+  "name": "Tomatoe Chat",
+  "short_name": "Tomatoe Chat",
+  "theme_color": "#e63946",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

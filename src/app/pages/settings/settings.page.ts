@@ -3,7 +3,6 @@ import { AuthService } from '../../services/auth.service';
 import { ToastController } from '@ionic/angular';
 import { PanelService } from '../../services/panel.service';
 import { Plugins } from '@capacitor/core';
-import { environment } from '../../../environments/environment';
 import { ThemeService } from 'src/app/services/theme.service';
 
 const { Browser } = Plugins;
@@ -15,18 +14,15 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
-  public target = '';
-
-  public version = '2.0.0-alpha.1';
+  version = '2.0.0-alpha.2';
 
   constructor(
-    public auth: AuthService,
-    public theme: ThemeService,
-    public toastController: ToastController,
-    public panel: PanelService
-  ) {
-    this.target = environment.production ? 'Stable' : 'Debug';
-  }
+    private auth: AuthService,
+    private theme: ThemeService,
+    private panel: PanelService
+  ) { }
+
+  toggleTheme = () => this.theme.toggle();
 
   ionViewWillEnter() {
     this.panel.show();
@@ -36,8 +32,8 @@ export class SettingsPage {
     this.auth.logout();
   }
 
-  openPortfolio() {
-    Browser.open({ url: 'https://angelxehg.com/' });
+  openRepo() {
+    Browser.open({ url: 'https://github.com/angelxehg/tomatoe-chat#readme' });
   }
 
   forceDarkChanged($event) {

@@ -15,13 +15,11 @@
   <ion-item-group>
     <ion-item-divider>
       <ion-label>
-        Theme
+        Tema
       </ion-label>
     </ion-item-divider>
-    <ion-item>
-      <ion-label>Force Dark Theme</ion-label>
-      <ion-toggle slot="end" [(ngModel)]="theme.forceDark" (ionChange)="forceDarkChanged($event)">
-      </ion-toggle>
+    <ion-item button (click)="toggleTheme()">
+      <ion-label>Cambiar tema</ion-label>
     </ion-item>
   </ion-item-group>
   <ion-item-group>
@@ -40,8 +38,8 @@
         About this app
       </ion-label>
     </ion-item-divider>
-    <ion-item button="true" (click)="openPortfolio()">
-      <ion-label>Orion Chat v{{ version }} ({{ target }}) | Angel Hurtado</ion-label>
+    <ion-item button="true" (click)="openRepo()">
+      <ion-label>Tomatoe Chat v{{ version }}</ion-label>
     </ion-item>
   </ion-item-group>
 </ion-content>

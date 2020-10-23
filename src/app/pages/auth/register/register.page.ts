@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-register',
@@ -28,12 +27,9 @@ export class RegisterPage {
 
   constructor(
     private auth: AuthService,
-    private theme: ThemeService,
     private router: Router,
     public toastController: ToastController
-  ) {
-    this.theme.load();
-  }
+  ) { }
 
   async register() {
     const toast = await this.toastController.create({

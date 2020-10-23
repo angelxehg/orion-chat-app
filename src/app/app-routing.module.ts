@@ -5,24 +5,33 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/app/home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
     path: 'app',
-    loadChildren: () => import('./panel/panel.module').then(m => m.PanelPageModule),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'register',
-    loadChildren: () => import('./pages/auth/register/register.module').then(m => m.RegisterPageModule),
-    canLoad: [AuthGuard]
+    loadChildren: () => import('./layout/layout.module').then(m => m.LayoutPageModule),
+    // canActivate: [AuthGuard],
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginPageModule),
-    canLoad: [AuthGuard]
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthPageModule)
   },
+  // {
+  //   path: 'app',
+  //   loadChildren: () => import('./panel/panel.module').then(m => m.PanelPageModule),
+  //   canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'register',
+  //   loadChildren: () => import('./pages/auth/register/register.module').then(m => m.RegisterPageModule),
+  //   canLoad: [AuthGuard]
+  // },
+  // {
+  //   path: 'login',
+  //   loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginPageModule),
+  //   canLoad: [AuthGuard]
+  // },
 ];
 @NgModule({
   imports: [

@@ -1,6 +1,6 @@
 {
   "appId": "com.angelxehg.orion",
-  "appName": "Orion Chat",
+  "appName": "Tomatoe Chat",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

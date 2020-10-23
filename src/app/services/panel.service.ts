@@ -26,7 +26,7 @@ export class PanelService {
       default:
         const current = this.org.current();
         const extra = current ? ' | ' + current.title : '';
-        return 'Orion Chat' + extra;
+        return 'Tomatoe Chat' + extra;
     }
   }
 

@@ -56,6 +56,8 @@ Instale las siguientes extensiones si va a trabajar en el código:
 
 - [npm](https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script)
 
+- [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)
+
 Configure VSCode para poder hacer debug:
 
 - Iniciar servidor sin abrir navegador: `ionic serve --no-open`
