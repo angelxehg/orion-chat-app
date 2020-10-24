@@ -21,6 +21,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/spaces/spaces.module').then(m => m.SpacesPageModule)
       },
       {
+        path: 'contacts',
+        loadChildren: () => import('../pages/contacts/contacts.module').then(m => m.ContactsPageModule)
+      },
+      {
         path: 'chats',
         loadChildren: () => import('../pages/chats/chats.module').then(m => m.ChatsPageModule)
       },

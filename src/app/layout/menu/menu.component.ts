@@ -20,6 +20,11 @@ export class MenuComponent {
       icon: 'chatbubbles',
     },
     {
+      title: 'Contactos',
+      url: '/app/contacts',
+      icon: 'people',
+    },
+    {
       title: 'Espacios',
       url: '/app/spaces',
       icon: 'file-tray-full',
