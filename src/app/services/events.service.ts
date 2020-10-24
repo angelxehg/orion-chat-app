@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { TomatoeContactGroup } from '../models/contact';
 import { TomatoeEventGroup } from '../models/event';
+
+export const EventsServiceMock = {
+  observable: of([]),
+  mock: () => { },
+};
 
 @Injectable({
   providedIn: 'root'

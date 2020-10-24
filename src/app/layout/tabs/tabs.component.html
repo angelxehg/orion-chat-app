@@ -1,5 +1,5 @@
 <ion-tabs>
-  <ion-tab-bar slot="bottom" class="ion-hide-md-up {{ !panel.tabs ? 'ion-hide' : '' }}">
+  <ion-tab-bar slot="bottom" class="ion-hide-md-up" [class.ion-hide]="!showTabs()">
     <!-- Home tab -->
     <ion-tab-button tab="home">
       <ion-icon [name]="activeIcon('home', 'home')"></ion-icon>

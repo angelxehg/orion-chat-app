@@ -8,7 +8,9 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class TabsComponent {
 
-  constructor(public panel: PanelService) { }
+  constructor(private panel: PanelService) { }
+
+  showTabs = () => this.panel.tabs;
 
   activeIcon(tab: string, icon: string) {
     if (window.location.pathname.includes(tab)) {
