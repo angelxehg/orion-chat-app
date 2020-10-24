@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
@@ -6,7 +7,7 @@ import { of } from 'rxjs';
 
 export const AuthStorageMock: any = {
   get: (param) => {
-    if (param === 'MOCK_SESSION') {
+    if (param === 'USER_DATA') {
       return of('dark').toPromise();
     }
     return of('').toPromise();
@@ -28,14 +29,29 @@ export const AuthServiceMock = {
 })
 export class AuthService {
 
+  private userData: firebase.User;
+
   constructor(
     private router: Router,
     private storage: Storage,
-    private alert: AlertController
-  ) { }
+    private alert: AlertController,
+    private fireAuth: AngularFireAuth
+  ) {
+    this.fireAuth.authState.subscribe(user => {
+      if (user) {
+        this.userData = user;
+        this.storage.set('USER_DATA', JSON.stringify(user)).then();
+        this.router.navigateByUrl('/app/home');
+      } else {
+        this.userData = null;
+        this.storage.remove('USER_DATA').then();
+        this.router.navigateByUrl('/landing');
+      }
+    });
+  }
 
-  public isLoggedIn = () => this.storage.get('MOCK_SESSION').then(token => {
-    if (!token) {
+  public isLoggedIn = () => this.storage.get('USER_DATA').then(data => {
+    if (!data) {
       return false;
     }
     return true;
@@ -67,7 +83,7 @@ export class AuthService {
           text: 'Iniciar sesión',
           cssClass: 'success',
           handler: ({ email, password }) => {
-            console.log('loginWithEmail', email, password);
+            this.authLoginWithEmail(email, password);
           }
         }
       ]
@@ -135,8 +151,14 @@ export class AuthService {
     }).then(a => a.present());
   }
 
-  public logout = () => this.storage.remove('MOCK_SESSION').then(() => {
-    this.router.navigateByUrl('/landing');
-    return true;
-  })
+  public logout = () => this.fireAuth.signOut();
+
+  private authLoginWithEmail(email: string, password: string) {
+    if (!email || !password) {
+      return;
+    }
+    this.fireAuth.signInWithEmailAndPassword(email, password).then().catch(err => {
+      console.log(err);
+    });
+  }
 }
