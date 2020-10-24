@@ -12,32 +12,50 @@ export class HomePage {
     {
       title: 'Chats',
       url: '/app/chats',
-      icon: 'chatbubbles',
+      icon: {
+        name: 'chatbubbles',
+        color: 'primary'
+      }
     },
     {
       title: 'Contactos',
       url: '/app/contacts',
-      icon: 'people',
+      icon: {
+        name: 'people',
+        color: 'primary'
+      }
     },
     {
       title: 'Eventos',
       url: '/app/events',
-      icon: 'calendar',
+      icon: {
+        name: 'calendar',
+        color: 'primary'
+      }
     },
     {
       title: 'Espacios',
       url: '/app/spaces',
-      icon: 'file-tray-full',
+      icon: {
+        name: 'file-tray-full',
+        color: 'primary'
+      }
     },
     {
       title: 'Archivos',
       url: '/app/files',
-      icon: 'documents',
+      icon: {
+        name: 'documents',
+        color: 'primary'
+      }
     },
     {
       title: 'Configuración',
       url: '/app/settings',
-      icon: 'cog',
+      icon: {
+        name: 'cog',
+        color: 'primary'
+      }
     },
   ];
 
@@ -46,8 +64,10 @@ export class HomePage {
   // ].map(color => {
   //   return {
   //     title: `Color '${color}'`,
-  //     icon: 'color-palette-outline',
-  //     color
+  //     icon: {
+  //      name: 'color-palette-outline',
+  //      color: 'primary'
+  //    }
   //   };
   // });
 

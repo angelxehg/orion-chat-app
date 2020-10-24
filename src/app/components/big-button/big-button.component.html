@@ -1,5 +1,5 @@
 <ion-card [color]="item.color" [routerLink]="item.url">
-  <ion-icon class="big" [name]="item.icon"></ion-icon>
+  <ion-icon class="big" *ngIf="item.icon" [name]="item.icon.name" [color]="item.icon.color"></ion-icon>
   <ion-card-header *ngIf="item.title">
     <ion-card-title>
       {{ item.title }}
