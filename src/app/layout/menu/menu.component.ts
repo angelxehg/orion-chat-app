@@ -48,6 +48,13 @@ export class MenuComponent {
 
   constructor() { }
 
+  activeIcon(item: MenuItem) {
+    if (window.location.pathname.includes(item.url)) {
+      return item.icon;
+    }
+    return `${item.icon}-outline`;
+  }
+
   activeColor(url) {
     const active = window.location.pathname.includes(url);
     return active ? 'primary' : '';

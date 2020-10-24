@@ -4,7 +4,7 @@
   </ion-item-divider>
   <ion-menu-toggle auto-hide="false" *ngFor="let item of items">
     <ion-item routerDirection="root" [routerLink]="[item.url]" lines="none" detail="false">
-      <ion-icon slot="start" [name]="item.icon" [color]="activeColor(item.url)"></ion-icon>
+      <ion-icon slot="start" [name]="activeIcon(item)" [color]="activeColor(item.url)"></ion-icon>
       <ion-label [color]="activeColor(item.url)">{{ item.title }}</ion-label>
     </ion-item>
   </ion-menu-toggle>
