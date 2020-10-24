@@ -25,6 +25,11 @@ export class MenuComponent {
       icon: 'people',
     },
     {
+      title: 'Eventos',
+      url: '/app/events',
+      icon: 'calendar',
+    },
+    {
       title: 'Espacios',
       url: '/app/spaces',
       icon: 'file-tray-full',
