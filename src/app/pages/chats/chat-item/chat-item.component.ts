@@ -10,6 +10,8 @@ export class ChatItemComponent {
 
   @Input() item: TomatoeChat;
 
+  @Input() color = '';
+
   constructor() { }
 
 }
