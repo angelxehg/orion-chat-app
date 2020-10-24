@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TomatoeChatGroup } from 'src/app/models/chat';
 import { ChatsService } from 'src/app/services/chats.service';
 import { PanelService } from 'src/app/services/panel.service';
 
@@ -10,8 +8,6 @@ import { PanelService } from 'src/app/services/panel.service';
   styleUrls: ['./chats.page.scss'],
 })
 export class ChatsPage {
-
-  items: Observable<TomatoeChatGroup[]> = this.chats.observable;
 
   constructor(private chats: ChatsService, public panel: PanelService) { }
 

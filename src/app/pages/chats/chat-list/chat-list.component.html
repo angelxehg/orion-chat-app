@@ -1,0 +1,9 @@
+<ion-list>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Mis conversaciones</ion-label>
+    </ion-item-divider>
+    <app-chat-item *ngFor="let item of items | async" [item]="item">
+    </app-chat-item>
+  </ion-item-group>
+</ion-list>

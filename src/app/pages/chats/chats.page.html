@@ -12,14 +12,6 @@
       <ion-title size="large">Conversaciones</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-list class="ion-hide-md-up">
-    <!-- Chats -->
-    <ion-item-group *ngFor="let group of items | async">
-      <ion-item-divider>
-        <ion-label>{{ group.title }}</ion-label>
-      </ion-item-divider>
-      <app-chat-item *ngFor="let item of group.items" [item]="item">
-      </app-chat-item>
-    </ion-item-group>
-  </ion-list>
+  <!-- Chats -->
+  <app-chat-list class="ion-hide-md-up"></app-chat-list>
 </ion-content>

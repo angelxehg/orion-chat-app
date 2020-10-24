@@ -8,6 +8,7 @@ import { ChatsPageRoutingModule } from './chats-routing.module';
 
 import { ChatsPage } from './chats.page';
 import { ChatItemComponent } from './chat-item/chat-item.component';
+import { ChatListComponent } from './chat-list/chat-list.component';
 
 @NgModule({
   imports: [
@@ -18,10 +19,11 @@ import { ChatItemComponent } from './chat-item/chat-item.component';
   ],
   declarations: [
     ChatsPage,
-    ChatItemComponent
+    ChatItemComponent,
+    ChatListComponent
   ],
   exports: [
-    ChatItemComponent
+    ChatListComponent
   ]
 })
 export class ChatsPageModule { }
