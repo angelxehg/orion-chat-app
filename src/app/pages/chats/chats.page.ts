@@ -13,7 +13,6 @@ export class ChatsPage {
 
   ionViewWillEnter() {
     this.panel.show('chats');
-    this.chats.mock();
   }
 
   createChat() {

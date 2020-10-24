@@ -17,7 +17,9 @@ export class ChatsService {
 
   public observable = this.items$.asObservable();
 
-  constructor() { }
+  constructor() {
+    this.mock();
+  }
 
   create() {
     this.items.push({
