@@ -25,19 +25,29 @@ export class ChatsService {
         title: 'Mis conversaciones',
         items: [
           {
-            title: 'Conversación 1'
+            title: 'Conversación 1',
+            lastMsg: '[Yo]: Hola',
+            lastMsgDate: '19:00'
           },
           {
-            title: 'Conversación 2'
+            title: 'Conversación 2',
+            lastMsg: '[Yo]: Hola',
+            lastMsgDate: '20:15'
           },
           {
-            title: 'Conversación 3'
+            title: 'Conversación 3',
+            lastMsg: '[Yo]: Hola',
+            lastMsgDate: '15:30'
           },
           {
-            title: 'Conversación 4'
+            title: 'Conversación 4',
+            lastMsg: '[Yo]: Hola',
+            lastMsgDate: '21:10'
           },
           {
-            title: 'Conversación 5'
+            title: 'Conversación 5',
+            lastMsg: '[Yo]: Hola',
+            lastMsgDate: '19:30'
           }
         ]
       }

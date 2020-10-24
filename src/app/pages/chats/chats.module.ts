@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ChatsPageRoutingModule } from './chats-routing.module';
 
 import { ChatsPage } from './chats.page';
+import { ChatItemComponent } from './chat-item/chat-item.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,12 @@ import { ChatsPage } from './chats.page';
     IonicModule,
     ChatsPageRoutingModule
   ],
-  declarations: [ChatsPage]
+  declarations: [
+    ChatsPage,
+    ChatItemComponent
+  ],
+  exports: [
+    ChatItemComponent
+  ]
 })
-export class ChatsPageModule {}
+export class ChatsPageModule { }

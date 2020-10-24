@@ -18,10 +18,8 @@
       <ion-item-divider>
         <ion-label>{{ group.title }}</ion-label>
       </ion-item-divider>
-      <ion-item *ngFor="let item of group.items">
-        <ion-icon slot="end" name="chatbubbles-outline" color="secondary"></ion-icon>
-        <ion-label>{{ item.title }}</ion-label>
-      </ion-item>
+      <app-chat-item *ngFor="let item of group.items" [item]="item">
+      </app-chat-item>
     </ion-item-group>
   </ion-list>
 </ion-content>
