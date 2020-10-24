@@ -10,6 +10,8 @@ export class ButtonGridComponent {
 
   @Input() items: TomatoeItem[] = [];
 
+  @Input() title = 'Sample Grid';
+
   constructor() { }
 
 }

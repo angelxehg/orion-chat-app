@@ -12,12 +12,5 @@
       <ion-title size="large">Inicio</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-item-group>
-    <ion-item-divider>
-      <ion-label>
-        Paleta de colores
-      </ion-label>
-    </ion-item-divider>
-    <app-button-grid [items]="colors"></app-button-grid>
-  </ion-item-group>
+  <app-button-grid title="Paleta de colores" [items]="colors"></app-button-grid>
 </ion-content>
