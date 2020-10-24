@@ -1,0 +1,15 @@
+@import '../big-button/big-button.component.scss';
+
+ion-grid {
+  ion-col {
+    padding: 0;
+    ion-card {
+      height: calc(100% - 1em);
+    }
+  }
+}
+
+ion-list {
+  padding: 0;
+  background: var(--ion-backgroud-color);
+}

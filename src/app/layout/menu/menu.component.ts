@@ -20,6 +20,16 @@ export class MenuComponent {
       icon: 'chatbubbles',
     },
     {
+      title: 'Contactos',
+      url: '/app/contacts',
+      icon: 'people',
+    },
+    {
+      title: 'Eventos',
+      url: '/app/events',
+      icon: 'calendar',
+    },
+    {
       title: 'Espacios',
       url: '/app/spaces',
       icon: 'file-tray-full',
@@ -37,6 +47,13 @@ export class MenuComponent {
   ];
 
   constructor() { }
+
+  activeIcon(item: MenuItem) {
+    if (window.location.pathname.includes(item.url)) {
+      return item.icon;
+    }
+    return `${item.icon}-outline`;
+  }
 
   activeColor(url) {
     const active = window.location.pathname.includes(url);

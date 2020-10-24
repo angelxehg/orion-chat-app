@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PanelService } from '../../services/panel.service';
+import { TomatoeItem } from 'src/app/models/item';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +8,69 @@ import { PanelService } from '../../services/panel.service';
 })
 export class HomePage {
 
-  colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger'];
+  pages: TomatoeItem[] = [
+    {
+      title: 'Chats',
+      url: '/app/chats',
+      icon: {
+        name: 'chatbubbles',
+        color: 'primary'
+      }
+    },
+    {
+      title: 'Contactos',
+      url: '/app/contacts',
+      icon: {
+        name: 'people',
+        color: 'primary'
+      }
+    },
+    {
+      title: 'Eventos',
+      url: '/app/events',
+      icon: {
+        name: 'calendar',
+        color: 'primary'
+      }
+    },
+    {
+      title: 'Espacios',
+      url: '/app/spaces',
+      icon: {
+        name: 'file-tray-full',
+        color: 'primary'
+      }
+    },
+    {
+      title: 'Archivos',
+      url: '/app/files',
+      icon: {
+        name: 'documents',
+        color: 'primary'
+      }
+    },
+    {
+      title: 'Configuración',
+      url: '/app/settings',
+      icon: {
+        name: 'cog',
+        color: 'primary'
+      }
+    },
+  ];
 
-  constructor(public panel: PanelService) { }
+  // colors: TomatoeItem[] = [
+  //   'primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'dark', 'medium', 'light'
+  // ].map(color => {
+  //   return {
+  //     title: `Color '${color}'`,
+  //     icon: {
+  //      name: 'color-palette-outline',
+  //      color: 'primary'
+  //    }
+  //   };
+  // });
 
-  ionViewWillEnter() {
-    this.panel.show();
-  }
+  constructor() { }
 
 }

@@ -16,8 +16,8 @@ import { ChatsPageModule } from '../pages/chats/chats.module';
     CommonModule,
     FormsModule,
     IonicModule,
+    LayoutPageRoutingModule,
     ChatsPageModule,
-    LayoutPageRoutingModule
   ],
   declarations: [
     LayoutPage,

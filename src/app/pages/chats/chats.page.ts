@@ -15,6 +15,10 @@ export class ChatsPage {
     this.panel.show('chats');
   }
 
+  ionViewWillLeave() {
+    this.panel.show();
+  }
+
   createChat() {
     this.chats.create();
   }

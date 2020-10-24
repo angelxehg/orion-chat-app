@@ -12,20 +12,6 @@
       <ion-title size="large">Inicio</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-item-group>
-    <ion-item-divider>
-      <ion-label>
-        Paleta de colores
-      </ion-label>
-    </ion-item-divider>
-    <ion-grid>
-      <ion-row class="ion-align-items-stretch">
-        <ion-card *ngFor="let color of colors" class="setting-card" [color]="color">
-          <ion-card-content style="padding: 10px;">
-            Color {{ color }}
-          </ion-card-content>
-        </ion-card>
-      </ion-row>
-    </ion-grid>
-  </ion-item-group>
+  <app-button-grid title="Enlaces" [items]="pages"></app-button-grid>
+  <!-- <app-button-grid title="Paleta de colores" [items]="colors"></app-button-grid> -->
 </ion-content>

@@ -5,7 +5,7 @@ import { LayoutPage } from './layout.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: '/app/home',
     pathMatch: 'full'
   },
   {
@@ -21,8 +21,16 @@ const routes: Routes = [
         loadChildren: () => import('../pages/spaces/spaces.module').then(m => m.SpacesPageModule)
       },
       {
+        path: 'contacts',
+        loadChildren: () => import('../pages/contacts/contacts.module').then(m => m.ContactsPageModule)
+      },
+      {
         path: 'chats',
         loadChildren: () => import('../pages/chats/chats.module').then(m => m.ChatsPageModule)
+      },
+      {
+        path: 'events',
+        loadChildren: () => import('../pages/events/events.module').then(m => m.EventsPageModule)
       },
       {
         path: 'files',
@@ -34,7 +42,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: '/app/home',
         pathMatch: 'full'
       }
     ]

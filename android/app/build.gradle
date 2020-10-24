@@ -6,8 +6,8 @@ android {
         applicationId "com.angelxehg.orion"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 24
-        versionName "2.0.0-alpha.6"
+        versionCode 25
+        versionName "2.0.0-alpha.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
