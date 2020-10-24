@@ -16,7 +16,7 @@ export class SpacesPage {
   constructor(private spaces: SpacesService, public panel: PanelService) { }
 
   ionViewWillEnter() {
-    this.panel.show('spaces');
+    this.panel.show();
     this.spaces.mock();
   }
 }

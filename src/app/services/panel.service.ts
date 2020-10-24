@@ -78,29 +78,6 @@ export class PanelService {
     }
   ];
 
-  private defaultSpaces: MenuGroup[] = [
-    {
-      title: 'Espacios',
-      items: [
-        {
-          title: 'Espacio 1',
-          url: '/app/spaces/1',
-          icon: 'home',
-        },
-        {
-          title: 'Espacio 2',
-          url: '/app/spaces/2',
-          icon: 'home',
-        },
-        {
-          title: 'Espacio 3',
-          url: '/app/spaces/3',
-          icon: 'home',
-        },
-      ]
-    }
-  ];
-
   private items: MenuGroup[] = [];
   private items$ = new Subject<MenuGroup[]>();
 
@@ -116,8 +93,6 @@ export class PanelService {
     switch (this.current) {
       case 'chats':
         return 'Conversaciones';
-      case 'spaces':
-        return 'Espacios';
       default:
         return 'Tomatoe Chat';
     }
@@ -130,9 +105,6 @@ export class PanelService {
     switch (this.current) {
       case 'chats':
         this.items = this.defaultChats;
-        break;
-      case 'spaces':
-        this.items = this.defaultSpaces;
         break;
       default:
         this.items = this.defaultMenu;
