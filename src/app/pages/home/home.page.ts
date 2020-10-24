@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PanelService } from '../../services/panel.service';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +9,6 @@ export class HomePage {
 
   colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger'];
 
-  constructor(public panel: PanelService) { }
-
-  ionViewWillEnter() {
-    this.panel.show();
-  }
+  constructor() { }
 
 }

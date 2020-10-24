@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { PanelService, PanelServiceMock } from 'src/app/services/panel.service';
 
 import { FilesPage } from './files.page';
 
@@ -12,9 +11,6 @@ describe('FilesPage', () => {
     TestBed.configureTestingModule({
       declarations: [FilesPage],
       imports: [IonicModule.forRoot()],
-      providers: [
-        { provide: PanelService, useValue: PanelServiceMock }
-      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FilesPage);

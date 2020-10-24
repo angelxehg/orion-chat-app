@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TomatoeEventGroup } from 'src/app/models/event';
 import { EventsService } from 'src/app/services/events.service';
-import { PanelService } from 'src/app/services/panel.service';
-
 @Component({
   selector: 'app-events',
   templateUrl: './events.page.html',
@@ -13,10 +11,9 @@ export class EventsPage {
 
   items: Observable<TomatoeEventGroup[]> = this.events.observable;
 
-  constructor(private events: EventsService, public panel: PanelService) { }
+  constructor(private events: EventsService) { }
 
   ionViewWillEnter() {
-    this.panel.show();
     this.events.mock();
   }
 
