@@ -8,7 +8,11 @@ import { TomatoeChat } from 'src/app/models/chat';
 })
 export class ChatItemComponent {
 
-  @Input() item: TomatoeChat;
+  @Input() item: TomatoeChat = {
+    title: 'Item',
+    lastMsg: '',
+    lastMsgDate: ''
+  };
 
   @Input() color = '';
 
