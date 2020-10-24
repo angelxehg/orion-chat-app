@@ -14,7 +14,7 @@
   </ion-header>
   <ion-list>
     <!-- Documentos -->
-    <ion-item-group *ngFor="let group of itemGroups">
+    <ion-item-group *ngFor="let group of items | async">
       <ion-item-divider>
         <ion-label>{{ group.title }}</ion-label>
       </ion-item-divider>

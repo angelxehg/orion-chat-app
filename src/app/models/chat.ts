@@ -5,4 +5,7 @@ export interface TomatoeChatGroup {
 
 export interface TomatoeChat {
   title: string;
+  lastMsg: string;
+  lastMsgDate: string;
+  imageSrc?: string;
 }

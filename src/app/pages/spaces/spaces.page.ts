@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TomatoeSpaceGroup } from 'src/app/models/space';
 import { PanelService } from 'src/app/services/panel.service';
+import { SpacesService } from 'src/app/services/spaces.service';
 
 @Component({
   selector: 'app-spaces',
@@ -9,26 +11,12 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class SpacesPage {
 
-  itemGroups: TomatoeSpaceGroup[] = [
-    {
-      title: 'Mis espacios de trabajo',
-      items: [
-        {
-          title: 'Espacio 1'
-        },
-        {
-          title: 'Espacio 2'
-        },
-        {
-          title: 'Espacio 3'
-        }
-      ]
-    }
-  ];
+  items: Observable<TomatoeSpaceGroup[]> = this.spaces.observable;
 
-  constructor(public panel: PanelService) { }
+  constructor(private spaces: SpacesService, public panel: PanelService) { }
 
   ionViewWillEnter() {
-    this.panel.show('spaces');
+    this.panel.show();
+    this.spaces.mock();
   }
 }

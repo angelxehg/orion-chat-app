@@ -3,14 +3,15 @@
     <ion-menu contentId="main">
       <ion-header>
         <ion-toolbar>
-          <ion-buttons slot="start" class="{{ panel.current == 'menu' ? 'ion-hide' : '' }}">
+          <ion-buttons slot="start" class="{{ panel.current === 'menu' ? 'ion-hide' : '' }}">
             <ion-back-button defaultHref="app/home"></ion-back-button>
           </ion-buttons>
           <ion-title>{{ panel.title() }}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <app-menu></app-menu>
+        <app-menu *ngIf="panel.current == 'menu'"></app-menu>
+        <app-chat-menu *ngIf="panel.current == 'chats'"></app-chat-menu>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main">

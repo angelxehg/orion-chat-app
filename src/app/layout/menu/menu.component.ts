@@ -1,7 +1,5 @@
 import { Component, } from '@angular/core';
-import { Observable } from 'rxjs';
-import { MenuGroup } from 'src/app/models/menu';
-import { PanelService } from 'src/app/services/panel.service';
+import { MenuItem } from 'src/app/models/menu';
 
 @Component({
   selector: 'app-menu',
@@ -10,8 +8,39 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class MenuComponent {
 
-  menuGroups: Observable<MenuGroup[]> = this.panel.menuItems;
+  items: MenuItem[] = [
+    {
+      title: 'Inicio',
+      url: '/app/home',
+      icon: 'home',
+    },
+    {
+      title: 'Chats',
+      url: '/app/chats',
+      icon: 'chatbubbles',
+    },
+    {
+      title: 'Espacios',
+      url: '/app/spaces',
+      icon: 'file-tray-full',
+    },
+    {
+      title: 'Archivos',
+      url: '/app/files',
+      icon: 'documents',
+    },
+    {
+      title: 'Configuración',
+      url: '/app/settings',
+      icon: 'cog',
+    },
+  ];
 
-  constructor(private panel: PanelService) { }
+  constructor() { }
+
+  activeColor(url) {
+    const active = window.location.pathname.includes(url);
+    return active ? 'primary' : '';
+  }
 
 }

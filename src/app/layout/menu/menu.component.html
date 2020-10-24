@@ -1,6 +1,11 @@
-<ion-item-group *ngFor="let group of menuGroups | async">
+<ion-item-group>
   <ion-item-divider>
-    <ion-label>{{ group.title }}</ion-label>
+    <ion-label>Secciones</ion-label>
   </ion-item-divider>
-  <app-menu-item [items]="group.items"></app-menu-item>
+  <ion-menu-toggle auto-hide="false" *ngFor="let item of items">
+    <ion-item routerDirection="root" [routerLink]="[item.url]" lines="none" detail="false">
+      <ion-icon slot="start" [name]="item.icon" [color]="activeColor(item.url)"></ion-icon>
+      <ion-label [color]="activeColor(item.url)">{{ item.title }}</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
 </ion-item-group>

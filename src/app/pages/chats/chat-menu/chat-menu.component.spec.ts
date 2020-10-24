@@ -1,25 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { ChatServiceMock, ChatsService } from 'src/app/services/chats.service';
-import { PanelService, PanelServiceMock } from 'src/app/services/panel.service';
+import { ChatsService } from 'src/app/services/chats.service';
+import { ChatServiceMock } from 'src/app/services/spaces.service';
 
-import { ChatsPage } from './chats.page';
+import { ChatMenuComponent } from './chat-menu.component';
 
-describe('ChatsPage', () => {
-  let component: ChatsPage;
-  let fixture: ComponentFixture<ChatsPage>;
+describe('ChatMenuComponent', () => {
+  let component: ChatMenuComponent;
+  let fixture: ComponentFixture<ChatMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ChatsPage],
+      declarations: [ChatMenuComponent],
       imports: [IonicModule.forRoot()],
       providers: [
-        { provide: PanelService, useValue: PanelServiceMock },
         { provide: ChatsService, useValue: ChatServiceMock }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ChatsPage);
+    fixture = TestBed.createComponent(ChatMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

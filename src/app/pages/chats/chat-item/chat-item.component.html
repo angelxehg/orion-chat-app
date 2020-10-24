@@ -1,0 +1,10 @@
+<ion-item [color]="color">
+  <ion-avatar slot="start">
+    <img [src]="item.imageSrc || 'assets/icon/favicon.png'">
+  </ion-avatar>
+  <ion-label>
+    <h2>{{ item.title }}</h2>
+    <p>{{ item.lastMsg }}</p>
+  </ion-label>
+  <ion-note slot="end">{{ item.lastMsgDate }}</ion-note>
+</ion-item>

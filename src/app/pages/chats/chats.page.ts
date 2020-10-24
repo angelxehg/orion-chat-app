@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TomatoeChatGroup } from 'src/app/models/chat';
+import { ChatsService } from 'src/app/services/chats.service';
 import { PanelService } from 'src/app/services/panel.service';
 
 @Component({
@@ -9,26 +9,13 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class ChatsPage {
 
-  itemGroups: TomatoeChatGroup[] = [
-    {
-      title: 'Mis conversaciones',
-      items: [
-        {
-          title: 'Conversación 1'
-        },
-        {
-          title: 'Conversación 2'
-        },
-        {
-          title: 'Conversación 3'
-        }
-      ]
-    }
-  ];
-
-  constructor(public panel: PanelService) { }
+  constructor(private chats: ChatsService, public panel: PanelService) { }
 
   ionViewWillEnter() {
     this.panel.show('chats');
+  }
+
+  createChat() {
+    this.chats.create();
   }
 }

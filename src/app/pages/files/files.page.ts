@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TomatoeDocumentGroup } from 'src/app/models/document';
+import { FilesService } from 'src/app/services/files.service';
 import { PanelService } from '../../services/panel.service';
 
 @Component({
@@ -9,26 +11,12 @@ import { PanelService } from '../../services/panel.service';
 })
 export class FilesPage {
 
-  itemGroups: TomatoeDocumentGroup[] = [
-    {
-      title: 'Grupo 1',
-      items: [
-        {
-          title: 'Documento 1'
-        },
-        {
-          title: 'Documento 2'
-        },
-        {
-          title: 'Documento 3'
-        }
-      ]
-    }
-  ];
+  items: Observable<TomatoeDocumentGroup[]> = this.files.observable;
 
-  constructor(public panel: PanelService) { }
+  constructor(private files: FilesService, public panel: PanelService) { }
 
   ionViewWillEnter() {
     this.panel.show();
+    this.files.mock();
   }
 }
