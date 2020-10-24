@@ -9,7 +9,6 @@ import { LayoutPageRoutingModule } from './layout-routing.module';
 import { LayoutPage } from './layout.page';
 import { TabsComponent } from './tabs/tabs.component';
 import { MenuComponent } from './menu/menu.component';
-import { MenuItemComponent } from './menu-item/menu-item.component';
 
 @NgModule({
   imports: [
@@ -21,8 +20,7 @@ import { MenuItemComponent } from './menu-item/menu-item.component';
   declarations: [
     LayoutPage,
     TabsComponent,
-    MenuComponent,
-    MenuItemComponent
+    MenuComponent
   ]
 })
 export class LayoutPageModule { }

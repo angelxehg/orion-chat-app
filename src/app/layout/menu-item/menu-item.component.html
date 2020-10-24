@@ -1,6 +1,0 @@
-<ion-menu-toggle auto-hide="false" *ngFor="let page of items">
-  <ion-item routerDirection="root" [routerLink]="[page.url]" lines="none" detail="false">
-    <ion-icon slot="start" [name]="page.icon" [color]="activeColor(page.url)"></ion-icon>
-    <ion-label [color]="activeColor(page.url)">{{ page.title }}</ion-label>
-  </ion-item>
-</ion-menu-toggle>
