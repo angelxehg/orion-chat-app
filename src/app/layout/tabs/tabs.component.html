@@ -8,8 +8,16 @@
     <ion-tab-button tab="chats">
       <ion-icon [name]="activeIcon('chats', 'chatbubbles')"></ion-icon>
     </ion-tab-button>
+    <!-- Contacts tab -->
+    <ion-tab-button tab="contacts">
+      <ion-icon [name]="activeIcon('contacts', 'people')"></ion-icon>
+    </ion-tab-button>
+    <!-- Events tab -->
+    <ion-tab-button tab="events" class="ion-hide-sm-down">
+      <ion-icon [name]="activeIcon('events', 'calendar')"></ion-icon>
+    </ion-tab-button>
     <!-- Spaces tab -->
-    <ion-tab-button tab="spaces">
+    <ion-tab-button tab="spaces" class="ion-hide-sm-down">
       <ion-icon [name]="activeIcon('spaces', 'file-tray-full')"></ion-icon>
     </ion-tab-button>
     <!-- Files tab -->
