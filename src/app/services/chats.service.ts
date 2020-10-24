@@ -19,32 +19,34 @@ export class ChatsService {
 
   constructor() { }
 
+  create() {
+    this.items.push({
+      title: 'Conversación X',
+      lastMsg: '[Yo]: Hola',
+      lastMsgDate: '19:00'
+    });
+    this.items$.next(this.items);
+  }
+
   mock() {
     this.items = [
       {
         title: 'Conversación 1',
         lastMsg: '[Yo]: Hola',
-        lastMsgDate: '19:00'
+        lastMsgDate: '19:00',
+        imageSrc: 'https://ionicframework.com/docs/demos/api/list/avatar-finn.png'
       },
       {
         title: 'Conversación 2',
         lastMsg: '[Yo]: Hola',
-        lastMsgDate: '20:15'
+        lastMsgDate: '20:15',
+        imageSrc: 'https://ionicframework.com/docs/demos/api/list/avatar-han.png'
       },
       {
         title: 'Conversación 3',
         lastMsg: '[Yo]: Hola',
-        lastMsgDate: '15:30'
-      },
-      {
-        title: 'Conversación 4',
-        lastMsg: '[Yo]: Hola',
-        lastMsgDate: '21:10'
-      },
-      {
-        title: 'Conversación 5',
-        lastMsg: '[Yo]: Hola',
-        lastMsgDate: '19:30'
+        lastMsgDate: '15:30',
+        imageSrc: 'https://ionicframework.com/docs/demos/api/list/avatar-luke.png'
       }
     ];
     this.items$.next(this.items);

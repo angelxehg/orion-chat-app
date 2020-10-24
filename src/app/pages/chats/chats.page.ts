@@ -15,4 +15,8 @@ export class ChatsPage {
     this.panel.show('chats');
     this.chats.mock();
   }
+
+  createChat() {
+    this.chats.create();
+  }
 }
