@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { BigButtonComponent } from './big-button/big-button.component';
 import { ButtonGridComponent } from './button-grid/button-grid.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { ButtonGridComponent } from './button-grid/button-grid.component';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     IonicModule
   ],
   exports: [

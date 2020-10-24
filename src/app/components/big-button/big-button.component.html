@@ -1,4 +1,4 @@
-<ion-card [color]="item.color || 'default'">
+<ion-card [color]="item.color" [routerLink]="item.url">
   <ion-icon class="big" [name]="item.icon"></ion-icon>
   <ion-card-header *ngIf="item.title">
     <ion-card-title>

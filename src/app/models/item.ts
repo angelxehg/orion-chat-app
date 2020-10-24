@@ -3,4 +3,5 @@ export interface TomatoeItem {
   content?: string;
   color?: string;
   icon?: string;
+  url?: string;
 }
