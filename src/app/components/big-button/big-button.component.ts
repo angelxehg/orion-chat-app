@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TomatoeItem } from 'src/app/models/item';
 
 @Component({
   selector: 'app-big-button',
@@ -7,9 +8,9 @@ import { Component, Input } from '@angular/core';
 })
 export class BigButtonComponent {
 
-  @Input() title = '';
-
-  @Input() color = 'default';
+  @Input() item: TomatoeItem = {
+    title: 'Sample Item'
+  };
 
   constructor() { }
 

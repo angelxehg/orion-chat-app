@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 import { BigButtonComponent } from './big-button/big-button.component';
+import { ButtonGridComponent } from './button-grid/button-grid.component';
 
 @NgModule({
   declarations: [
-    BigButtonComponent
+    BigButtonComponent,
+    ButtonGridComponent
   ],
   imports: [
     CommonModule,
     IonicModule
   ],
   exports: [
-    BigButtonComponent
+    BigButtonComponent,
+    ButtonGridComponent
   ]
 })
 export class ComponentsModule { }

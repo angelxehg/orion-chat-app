@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TomatoeItem } from 'src/app/models/item';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,15 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger'];
+  colors: TomatoeItem[] = [
+    'primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'dark', 'medium', 'light'
+  ].map(color => {
+    return {
+      title: `Color '${color}'`,
+      icon: 'color-palette-outline',
+      color
+    };
+  });
 
   constructor() { }
 

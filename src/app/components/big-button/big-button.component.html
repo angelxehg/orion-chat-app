@@ -1,5 +1,11 @@
-<ion-card [color]="color">
-  <ion-card-content style="padding: 10px;">
-    {{ title }}
+<ion-card [color]="item.color || 'default'">
+  <ion-icon class="big" [name]="item.icon"></ion-icon>
+  <ion-card-header *ngIf="item.title">
+    <ion-card-title>
+      {{ item.title }}
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content *ngIf="item.content">
+    {{ item.content }}
   </ion-card-content>
 </ion-card>

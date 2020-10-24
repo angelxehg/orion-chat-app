@@ -18,6 +18,6 @@
         Paleta de colores
       </ion-label>
     </ion-item-divider>
-    <app-big-button *ngFor="let color of colors" [title]="color" [color]="color"></app-big-button>
+    <app-button-grid [items]="colors"></app-button-grid>
   </ion-item-group>
 </ion-content>
