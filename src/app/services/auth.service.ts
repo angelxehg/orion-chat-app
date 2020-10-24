@@ -41,11 +41,9 @@ export class AuthService {
       if (user) {
         this.userData = user;
         this.storage.set('USER_DATA', JSON.stringify(user)).then();
-        this.router.navigateByUrl('/app/home');
       } else {
         this.userData = null;
         this.storage.remove('USER_DATA').then();
-        this.router.navigateByUrl('/landing');
       }
     });
   }
@@ -151,13 +149,21 @@ export class AuthService {
     }).then(a => a.present());
   }
 
-  public logout = () => this.fireAuth.signOut();
+  public logout = () => this.fireAuth.signOut().then(() => {
+    this.storage.remove('USER_DATA').then(() => {
+      this.router.navigateByUrl('/landing');
+    });
+  })
 
   private authLoginWithEmail(email: string, password: string) {
     if (!email || !password) {
       return;
     }
-    this.fireAuth.signInWithEmailAndPassword(email, password).then().catch(err => {
+    this.fireAuth.signInWithEmailAndPassword(email, password).then(credential => {
+      this.storage.set('USER_DATA', JSON.stringify(credential.user)).then(() => {
+        this.router.navigateByUrl('/app/home');
+      });
+    }).catch(err => {
       console.log(err);
     });
   }
