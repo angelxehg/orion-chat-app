@@ -29,7 +29,7 @@ export const AuthServiceMock = {
 })
 export class AuthService {
 
-  private userData: firebase.User;
+  public userData: firebase.User;
 
   constructor(
     private router: Router,
