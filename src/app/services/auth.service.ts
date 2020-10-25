@@ -183,11 +183,22 @@ export class AuthService {
     this.fireAuth.createUserWithEmailAndPassword(email, password).then(credential => {
       credential.user.sendEmailVerification().then(() => {
         this.storage.set('USER_DATA', JSON.stringify(credential.user)).then(() => {
-          this.router.navigateByUrl('/app/home');
+          this.router.navigateByUrl('/verify');
         });
       });
     }).catch(err => {
       console.log(err);
+    });
+  }
+
+  public verifyEmail(oobCode: string) {
+    return this.fireAuth.applyActionCode(oobCode).then(() => {
+      setTimeout((router: Router) => {
+        router.navigateByUrl('/app/home');
+      }, 1000, this.router);
+      return true;
+    }).catch(err => {
+      return false;
     });
   }
 }

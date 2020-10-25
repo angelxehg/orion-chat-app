@@ -2,18 +2,17 @@
   <ion-slides pager="true" [options]="slideOpts">
     <ion-slide>
       <ion-card>
-        <ion-icon class="big-icon" name="shield-checkmark" color="success"></ion-icon>
+        <ion-icon *ngIf="ready; else loadingSpinner" class="big-icon" name="shield-checkmark"
+          [color]="error ? 'danger' : 'success'">
+        </ion-icon>
+        <ng-template #loadingSpinner>
+          <ion-spinner class="big-icon" name="circles" color="secondary"></ion-spinner>
+        </ng-template>
         <ion-card-header>
-          <ion-card-title>Verificación</ion-card-title>
+          <ion-card-title>{{ title() }}</ion-card-title>
         </ion-card-header>
-        <ion-card-content class="card-items">
-          <!-- Links-->
-          <!-- <ion-item button (click)="login()">
-            <ion-icon slot="end" name="log-in"></ion-icon>
-            <ion-label>
-              Iniciar sesión
-            </ion-label>
-          </ion-item> -->
+        <ion-card-content>
+          {{ content() }}
         </ion-card-content>
       </ion-card>
     </ion-slide>
