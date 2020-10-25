@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-verify',
-  templateUrl: './verify.component.html',
-  styleUrls: ['./verify.component.scss'],
+  templateUrl: './verify.page.html',
+  styleUrls: ['./verify.page.scss'],
 })
-export class VerifyComponent {
+export class VerifyPage {
 
   slideOpts = {
     speed: 400
