@@ -23,6 +23,7 @@ export class SettingsPage {
 
   get themeColor() { return this.settings.isDarkTheme() ? 'tertiary' : 'warning'; }
 
+  user = () => this.auth.userData;
 
   logout = () => this.auth.logout();
 

@@ -14,6 +14,8 @@ export class ChatMenuComponent {
 
   constructor(private chats: ChatsService) { }
 
+  enabled = () => this.chats.enabled();
+
   activeColor(item: TomatoeChat) {
     return item.lastMsgDate === '20:15' ? 'primary' : '';
   }

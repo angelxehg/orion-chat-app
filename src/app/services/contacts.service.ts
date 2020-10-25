@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { of, Subject } from 'rxjs';
 import { TomatoeContactGroup } from '../models/contact';
+import { AuthService } from './auth.service';
 
 export const ContactsServiceMock = {
   observable: of([]),
   mock: () => { },
+  enabled: () => true
 };
 
 @Injectable({
@@ -17,7 +19,9 @@ export class ContactsService {
 
   public observable = this.items$.asObservable();
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
+
+  enabled = () => this.auth.isVerified();
 
   mock() {
     this.items = [

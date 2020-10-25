@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { of, Subject } from 'rxjs';
 import { TomatoeChat } from '../models/chat';
+import { AuthService } from './auth.service';
 
 export const ChatServiceMock = {
   observable: of([]),
   mock: () => { },
+  enabled: () => true
 };
 
 @Injectable({
@@ -17,11 +19,14 @@ export class ChatsService {
 
   public observable = this.items$.asObservable();
 
-  constructor() {
-    this.mock();
-  }
+  constructor(private auth: AuthService) { }
+
+  enabled = () => this.auth.isVerified();
 
   create() {
+    if (!this.enabled()) {
+      return console.log('No verified');
+    }
     this.items.push({
       title: 'Conversación X',
       lastMsg: '[Yo]: Hola',

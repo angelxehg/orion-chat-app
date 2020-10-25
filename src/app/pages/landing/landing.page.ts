@@ -24,6 +24,8 @@ export class LandingPage {
 
   register = () => this.auth.registerWithEmail();
 
+  recover = () => this.auth.recoverPasswordByEmail();
+
   toggleTheme = () => this.settings.toggleTheme();
 
   get themeIcon() { return this.settings.isDarkTheme() ? 'moon' : 'sunny'; }

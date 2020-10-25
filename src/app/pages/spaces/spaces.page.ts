@@ -14,6 +14,8 @@ export class SpacesPage {
 
   constructor(private spaces: SpacesService) { }
 
+  enabled = () => this.spaces.enabled();
+
   ionViewWillEnter() {
     this.spaces.mock();
   }

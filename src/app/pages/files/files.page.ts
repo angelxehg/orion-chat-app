@@ -14,6 +14,8 @@ export class FilesPage {
 
   constructor(private files: FilesService) { }
 
+  enabled = () => this.files.enabled();
+
   ionViewWillEnter() {
     this.files.mock();
   }

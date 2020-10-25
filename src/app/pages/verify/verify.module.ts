@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LandingPageRoutingModule } from './landing-routing.module';
+import { VerifyPageRoutingModule } from './verify-routing.module';
 
-import { LandingPage } from './landing.page';
+import { VerifyPage } from './verify.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LandingPageRoutingModule
+    VerifyPageRoutingModule
   ],
-  declarations: [
-    LandingPage
-  ]
+  declarations: [VerifyPage]
 })
-export class LandingPageModule { }
+export class VerifyPageModule {}

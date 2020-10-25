@@ -13,6 +13,8 @@ export class EventsPage {
 
   constructor(private events: EventsService) { }
 
+  enabled = () => this.events.enabled();
+
   ionViewWillEnter() {
     this.events.mock();
   }

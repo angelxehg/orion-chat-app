@@ -14,4 +14,6 @@ export class ChatListComponent {
 
   constructor(private chats: ChatsService) { }
 
+  enabled = () => this.chats.enabled();
+
 }

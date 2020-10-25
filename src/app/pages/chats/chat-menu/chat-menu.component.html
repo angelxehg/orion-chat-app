@@ -1,4 +1,4 @@
-<ion-item-group>
+<ion-item-group *ngIf="enabled(); else noVerified;">
   <ion-item-divider>
     <ion-label>Mis chats</ion-label>
   </ion-item-divider>
@@ -6,3 +6,6 @@
     <app-chat-item [item]="item" [color]="activeColor(item)"></app-chat-item>
   </ion-menu-toggle>
 </ion-item-group>
+<ng-template #noVerified>
+  <p>Por favor verifica tu email para poder enviar mensajes</p>
+</ng-template>

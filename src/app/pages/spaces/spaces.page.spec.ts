@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { SpacesService, SpacesServiceMock } from 'src/app/services/spaces.service';
 
 import { SpacesPage } from './spaces.page';
 
@@ -11,6 +12,9 @@ describe('SpacesPage', () => {
     TestBed.configureTestingModule({
       declarations: [SpacesPage],
       imports: [IonicModule.forRoot()],
+      providers: [
+        { provide: SpacesService, useValue: SpacesServiceMock }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SpacesPage);

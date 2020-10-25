@@ -18,7 +18,11 @@ const routes: Routes = [
     path: 'landing',
     loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingPageModule),
     canActivate: [NoAuthGuard]
+  },  {
+    path: 'verify',
+    loadChildren: () => import('./pages/verify/verify.module').then( m => m.VerifyPageModule)
   }
+
 ];
 @NgModule({
   imports: [
