@@ -102,6 +102,11 @@ export class AuthService {
           name: 'password',
           type: 'password',
           placeholder: 'Ingresa tu contraseña'
+        },
+        {
+          name: 'passwordConfirmation',
+          type: 'password',
+          placeholder: 'Confirma tu contraseña'
         }
       ],
       buttons: [
@@ -113,8 +118,8 @@ export class AuthService {
         {
           text: 'Registrar',
           cssClass: 'success',
-          handler: ({ email, password }) => {
-            console.log('registerWithEmail', email, password);
+          handler: ({ email, password, passwordConfirmation }) => {
+            this.authRegisterWithEmail(email, password, passwordConfirmation);
           }
         }
       ]
@@ -162,6 +167,24 @@ export class AuthService {
     this.fireAuth.signInWithEmailAndPassword(email, password).then(credential => {
       this.storage.set('USER_DATA', JSON.stringify(credential.user)).then(() => {
         this.router.navigateByUrl('/app/home');
+      });
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
+  private authRegisterWithEmail(email: string, password: string, passwordConfirmation: string) {
+    if (!email || !password || !passwordConfirmation) {
+      return;
+    }
+    if (password !== passwordConfirmation) {
+      return;
+    }
+    this.fireAuth.createUserWithEmailAndPassword(email, password).then(credential => {
+      credential.user.sendEmailVerification().then(() => {
+        this.storage.set('USER_DATA', JSON.stringify(credential.user)).then(() => {
+          this.router.navigateByUrl('/app/home');
+        });
       });
     }).catch(err => {
       console.log(err);
