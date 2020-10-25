@@ -55,6 +55,13 @@ export class AuthService {
     return true;
   })
 
+  public isVerified = () => {
+    if (!this.userData) {
+      return false;
+    }
+    return this.userData.emailVerified;
+  }
+
   public loginWithEmail() {
     this.alert.create({
       header: 'Iniciar sesión',

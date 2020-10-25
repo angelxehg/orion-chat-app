@@ -12,7 +12,7 @@
       <ion-title size="large">Espacios</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-list class="ion-hide-md-up">
+  <ion-list *ngIf="enabled(); else noVerified;">
     <!-- Espacios -->
     <ion-item-group *ngFor="let group of items | async">
       <ion-item-divider>
@@ -24,4 +24,7 @@
       </ion-item>
     </ion-item-group>
   </ion-list>
+  <ng-template #noVerified>
+    <p>Por favor verifica tu email para poder enviar mensajes</p>
+  </ng-template>
 </ion-content>

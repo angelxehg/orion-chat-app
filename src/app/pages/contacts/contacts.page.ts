@@ -14,6 +14,8 @@ export class ContactsPage {
 
   constructor(private contacts: ContactsService) { }
 
+  enabled = () => this.contacts.enabled();
+
   ionViewWillEnter() {
     this.contacts.mock();
   }

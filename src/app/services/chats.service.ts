@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 export const ChatServiceMock = {
   observable: of([]),
   mock: () => { },
+  enabled: () => true
 };
 
 @Injectable({
@@ -18,13 +19,14 @@ export class ChatsService {
 
   public observable = this.items$.asObservable();
 
-  constructor(private auth: AuthService) {
-    this.mock();
-  }
+  constructor(private auth: AuthService) { }
 
-  enabled = () => this.auth.userData.emailVerified;
+  enabled = () => this.auth.isVerified();
 
   create() {
+    if (!this.enabled()) {
+      return console.log('No verified');
+    }
     this.items.push({
       title: 'Conversación X',
       lastMsg: '[Yo]: Hola',
