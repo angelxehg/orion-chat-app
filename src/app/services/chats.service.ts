@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of, Subject } from 'rxjs';
 import { TomatoeChat } from '../models/chat';
+import { AuthService } from './auth.service';
 
 export const ChatServiceMock = {
   observable: of([]),
@@ -17,9 +18,11 @@ export class ChatsService {
 
   public observable = this.items$.asObservable();
 
-  constructor() {
+  constructor(private auth: AuthService) {
     this.mock();
   }
+
+  enabled = () => this.auth.userData.emailVerified;
 
   create() {
     this.items.push({
