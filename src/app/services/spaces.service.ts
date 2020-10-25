@@ -3,7 +3,7 @@ import { of, Subject } from 'rxjs';
 import { TomatoeSpaceGroup } from '../models/space';
 import { AuthService } from './auth.service';
 
-export const ChatServiceMock = {
+export const SpacesServiceMock = {
   observable: of([]),
   mock: () => { },
   enabled: () => true

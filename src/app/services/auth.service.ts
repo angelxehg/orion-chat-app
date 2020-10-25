@@ -14,7 +14,12 @@ export const AuthStorageMock: any = {
   },
   set: (param, value) => {
     return of(value).toPromise();
-  }
+  },
+  remove: (param) => { }
+};
+
+export const AngularFireAuthMock = {
+  authState: of(null)
 };
 
 export const AuthServiceMock = {

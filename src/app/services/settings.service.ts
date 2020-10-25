@@ -15,7 +15,8 @@ export const SettingsStorageMock: any = {
   },
   set: (param, value) => {
     return of(value).toPromise();
-  }
+  },
+  remove: (param) => { }
 };
 
 export const SettingsServiceMock = {

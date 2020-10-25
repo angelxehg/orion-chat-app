@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { ChatsService } from 'src/app/services/chats.service';
-import { ChatServiceMock } from 'src/app/services/spaces.service';
+import { ChatServiceMock, ChatsService } from 'src/app/services/chats.service';
 
 import { ChatMenuComponent } from './chat-menu.component';
 
