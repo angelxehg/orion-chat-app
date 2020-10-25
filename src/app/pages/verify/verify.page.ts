@@ -29,6 +29,7 @@ export class VerifyPage {
       return this.verifyEmail(params.oobCode);
     }
     this.ready = true;
+    this.success = true;
   }
 
   verifyEmail(oobCode: string) {
@@ -52,7 +53,7 @@ export class VerifyPage {
     }
   }
 
-  content() {
+  subtitle() {
     switch (this.mode) {
       case 'verifyEmail':
         if (this.error) {
