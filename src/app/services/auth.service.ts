@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 export const AuthStorageMock: any = {
   get: (param) => {
@@ -29,10 +29,19 @@ export const AuthServiceMock = {
   logout: () => of(true).toPromise(),
 };
 
+export interface User {
+  displayName?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  //
+  private session = new BehaviorSubject<User>(null);
+  public session$ = this.session.asObservable();
+  //
 
   public userData: firebase.User;
 
@@ -46,19 +55,20 @@ export class AuthService {
       if (user) {
         this.userData = user;
         this.storage.set('USER_DATA', JSON.stringify(user)).then();
+        //
+        // console.log('Auth state marking session as User');
+        this.session.next(user);
       } else {
         this.userData = null;
         this.storage.remove('USER_DATA').then();
+        //
+        // console.log('Auth state marking session as {}');
+        this.session.next({});
       }
     });
   }
 
-  public isLoggedIn = () => this.storage.get('USER_DATA').then(data => {
-    if (!data) {
-      return false;
-    }
-    return true;
-  })
+  public isLoggedIn = () => this.userData !== null;
 
   public isVerified = () => {
     if (!this.userData) {
