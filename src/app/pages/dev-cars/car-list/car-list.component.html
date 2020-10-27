@@ -11,7 +11,7 @@
       Este item se repite varias veces con *ngFor, ya que es un listado.
       Fue generado con 'ionic g component pages/dev-cars/car-item'
     -->
-    <app-car-item *ngFor="let item of items" [item]="item" [routerLink]="item.id">
+    <app-car-item *ngFor="let item of items" [item]="item">
     </app-car-item>
   </ion-item-group>
 </ion-list>

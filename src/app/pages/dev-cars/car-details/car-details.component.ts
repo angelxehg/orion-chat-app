@@ -32,6 +32,8 @@ export class CarDetailsComponent {
   save() {
     if (this.mode === 'edit') {
       this.cars.update(this.id, this.item).then();
+    } else if (this.mode === 'new') {
+      this.cars.create(this.item).then();
     }
   }
 

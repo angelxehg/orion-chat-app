@@ -33,12 +33,29 @@ export class CarService {
     return this.collection.doc<TomatoeItem>(id).valueChanges().pipe(take(1));
   }
 
+  create(item: TomatoeItem) {
+    return this.collection.add(item).then(() => {
+      this.toast.success('Documento creado');
+    }).catch(err => {
+      this.toast.error('No se pudo crear documento');
+    });
+  }
+
   update(id: string, item: TomatoeItem) {
     const document = this.collection.doc<TomatoeItem>(id);
     return document.update(item).then(() => {
       this.toast.success('Documento actualizado');
     }).catch(err => {
       this.toast.error('No se pudo actualizar documento');
+    });
+  }
+
+  delete(id: string) {
+    const document = this.collection.doc<TomatoeItem>(id);
+    return document.delete().then(() => {
+      this.toast.success('Documento eliminado');
+    }).catch(err => {
+      this.toast.error('No se pudo eliminar documento');
     });
   }
 

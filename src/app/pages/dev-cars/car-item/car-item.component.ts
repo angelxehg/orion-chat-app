@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TomatoeItem } from 'src/app/models/item';
+import { CarService } from 'src/app/services/car.service';
 
 @Component({
   selector: 'app-car-item',
@@ -12,6 +13,10 @@ export class CarItemComponent {
     title: 'Item',
   };
 
-  constructor() { }
+  constructor(private cars: CarService) { }
+
+  delete() {
+    this.cars.delete(this.item.id).then();
+  }
 
 }
