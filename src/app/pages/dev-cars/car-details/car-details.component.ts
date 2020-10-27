@@ -22,9 +22,17 @@ export class CarDetailsComponent {
       this.cars.document(this.id).subscribe(item => {
         this.item = item;
       });
+    } else {
+      this.item = {};
     }
   }
 
   title = () => this.mode === 'new' ? 'Nuevo auto' : 'Modificar auto';
+
+  save() {
+    if (this.mode === 'edit') {
+      this.cars.update(this.id, this.item).then();
+    }
+  }
 
 }
