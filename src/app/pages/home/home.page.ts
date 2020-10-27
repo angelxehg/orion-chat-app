@@ -68,6 +68,14 @@ export class HomePage {
         color: 'warning'
       }
     },
+    {
+      title: 'Autos',
+      url: '/app/cars',
+      icon: {
+        name: 'car-sport',
+        color: 'warning'
+      }
+    },
   ];
 
   constructor() { }

@@ -45,6 +45,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/dev-palette/dev-palette.module').then(m => m.DevPalettePageModule)
       },
       {
+        path: 'cars',
+        loadChildren: () => import('../pages/dev-cars/dev-cars.module').then(m => m.DevCarsPageModule)
+      },
+      {
         path: '',
         redirectTo: '/app/home',
         pathMatch: 'full'
