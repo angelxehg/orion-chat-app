@@ -154,7 +154,7 @@ export class AuthService {
           text: 'Registrar',
           cssClass: 'success',
           handler: ({ email }) => {
-            console.log('recoverPasswordByEmail', email);
+            this.authSendRecoveryEmail(email);
           }
         }
       ]
@@ -198,6 +198,15 @@ export class AuthService {
     });
   }
 
+  private authSendRecoveryEmail(email: string) {
+    if (!email) {
+      return;
+    }
+    this.fireAuth.sendPasswordResetEmail(email).then(() => {
+      this.router.navigateByUrl('/verify');
+    });
+  }
+
   public verifyEmail(oobCode: string) {
     return this.fireAuth.applyActionCode(oobCode).then(() => {
       setTimeout((router: Router) => {
@@ -206,6 +215,60 @@ export class AuthService {
       return true;
     }).catch(err => {
       return false;
+    });
+  }
+
+  public resetPassword(oobCode: string) {
+    return this.fireAuth.verifyPasswordResetCode(oobCode).then(() => {
+      this.alert.create({
+        header: 'Recuperación de contraseña',
+        subHeader: 'Ingresa tu nueva contraseña',
+        inputs: [
+          {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Ingresa tu contraseña'
+          },
+          {
+            name: 'passwordConfirmation',
+            type: 'password',
+            placeholder: 'Confirma tu contraseña'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'danger',
+          },
+          {
+            text: 'Actualizar',
+            cssClass: 'success',
+            handler: ({ password, passwordConfirmation }) => {
+              this.authUpdatePassword(oobCode, password, passwordConfirmation);
+            }
+          }
+        ]
+      }).then(a => a.present());
+      return true;
+    }).catch(err => {
+      return false;
+    });
+  }
+
+  private authUpdatePassword(oobCode: string, password: string, passwordConfirmation: string) {
+    if (!password || !passwordConfirmation) {
+      return;
+    }
+    if (password !== passwordConfirmation) {
+      return;
+    }
+    return this.fireAuth.confirmPasswordReset(oobCode, password).then(() => {
+      setTimeout((router: Router) => {
+        router.navigateByUrl('/login');
+      }, 1000, this.router);
+    }).catch(err => {
+      return;
     });
   }
 }

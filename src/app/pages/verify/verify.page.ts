@@ -28,6 +28,9 @@ export class VerifyPage {
     if (params.mode === 'verifyEmail') {
       return this.verifyEmail(params.oobCode);
     }
+    if (params.mode === 'resetPassword') {
+      return this.resetPassword(params.oobCode);
+    }
     this.ready = true;
     this.success = true;
   }
@@ -35,9 +38,25 @@ export class VerifyPage {
   verifyEmail(oobCode: string) {
     this.mode = 'verifyEmail';
     if (!oobCode) {
-      return this.ready = true;
+      this.ready = true;
+      this.error = false;
+      return;
     }
     return this.auth.verifyEmail(oobCode).then(ok => {
+      this.ready = true;
+      this.success = ok;
+      this.error = !ok;
+    });
+  }
+
+  resetPassword(oobCode: string) {
+    this.mode = 'verifyEmail';
+    if (!oobCode) {
+      this.ready = true;
+      this.error = false;
+      return;
+    }
+    return this.auth.resetPassword(oobCode).then(ok => {
       this.ready = true;
       this.success = ok;
       this.error = !ok;
