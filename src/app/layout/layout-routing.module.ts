@@ -41,6 +41,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/settings/settings.module').then(m => m.SettingsPageModule)
       },
       {
+        path: 'palette',
+        loadChildren: () => import('../pages/dev-palette/dev-palette.module').then(m => m.DevPalettePageModule)
+      },
+      {
         path: '',
         redirectTo: '/app/home',
         pathMatch: 'full'

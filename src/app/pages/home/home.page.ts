@@ -59,17 +59,16 @@ export class HomePage {
     },
   ];
 
-  // colors: TomatoeItem[] = [
-  //   'primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'dark', 'medium', 'light'
-  // ].map(color => {
-  //   return {
-  //     title: `Color '${color}'`,
-  //     icon: {
-  //      name: 'color-palette-outline',
-  //      color: 'primary'
-  //    }
-  //   };
-  // });
+  devPages: TomatoeItem[] = [
+    {
+      title: 'Colores',
+      url: '/app/palette',
+      icon: {
+        name: 'color-palette',
+        color: 'warning'
+      }
+    },
+  ];
 
   constructor() { }
 
