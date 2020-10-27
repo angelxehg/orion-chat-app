@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { DevCarsPageRoutingModule } from './dev-cars-routing.module';
 
 import { DevCarsPage } from './dev-cars.page';
+import { CarListComponent } from './car-list/car-list.component';
+import { CarItemComponent } from './car-item/car-item.component';
 
 @NgModule({
   imports: [
@@ -15,6 +17,11 @@ import { DevCarsPage } from './dev-cars.page';
     IonicModule,
     DevCarsPageRoutingModule
   ],
-  declarations: [DevCarsPage]
+  declarations: [
+    DevCarsPage,
+    // Se debe declarar el componente CarList, CarItem para poderlo usar
+    CarListComponent,
+    CarItemComponent
+  ]
 })
-export class DevCarsPageModule {}
+export class DevCarsPageModule { }

@@ -3,6 +3,7 @@ export interface TomatoeItem {
   content?: string;
   color?: string;
   icon?: TomatoeIcon;
+  image?: string;
   url?: string;
 }
 

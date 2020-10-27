@@ -1,0 +1,11 @@
+<ion-item>
+  <!-- Muestra la foto del auto. Si no contiene foto muestra el logo de la app en su lugar-->
+  <ion-avatar slot="start">
+    <img [src]="item.image || 'assets/icon/favicon.png'">
+  </ion-avatar>
+  <ion-label>
+    <!-- Muestra título y contenido del objeto Auto -->
+    <h2>{{ item.title }}</h2>
+    <p>{{ item.content }}</p>
+  </ion-label>
+</ion-item>

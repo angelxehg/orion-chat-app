@@ -12,4 +12,19 @@
       <ion-title size="large">Autos</ion-title>
     </ion-toolbar>
   </ion-header>
+  <!-- 
+    app-car-list: Este componente controla la lista de autos.
+    Fue generado con 'ionic g component pages/dev-cars/car-list'
+    Recibe como parámetro el listado desde el servicio CarService
+    Ya que el listado es un Observable es necesario usar '| async'
+    El componente fue declarado en dev-cars.module.ts
+  -->
+  <app-car-list [items]="items | async" *ngIf="enabled(); else noVerified;"></app-car-list>
+  <!-- 
+    Esta plantilla se muestra cuando no se ha verificado el email.
+    Deberíamos impedir la mayoría de las operaciones mientras no se verifique el email
+  -->
+  <ng-template #noVerified>
+    <p>Por favor verifica tu email para poder enviar mensajes</p>
+  </ng-template>
 </ion-content>

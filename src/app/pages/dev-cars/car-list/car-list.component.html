@@ -1,0 +1,20 @@
+<ion-list>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Mis autos</ion-label>
+    </ion-item-divider>
+    <!--
+      app-car-item: Este componente representa un único item de autos.
+      Ya que un mensaje se muestra de manera distinta que un archivo es
+      buena idea generar un componente que represente a cada uno.
+      Como parámetro recibe el item que va a representar.
+      Este item se repite varias veces con *ngFor, ya que es un listado.
+      Fue generado con 'ionic g component pages/dev-cars/car-item'
+    -->
+    <app-car-item *ngFor="let item of items" [item]="item">
+    </app-car-item>
+  </ion-item-group>
+</ion-list>
+<ng-template #noVerified>
+  <p>Por favor verifica tu email para poder enviar mensajes</p>
+</ng-template>
