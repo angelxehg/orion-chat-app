@@ -1,4 +1,5 @@
 export interface TomatoeItem {
+  id?: string;
   title?: string;
   content?: string;
   color?: string;

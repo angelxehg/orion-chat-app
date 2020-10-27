@@ -12,4 +12,8 @@ export class CarListComponent {
 
   constructor() { }
 
+  openItem(item: TomatoeItem) {
+    console.log(item);
+  }
+
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { TomatoeItem } from '../models/item';
 import { AuthService } from './auth.service';
 
@@ -20,7 +21,11 @@ export class CarService {
   constructor(private auth: AuthService, private firestore: AngularFirestore) {
     this.collection = this.firestore.collection<TomatoeItem>('cars');
     // Esta es la instrucción que hace la magia de actualizar automáticamente
-    this.items = this.collection.valueChanges();
+    this.items = this.collection.valueChanges({ idField: 'id' });
+  }
+
+  document(id: string) {
+    return this.firestore.doc<TomatoeItem>(`cars/${id}`).valueChanges().pipe(take(1));
   }
 
   enabled = () => this.auth.isVerified();
