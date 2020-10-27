@@ -3,15 +3,15 @@ import { IonicModule } from '@ionic/angular';
 import { AuthService, AuthServiceMock } from 'src/app/services/auth.service';
 import { SettingsService, SettingsServiceMock } from 'src/app/services/settings.service';
 
-import { LandingPage } from './landing.page';
+import { LoginPage } from './login.page';
 
-describe('LandingPage', () => {
-  let component: LandingPage;
-  let fixture: ComponentFixture<LandingPage>;
+describe('LoginPage', () => {
+  let component: LoginPage;
+  let fixture: ComponentFixture<LoginPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LandingPage],
+      declarations: [LoginPage],
       imports: [IonicModule.forRoot()],
       providers: [
         { provide: AuthService, useValue: AuthServiceMock },
@@ -19,7 +19,7 @@ describe('LandingPage', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LandingPage);
+    fixture = TestBed.createComponent(LoginPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

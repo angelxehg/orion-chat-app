@@ -163,7 +163,7 @@ export class AuthService {
 
   public logout = () => this.fireAuth.signOut().then(() => {
     this.storage.remove('USER_DATA').then(() => {
-      this.router.navigateByUrl('/landing');
+      this.router.navigateByUrl('/login');
     });
   })
 

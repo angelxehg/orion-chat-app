@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['landing']);
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const redirectLoggedInToApp = () => redirectLoggedInTo(['app']);
 
 const routes: Routes = [
@@ -17,15 +17,14 @@ const routes: Routes = [
     ...canActivate(redirectUnauthorizedToLogin)
   },
   {
-    path: 'landing',
-    loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingPageModule),
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
     ...canActivate(redirectLoggedInToApp)
   },
   {
     path: 'verify',
     loadChildren: () => import('./pages/verify/verify.module').then(m => m.VerifyPageModule)
   }
-
 ];
 @NgModule({
   imports: [
