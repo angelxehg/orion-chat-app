@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { TomatoeItem } from '../models/item';
 import { AuthService } from './auth.service';
 
@@ -8,41 +9,19 @@ import { AuthService } from './auth.service';
 })
 export class CarService {
 
+  // Se traen los elementos de la colección 'cars'. Estos se actualizan en tiempo real
   // Los elementos deben contener las propiedades de la Interface TomatoeItem
   // Si requieres distintas propiedades puedes generar una nueva interface en /models
   // Asegurate de usar esa interface tanto en el servicio como en los componentes
-  private items: TomatoeItem[] = [];
-  private items$ = new Subject<TomatoeItem[]>();
+  private collection: AngularFirestoreCollection<TomatoeItem>;
 
-  public observable = this.items$.asObservable();
+  public items: Observable<TomatoeItem[]>;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private firestore: AngularFirestore) {
+    this.collection = this.firestore.collection<TomatoeItem>('cars');
+    // Esta es la instrucción que hace la magia de actualizar automáticamente
+    this.items = this.collection.valueChanges();
+  }
 
   enabled = () => this.auth.isVerified();
-
-  mock() {
-    this.items = [
-      {
-        title: 'Auto 1',
-        content: 'Marca Modelo del Auto'
-      },
-      {
-        title: 'Auto 2',
-        content: 'Marca Modelo del Auto'
-      },
-      {
-        title: 'Auto 3',
-        content: 'Marca Modelo del Auto'
-      },
-      {
-        title: 'Auto 4',
-        content: 'Marca Modelo del Auto'
-      },
-      {
-        title: 'Auto 5',
-        content: 'Marca Modelo del Auto'
-      }
-    ];
-    this.items$.next(this.items);
-  }
 }

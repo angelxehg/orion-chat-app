@@ -11,15 +11,11 @@ import { CarService } from 'src/app/services/car.service';
 export class DevCarsPage {
 
   // Recibe el listado de autos desde Firebase. Como es Observable se actualiza automáticamente
-  items: Observable<TomatoeItem[]> = this.cars.observable;
+  items: Observable<TomatoeItem[]> = this.cars.items;
 
   // Se tiene que injectar el servicio en el constructor
   constructor(private cars: CarService) { }
 
   enabled = () => this.cars.enabled();
-
-  ionViewWillEnter() {
-    this.cars.mock();
-  }
 
 }
