@@ -10,6 +10,7 @@ export const AngularFireAuthMock = {
 };
 
 export const AuthServiceMock = {
+  authState: of(null),
   isLoggedIn: () => of(true).toPromise(),
   loginWithEmail: () => of(true).toPromise(),
   registerWithEmail: () => of(true).toPromise(),

@@ -1,10 +1,23 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { TomatoeItem } from '../models/item';
 import { AuthService } from './auth.service';
 import { ToastService } from './toast.service';
+
+export const AngularFirestoreMock = {
+  authState: of(null)
+};
+
+export const CarServiceMock = {
+  index: () => of([]),
+  show: (id: string) => of({}),
+  create: () => { },
+  update: () => { },
+  delete: () => { },
+  enabled: () => true
+};
 
 @Injectable({
   providedIn: 'root'
