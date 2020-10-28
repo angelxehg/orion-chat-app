@@ -2,32 +2,24 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
 import { of } from 'rxjs';
-
-export const AuthStorageMock: any = {
-  get: (param) => {
-    if (param === 'USER_DATA') {
-      return of('dark').toPromise();
-    }
-    return of('').toPromise();
-  },
-  set: (param, value) => {
-    return of(value).toPromise();
-  },
-  remove: (param) => { }
-};
+import { ToastService } from './toast.service';
 
 export const AngularFireAuthMock = {
   authState: of(null)
 };
 
 export const AuthServiceMock = {
+  authState: of(null),
   isLoggedIn: () => of(true).toPromise(),
   loginWithEmail: () => of(true).toPromise(),
   registerWithEmail: () => of(true).toPromise(),
   logout: () => of(true).toPromise(),
 };
+
+export interface User {
+  displayName?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -38,27 +30,20 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    private storage: Storage,
     private alert: AlertController,
+    private toast: ToastService,
     private fireAuth: AngularFireAuth
   ) {
     this.fireAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
-        this.storage.set('USER_DATA', JSON.stringify(user)).then();
       } else {
         this.userData = null;
-        this.storage.remove('USER_DATA').then();
       }
     });
   }
 
-  public isLoggedIn = () => this.storage.get('USER_DATA').then(data => {
-    if (!data) {
-      return false;
-    }
-    return true;
-  })
+  public authState = this.fireAuth.authState;
 
   public isVerified = () => {
     if (!this.userData) {
@@ -159,7 +144,7 @@ export class AuthService {
           text: 'Registrar',
           cssClass: 'success',
           handler: ({ email }) => {
-            console.log('recoverPasswordByEmail', email);
+            this.authSendRecoveryEmail(email);
           }
         }
       ]
@@ -167,49 +152,137 @@ export class AuthService {
   }
 
   public logout = () => this.fireAuth.signOut().then(() => {
-    this.storage.remove('USER_DATA').then(() => {
-      this.router.navigateByUrl('/landing');
-    });
+    this.router.navigateByUrl('/login');
   })
 
-  private authLoginWithEmail(email: string, password: string) {
+  private async authLoginWithEmail(email: string, password: string) {
     if (!email || !password) {
-      return;
+      this.toast.error('No ingresó un correo o contraseña validos');
+      return false;
     }
-    this.fireAuth.signInWithEmailAndPassword(email, password).then(credential => {
-      this.storage.set('USER_DATA', JSON.stringify(credential.user)).then(() => {
-        this.router.navigateByUrl('/app/home');
-      });
+    const toast = await this.toast.waiting('Iniciando sesión...');
+    return this.fireAuth.signInWithEmailAndPassword(email, password).then(credential => {
+      toast.dismiss();
+      this.toast.success('Inicio de sesión correcto');
+      this.router.navigateByUrl('/app/home');
+      return true;
     }).catch(err => {
-      console.log(err);
+      toast.dismiss();
+      this.toast.error('Correo o contraseña incorrectos');
+      return false;
     });
   }
 
-  private authRegisterWithEmail(email: string, password: string, passwordConfirmation: string) {
+  private async authRegisterWithEmail(email: string, password: string, passwordConfirmation: string) {
     if (!email || !password || !passwordConfirmation) {
-      return;
+      this.toast.error('No ingresó un correo o contraseña validos');
+      return false;
     }
     if (password !== passwordConfirmation) {
-      return;
+      this.toast.error('Las contraseñas no coinciden');
+      return false;
     }
-    this.fireAuth.createUserWithEmailAndPassword(email, password).then(credential => {
+    const toast = await this.toast.waiting('Registrando...');
+    return this.fireAuth.createUserWithEmailAndPassword(email, password).then(credential => {
+      toast.dismiss();
+      this.toast.success('Registro e Inicio de sesión correcto');
       credential.user.sendEmailVerification().then(() => {
-        this.storage.set('USER_DATA', JSON.stringify(credential.user)).then(() => {
-          this.router.navigateByUrl('/verify');
-        });
+        this.router.navigateByUrl('/verify');
       });
+      return true;
     }).catch(err => {
-      console.log(err);
+      toast.dismiss();
+      this.toast.error('No se pudo crear cuenta');
+      return false;
+    });
+  }
+
+  private async authSendRecoveryEmail(email: string) {
+    if (!email) {
+      this.toast.error('No se ha especificado un correo electrónico');
+      return false;
+    }
+    const toast = await this.toast.waiting('Enviando enlace al correo...');
+    this.fireAuth.sendPasswordResetEmail(email).then(() => {
+      toast.dismiss();
+      this.toast.success('Se envió el correo de recuperación');
+      this.router.navigateByUrl('/verify');
+    }).catch(err => {
+      toast.dismiss();
+      this.toast.error('No se pudo enviar correo');
+      return false;
     });
   }
 
   public verifyEmail(oobCode: string) {
     return this.fireAuth.applyActionCode(oobCode).then(() => {
+      this.toast.success('Verificación exitosa');
       setTimeout((router: Router) => {
         router.navigateByUrl('/app/home');
       }, 1000, this.router);
       return true;
     }).catch(err => {
+      this.toast.error('No se pudo verificar el correo');
+      return false;
+    });
+  }
+
+  public resetPassword(oobCode: string) {
+    return this.fireAuth.verifyPasswordResetCode(oobCode).then(() => {
+      this.alert.create({
+        header: 'Recuperación de contraseña',
+        subHeader: 'Ingresa tu nueva contraseña',
+        inputs: [
+          {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Ingresa tu contraseña'
+          },
+          {
+            name: 'passwordConfirmation',
+            type: 'password',
+            placeholder: 'Confirma tu contraseña'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'danger',
+          },
+          {
+            text: 'Actualizar',
+            cssClass: 'success',
+            handler: ({ password, passwordConfirmation }) => {
+              this.authUpdatePassword(oobCode, password, passwordConfirmation);
+            }
+          }
+        ]
+      }).then(a => a.present());
+      return true;
+    }).catch(err => {
+      this.toast.error('No se pudo verificar el correo');
+      return false;
+    });
+  }
+
+  private authUpdatePassword(oobCode: string, password: string, passwordConfirmation: string) {
+    if (!password || !passwordConfirmation) {
+      this.toast.error('No ingresó una contraseña valida');
+      return false;
+    }
+    if (password !== passwordConfirmation) {
+      this.toast.error('Error: Las contraseñas no coinciden');
+      return false;
+    }
+    return this.fireAuth.confirmPasswordReset(oobCode, password).then(() => {
+      this.toast.success('Cambio de contraseña exitoso');
+      setTimeout((router: Router) => {
+        router.navigateByUrl('/login');
+      }, 1000, this.router);
+      return true;
+    }).catch(err => {
+      this.toast.error('No se pudo cambiar contraseña');
       return false;
     });
   }

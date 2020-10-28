@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'spaces',
-        loadChildren: () => import('../pages/spaces/spaces.module').then(m => m.SpacesPageModule)
+        loadChildren: () => import('../pages/spaces/spaces.module').then(m => m.SpacesPageModule),
       },
       {
         path: 'contacts',
@@ -39,6 +39,14 @@ const routes: Routes = [
       {
         path: 'settings',
         loadChildren: () => import('../pages/settings/settings.module').then(m => m.SettingsPageModule)
+      },
+      {
+        path: 'palette',
+        loadChildren: () => import('../pages/dev-palette/dev-palette.module').then(m => m.DevPalettePageModule)
+      },
+      {
+        path: 'cars',
+        loadChildren: () => import('../pages/dev-cars/dev-cars.module').then(m => m.DevCarsPageModule)
       },
       {
         path: '',
