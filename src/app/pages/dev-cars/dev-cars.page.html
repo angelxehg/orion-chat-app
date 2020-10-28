@@ -24,7 +24,7 @@
     Ya que el listado es un Observable es necesario usar '| async'
     El componente fue declarado en dev-cars.module.ts
   -->
-  <app-car-list [items]="items | async" *ngIf="enabled(); else noVerified;"></app-car-list>
+  <app-car-list [items]="items" *ngIf="enabled(); else noVerified;"></app-car-list>
   <!-- 
     Esta plantilla se muestra cuando no se ha verificado el email.
     Deberíamos impedir la mayoría de las operaciones mientras no se verifique el email

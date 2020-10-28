@@ -6,6 +6,7 @@ export interface TomatoeItem {
   icon?: TomatoeIcon;
   image?: string;
   url?: string;
+  user?: string;
 }
 
 export interface TomatoeIcon {

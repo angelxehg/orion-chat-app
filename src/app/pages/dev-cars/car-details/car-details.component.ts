@@ -19,7 +19,7 @@ export class CarDetailsComponent {
     if (params.car) {
       this.mode = 'edit';
       this.id = params.car;
-      this.cars.document(this.id).subscribe(item => {
+      this.cars.show(this.id).subscribe(item => {
         this.item = item;
       });
     } else {

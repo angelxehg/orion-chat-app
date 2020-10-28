@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { TomatoeItem } from '../models/item';
 import { AuthService } from './auth.service';
 import { ToastService } from './toast.service';
@@ -16,6 +16,7 @@ export class CarService {
   // Si requieres distintas propiedades puedes generar una nueva interface en /models
   // Asegurate de usar esa interface tanto en el servicio como en los componentes
   private collection: AngularFirestoreCollection<TomatoeItem>;
+  private userID = '';
 
   public items: Observable<TomatoeItem[]>;
 
@@ -24,37 +25,57 @@ export class CarService {
     private firestore: AngularFirestore,
     private toast: ToastService
   ) {
-    this.collection = this.firestore.collection<TomatoeItem>('cars');
-    // Esta es la instrucción que hace la magia de actualizar automáticamente
-    this.items = this.collection.valueChanges({ idField: 'id' });
+    this.auth.authState.subscribe(user => {
+      if (user) {
+        console.log('There\'s a user');
+        this.userID = user.uid;
+        this.collection = this.firestore.collection<TomatoeItem>('cars',
+          q => q.where('user', '==', this.userID)
+        );
+      } else {
+        this.userID = '';
+        this.collection = null;
+      }
+    });
   }
 
-  document(id: string) {
+  public index() {
+    if (!this.collection) {
+      return of([]);
+    }
+    return this.collection.valueChanges({ idField: 'id' });
+  }
+
+  public show(id: string) {
     return this.collection.doc<TomatoeItem>(id).valueChanges().pipe(take(1));
   }
 
-  create(item: TomatoeItem) {
+  public create(item: TomatoeItem) {
+    item.user = this.userID;
     return this.collection.add(item).then(() => {
       this.toast.success('Documento creado');
     }).catch(err => {
+      console.log(err);
       this.toast.error('No se pudo crear documento');
     });
   }
 
-  update(id: string, item: TomatoeItem) {
+  public update(id: string, item: TomatoeItem) {
     const document = this.collection.doc<TomatoeItem>(id);
     return document.update(item).then(() => {
       this.toast.success('Documento actualizado');
     }).catch(err => {
+      console.log(err);
       this.toast.error('No se pudo actualizar documento');
     });
   }
 
-  delete(id: string) {
+  public delete(id: string) {
     const document = this.collection.doc<TomatoeItem>(id);
     return document.delete().then(() => {
       this.toast.success('Documento eliminado');
     }).catch(err => {
+      console.log(err);
       this.toast.error('No se pudo eliminar documento');
     });
   }

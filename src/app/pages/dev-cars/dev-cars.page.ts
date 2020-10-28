@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TomatoeItem } from 'src/app/models/item';
 import { CarService } from 'src/app/services/car.service';
 
@@ -10,11 +10,19 @@ import { CarService } from 'src/app/services/car.service';
 })
 export class DevCarsPage {
 
-  // Recibe el listado de autos desde Firebase. Como es Observable se actualiza automáticamente
-  items: Observable<TomatoeItem[]> = this.cars.items;
+  items: TomatoeItem[];
 
-  // Se tiene que injectar el servicio en el constructor
+  subscription: Subscription;
+
   constructor(private cars: CarService) { }
+
+  ionViewWillEnter() {
+    this.subscription = this.cars.index().subscribe(items => this.items = items);
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
 
   enabled = () => this.cars.enabled();
 

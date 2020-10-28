@@ -42,6 +42,8 @@ export class AuthService {
     });
   }
 
+  public authState = this.fireAuth.authState;
+
   public isVerified = () => {
     if (!this.userData) {
       return false;
