@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ChatItemComponent } from './chat-item.component';
@@ -9,8 +10,11 @@ describe('ChatItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChatItemComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ChatItemComponent],
+      imports: [
+        IonicModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ChatItemComponent);
