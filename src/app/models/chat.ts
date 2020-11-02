@@ -10,10 +10,11 @@ export interface TomatoeChat {
   lastMsgDate: string;
   imageSrc?: string;
   participants?: string[];
-  messages?: Message[];
+  messages?: TomatoeMessage[];
 }
 
-interface Message {
+export interface TomatoeMessage {
   from: string;
   content: string;
+  mine: boolean;
 }

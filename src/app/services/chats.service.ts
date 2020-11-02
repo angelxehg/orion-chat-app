@@ -65,7 +65,13 @@ export class ChatsService {
             lastMsg: 'last msg',
             lastMsgDate: 'last',
             participants: e.participants,
-            messages: e.messages
+            messages: e.messages.map(m => {
+              return {
+                from: m.from,
+                content: m.content,
+                mine: this.userID === m.from
+              };
+            })
           };
         });
         return chats;
@@ -82,7 +88,13 @@ export class ChatsService {
           lastMsg: 'last msg',
           lastMsgDate: 'last',
           participants: e.participants,
-          messages: e.messages
+          messages: e.messages.map(m => {
+            return {
+              from: m.from,
+              content: m.content,
+              mine: this.userID === m.from
+            };
+          })
         };
       })
     );
