@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="ion-hide-md-up">
+      <ion-back-button defaultHref="/app/chats"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{ title() }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid *ngIf="chat" class="ion-no-margin ion-no-padding">
+    <ion-row *ngFor="let msg of chat.messages">
+      <ion-col class="{{ msg.mine ? 'self-message' : 'other-message' }}">
+        <ion-card color="{{ msg.mine ? 'primary' : 'light' }}">
+          <ion-card-content>
+            {{ msg.content }}
+            <!-- <ion-text *ngIf="!msg.mine" color="medium"><i><br />@{{ msg.from }}</i></ion-text> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { TomatoeChat } from 'src/app/models/chat';
 import { ChatsService } from 'src/app/services/chats.service';
 import { PanelService } from 'src/app/services/panel.service';
 
@@ -9,17 +11,28 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class ChatsPage {
 
+  items: TomatoeChat[];
+
+  subscription: Subscription;
+
   constructor(private chats: ChatsService, public panel: PanelService) { }
 
   ionViewWillEnter() {
+    this.subscription = this.chats.index().subscribe(items => {
+      this.items = items;
+      this.panel.updateItems(items);
+    });
     this.panel.show('chats');
   }
 
   ionViewWillLeave() {
+    this.subscription.unsubscribe();
     this.panel.show();
   }
 
+  enabled = () => this.chats.enabled();
+
   createChat() {
-    this.chats.create();
+    // this.chats.create();
   }
 }

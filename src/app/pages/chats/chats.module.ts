@@ -10,6 +10,7 @@ import { ChatsPage } from './chats.page';
 import { ChatItemComponent } from './chat-item/chat-item.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatMenuComponent } from './chat-menu/chat-menu.component';
+import { ChatViewComponent } from './chat-view/chat-view.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ChatMenuComponent } from './chat-menu/chat-menu.component';
     ChatsPage,
     ChatItemComponent,
     ChatListComponent,
-    ChatMenuComponent
+    ChatMenuComponent,
+    ChatViewComponent
   ],
   exports: [
     ChatMenuComponent

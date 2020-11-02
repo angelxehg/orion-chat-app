@@ -1,23 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
+import { ChatsService, ChatServiceMock } from 'src/app/services/chats.service';
 
-import { ChatItemComponent } from './chat-item.component';
+import { ChatViewComponent } from './chat-view.component';
 
-describe('ChatItemComponent', () => {
-  let component: ChatItemComponent;
-  let fixture: ComponentFixture<ChatItemComponent>;
+describe('ChatViewComponent', () => {
+  let component: ChatViewComponent;
+  let fixture: ComponentFixture<ChatViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ChatItemComponent],
+      declarations: [ChatViewComponent],
       imports: [
         IonicModule.forRoot(),
         RouterTestingModule.withRoutes([]),
+      ],
+      providers: [
+        { provide: ChatsService, useValue: ChatServiceMock }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ChatItemComponent);
+    fixture = TestBed.createComponent(ChatViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

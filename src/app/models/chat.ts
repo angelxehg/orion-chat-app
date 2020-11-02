@@ -4,8 +4,17 @@ export interface TomatoeChatGroup {
 }
 
 export interface TomatoeChat {
+  id: string;
   title: string;
   lastMsg: string;
   lastMsgDate: string;
   imageSrc?: string;
+  participants?: string[];
+  messages?: TomatoeMessage[];
+}
+
+export interface TomatoeMessage {
+  from: string;
+  content: string;
+  mine: boolean;
 }

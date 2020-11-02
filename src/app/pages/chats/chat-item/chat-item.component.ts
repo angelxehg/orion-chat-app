@@ -9,6 +9,7 @@ import { TomatoeChat } from 'src/app/models/chat';
 export class ChatItemComponent {
 
   @Input() item: TomatoeChat = {
+    id: '',
     title: 'Item',
     lastMsg: '',
     lastMsgDate: ''

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { TomatoeChat } from 'src/app/models/chat';
 import { ChatsService } from 'src/app/services/chats.service';
 
@@ -10,7 +10,7 @@ import { ChatsService } from 'src/app/services/chats.service';
 })
 export class ChatMenuComponent {
 
-  items: Observable<TomatoeChat[]> = this.chats.observable;
+  @Input() items: TomatoeChat[] = [];
 
   constructor(private chats: ChatsService) { }
 

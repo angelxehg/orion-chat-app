@@ -17,6 +17,8 @@ export const PanelServiceMock = {
 })
 export class PanelService {
 
+  public items: any[];
+
   public panel: boolean;
   public tabs: boolean;
 
@@ -33,6 +35,10 @@ export class PanelService {
       default:
         return 'Tomatoe Chat';
     }
+  }
+
+  updateItems(items: any[]) {
+    this.items = items;
   }
 
   show(panel: string = 'menu', tabs: boolean = true) {
