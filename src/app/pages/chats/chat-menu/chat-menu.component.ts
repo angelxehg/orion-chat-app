@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { TomatoeChat } from 'src/app/models/chat';
 import { ChatsService } from 'src/app/services/chats.service';
 
@@ -8,11 +8,21 @@ import { ChatsService } from 'src/app/services/chats.service';
   templateUrl: './chat-menu.component.html',
   styleUrls: ['./chat-menu.component.scss'],
 })
-export class ChatMenuComponent {
+export class ChatMenuComponent implements OnInit, OnDestroy {
 
-  items: Observable<TomatoeChat[]> = this.chats.observable;
+  items: TomatoeChat[];
+
+  subscription: Subscription;
 
   constructor(private chats: ChatsService) { }
+
+  ngOnInit() {
+    this.subscription = this.chats.index().subscribe(items => this.items = items);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   enabled = () => this.chats.enabled();
 

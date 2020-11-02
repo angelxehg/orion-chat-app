@@ -18,5 +18,12 @@
     </ion-toolbar>
   </ion-header>
   <!-- Chats -->
-  <app-chat-list class="ion-hide-md-up"></app-chat-list>
+  <app-chat-list [items]="items" *ngIf="enabled(); else noVerified;" class="ion-hide-md-up"></app-chat-list>
+  <!-- 
+    Esta plantilla se muestra cuando no se ha verificado el email.
+    Deberíamos impedir la mayoría de las operaciones mientras no se verifique el email
+  -->
+  <ng-template #noVerified>
+    <p>Por favor verifica tu email para poder enviar mensajes</p>
+  </ng-template>
 </ion-content>

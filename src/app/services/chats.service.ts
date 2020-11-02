@@ -1,7 +1,21 @@
 import { Injectable } from '@angular/core';
-import { of, Subject } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable, of, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TomatoeChat } from '../models/chat';
 import { AuthService } from './auth.service';
+import { ToastService } from './toast.service';
+
+interface Chat {
+  title: string;
+  participants: string[];
+  messages: Message[];
+}
+
+interface Message {
+  from: string;
+  content: string;
+}
 
 export const ChatServiceMock = {
   observable: of([]),
@@ -14,48 +28,50 @@ export const ChatServiceMock = {
 })
 export class ChatsService {
 
-  private items: TomatoeChat[] = [];
-  private items$ = new Subject<TomatoeChat[]>();
+  private collection: AngularFirestoreCollection<Chat>;
+  private userID = '';
 
-  public observable = this.items$.asObservable();
+  public items: Observable<Chat[]>;
 
-  constructor(private auth: AuthService) { }
+  constructor(
+    private auth: AuthService,
+    private firestore: AngularFirestore,
+    private toast: ToastService
+  ) {
+    this.auth.authState.subscribe(user => {
+      if (user) {
+        console.log('There\'s a user');
+        this.userID = user.uid;
+        this.collection = this.firestore.collection<Chat>('chats',
+          q => q.where('participants', 'array-contains', this.userID)
+        );
+      } else {
+        this.userID = '';
+        this.collection = null;
+      }
+    });
+  }
+
+  public index(): Observable<TomatoeChat[]> {
+    if (!this.collection) {
+      return of(null);
+    }
+    return this.collection.valueChanges().pipe(
+      map(elements => {
+        const chats: TomatoeChat[] = elements.map(e => {
+          return {
+            title: e.title,
+            lastMsg: 'last msg',
+            lastMsgDate: 'last',
+            participants: e.participants,
+            messages: e.messages
+          };
+        });
+        return chats;
+      })
+    );
+  }
 
   enabled = () => this.auth.isVerified();
 
-  create() {
-    if (!this.enabled()) {
-      return console.log('No verified');
-    }
-    this.items.push({
-      title: 'Conversación X',
-      lastMsg: '[Yo]: Hola',
-      lastMsgDate: '19:00'
-    });
-    this.items$.next(this.items);
-  }
-
-  mock() {
-    this.items = [
-      {
-        title: 'Conversación 1',
-        lastMsg: '[Yo]: Hola',
-        lastMsgDate: '19:00',
-        imageSrc: 'https://ionicframework.com/docs/demos/api/list/avatar-finn.png'
-      },
-      {
-        title: 'Conversación 2',
-        lastMsg: '[Yo]: Hola',
-        lastMsgDate: '20:15',
-        imageSrc: 'https://ionicframework.com/docs/demos/api/list/avatar-han.png'
-      },
-      {
-        title: 'Conversación 3',
-        lastMsg: '[Yo]: Hola',
-        lastMsgDate: '15:30',
-        imageSrc: 'https://ionicframework.com/docs/demos/api/list/avatar-luke.png'
-      }
-    ];
-    this.items$.next(this.items);
-  }
 }

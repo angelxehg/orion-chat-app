@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input } from '@angular/core';
 import { TomatoeChat } from 'src/app/models/chat';
-import { ChatsService } from 'src/app/services/chats.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -10,10 +8,8 @@ import { ChatsService } from 'src/app/services/chats.service';
 })
 export class ChatListComponent {
 
-  items: Observable<TomatoeChat[]> = this.chats.observable;
+  @Input() items: TomatoeChat[] = [];
 
-  constructor(private chats: ChatsService) { }
-
-  enabled = () => this.chats.enabled();
+  constructor() { }
 
 }

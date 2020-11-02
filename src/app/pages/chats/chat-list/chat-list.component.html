@@ -1,12 +1,9 @@
-<ion-list *ngIf="enabled(); else noVerified;">
+<ion-list>
   <ion-item-group>
     <ion-item-divider>
       <ion-label>Mis chats</ion-label>
     </ion-item-divider>
-    <app-chat-item *ngFor="let item of items | async" [item]="item">
+    <app-chat-item *ngFor="let item of items" [item]="item">
     </app-chat-item>
   </ion-item-group>
 </ion-list>
-<ng-template #noVerified>
-  <p>Por favor verifica tu email para poder enviar mensajes</p>
-</ng-template>
