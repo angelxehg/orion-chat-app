@@ -41,16 +41,14 @@ export class PanelService {
     this.items = items;
   }
 
-  show(panel: string = 'menu', tabs: boolean = true, items: any[] = []) {
+  show(panel: string = 'menu', tabs: boolean = true) {
     this.panel = true;
     this.current = panel;
     this.tabs = tabs;
-    this.items = items;
   }
 
   hide() {
     this.panel = false;
     this.tabs = false;
-    this.items = [];
   }
 }

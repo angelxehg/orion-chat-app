@@ -56,10 +56,11 @@ export class ChatsService {
     if (!this.collection) {
       return of(null);
     }
-    return this.collection.valueChanges().pipe(
+    return this.collection.valueChanges({ idField: 'id' }).pipe(
       map(elements => {
         const chats: TomatoeChat[] = elements.map(e => {
           return {
+            id: e.id,
             title: e.title,
             lastMsg: 'last msg',
             lastMsgDate: 'last',
