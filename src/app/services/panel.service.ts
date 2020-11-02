@@ -17,6 +17,8 @@ export const PanelServiceMock = {
 })
 export class PanelService {
 
+  public items: any[];
+
   public panel: boolean;
   public tabs: boolean;
 
@@ -35,14 +37,20 @@ export class PanelService {
     }
   }
 
-  show(panel: string = 'menu', tabs: boolean = true) {
+  updateItems(items: any[]) {
+    this.items = items;
+  }
+
+  show(panel: string = 'menu', tabs: boolean = true, items: any[] = []) {
     this.panel = true;
     this.current = panel;
     this.tabs = tabs;
+    this.items = items;
   }
 
   hide() {
     this.panel = false;
     this.tabs = false;
+    this.items = [];
   }
 }

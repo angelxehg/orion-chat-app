@@ -18,7 +18,10 @@ export class ChatsPage {
   constructor(private chats: ChatsService, public panel: PanelService) { }
 
   ionViewWillEnter() {
-    this.subscription = this.chats.index().subscribe(items => this.items = items);
+    this.subscription = this.chats.index().subscribe(items => {
+      this.items = items;
+      this.panel.updateItems(items);
+    });
     this.panel.show('chats');
   }
 
