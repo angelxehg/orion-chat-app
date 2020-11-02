@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable, of, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { TomatoeChat } from '../models/chat';
 import { AuthService } from './auth.service';
 import { ToastService } from './toast.service';
@@ -69,6 +69,21 @@ export class ChatsService {
           };
         });
         return chats;
+      })
+    );
+  }
+
+  public show(id: string) {
+    return this.collection.doc<Chat>(id).valueChanges().pipe(
+      map(e => {
+        return {
+          id,
+          title: e.title,
+          lastMsg: 'last msg',
+          lastMsgDate: 'last',
+          participants: e.participants,
+          messages: e.messages
+        };
       })
     );
   }

@@ -9,4 +9,11 @@ export interface TomatoeChat {
   lastMsg: string;
   lastMsgDate: string;
   imageSrc?: string;
+  participants?: string[];
+  messages?: Message[];
+}
+
+interface Message {
+  from: string;
+  content: string;
 }

@@ -4,11 +4,15 @@
       <ion-back-button defaultHref="/app/chats"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      Vista de chat
+      {{ title() }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  Aquí se mostrarían los mensajes
+  <div *ngIf="chat">
+    <p *ngFor="let msg of chat.messages">
+      {{ msg.from }} - {{ msg.content }}
+    </p>
+  </div>
 </ion-content>
