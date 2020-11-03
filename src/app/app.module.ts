@@ -27,7 +27,7 @@ import { LayoutsModule } from './layouts/layouts.module';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     LayoutsModule
   ],
   providers: [
