@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { TomatoeChat } from 'src/app/models/chat';
+import { AppChat } from 'src/app/models/new/chats';
 import { ChatsService } from 'src/app/services/chats.service';
 import { PanelService } from 'src/app/services/panel.service';
 
@@ -12,17 +11,21 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class ChatViewComponent {
 
-  chat: TomatoeChat;
+  chat: AppChat;
   id = '';
 
-  subscription: Subscription;
+  newMessage = '';
 
-  constructor(public panel: PanelService, private route: ActivatedRoute, private chats: ChatsService) {
+  constructor(
+    public panel: PanelService,
+    private route: ActivatedRoute,
+    private chats: ChatsService
+  ) {
     const params = this.route.snapshot.params;
     if (params.chat) {
       this.id = params.chat;
-      this.chats.show(this.id).subscribe(chat => {
-        this.chat = chat;
+      this.chats.items$.subscribe(all => {
+        this.chat = all.find(e => e.id === this.id);
       });
     } else {
       this.chat = null;
@@ -32,15 +35,18 @@ export class ChatViewComponent {
   title = () => this.chat ? this.chat.title : '...';
 
   ionViewWillEnter() {
+    this.chats.subscribe();
     this.panel.show('chats', false);
-    this.subscription = this.chats.index().subscribe(items => {
-      this.panel.updateItems(items);
-    });
   }
 
   ionViewWillLeave() {
-    this.subscription.unsubscribe();
+    this.chats.unsubscribe();
     this.panel.show();
+  }
+
+  sendMessage() {
+    this.chats.sendMessage(this.id, this.newMessage);
+    this.newMessage = '';
   }
 
 }

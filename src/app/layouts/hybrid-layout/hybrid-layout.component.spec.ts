@@ -1,27 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
-import { PanelService, PanelServiceMock } from '../services/panel.service';
 
-import { LayoutPage } from './layout.page';
+import { HybridLayoutComponent } from './hybrid-layout.component';
 
-describe('LayoutPage', () => {
-  let component: LayoutPage;
-  let fixture: ComponentFixture<LayoutPage>;
+describe('HybridLayoutComponent', () => {
+  let component: HybridLayoutComponent;
+  let fixture: ComponentFixture<HybridLayoutComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LayoutPage],
+      declarations: [HybridLayoutComponent],
       imports: [
         IonicModule.forRoot(),
-        RouterTestingModule.withRoutes([]),
-      ],
-      providers: [
-        { provide: PanelService, useValue: PanelServiceMock }
+        RouterTestingModule.withRoutes([])
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LayoutPage);
+    fixture = TestBed.createComponent(HybridLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -42,8 +42,10 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
+              "@angular/fire/firestore",
               "firebase",
               "@firebase/app",
+              "@firebase/auth",
               "@firebase/database",
               "@firebase/firestore",
               "@firebase/functions",

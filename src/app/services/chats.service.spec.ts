@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreMock } from 'src/app/models/mocks';
 import { AuthService, AuthServiceMock } from './auth.service';
-import { AngularFirestoreMock } from './car.service';
 
 import { ChatsService } from './chats.service';
 
@@ -11,8 +11,8 @@ describe('ChatsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: AngularFirestore, useValue: AngularFirestoreMock },
-        { provide: AuthService, useValue: AuthServiceMock }
+        { provide: AuthService, useValue: AuthServiceMock },
+        { provide: AngularFirestore, useValue: AngularFirestoreMock }
       ]
     });
     service = TestBed.inject(ChatsService);

@@ -1,26 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, of, Subject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
-import { TomatoeChat } from '../models/chat';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppChat, DBChat, transformChat } from 'src/app/models/new/chats';
 import { AuthService } from './auth.service';
-import { ToastService } from './toast.service';
-
-interface Chat {
-  title: string;
-  participants: string[];
-  messages: Message[];
-}
-
-interface Message {
-  from: string;
-  content: string;
-}
 
 export const ChatServiceMock = {
-  observable: of([]),
-  mock: () => { },
-  enabled: () => true
+  items$: of([]),
 };
 
 @Injectable({
@@ -28,78 +14,71 @@ export const ChatServiceMock = {
 })
 export class ChatsService {
 
-  private collection: AngularFirestoreCollection<Chat>;
-  private userID = '';
+  private user: firebase.User;
 
-  public items: Observable<Chat[]>;
+  private collection: AngularFirestoreCollection<DBChat>;
+
+  private subscription: Subscription;
+
+  public items$ = new BehaviorSubject<AppChat[]>([]);
 
   constructor(
     private auth: AuthService,
     private firestore: AngularFirestore,
-    private toast: ToastService
   ) {
     this.auth.authState.subscribe(user => {
       if (user) {
-        console.log('There\'s a user');
-        this.userID = user.uid;
-        this.collection = this.firestore.collection<Chat>('chats',
-          q => q.where('participants', 'array-contains', this.userID)
+        this.user = user;
+        this.collection = this.firestore.collection<DBChat>('chats',
+          q => q.where('participants', 'array-contains', this.user.uid)
         );
+        this.items$.next([]);
       } else {
-        this.userID = '';
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+        this.user = null;
         this.collection = null;
+        this.items$.next([]);
       }
     });
   }
 
-  public index(): Observable<TomatoeChat[]> {
-    if (!this.collection) {
-      return of(null);
+  public enabled = () => this.auth.isVerified();
+
+  public subscribe() {
+    if (!this.user) {
+      return null;
     }
-    return this.collection.valueChanges({ idField: 'id' }).pipe(
-      map(elements => {
-        const chats: TomatoeChat[] = elements.map(e => {
-          return {
-            id: e.id,
-            title: e.title,
-            lastMsg: 'last msg',
-            lastMsgDate: 'last',
-            participants: e.participants,
-            messages: e.messages.map(m => {
-              return {
-                from: m.from,
-                content: m.content,
-                mine: this.userID === m.from
-              };
-            })
-          };
-        });
-        return chats;
-      })
+    const obs = this.collection.valueChanges({ idField: 'id' }).pipe(
+      map(dbChats => dbChats.map(
+        chat => transformChat(chat, this.user.uid)
+      ))
     );
+    this.subscription = obs.subscribe(elements => {
+      this.items$.next(elements);
+    });
+    return this.subscription;
   }
 
-  public show(id: string) {
-    return this.collection.doc<Chat>(id).valueChanges().pipe(
-      map(e => {
-        return {
-          id,
-          title: e.title,
-          lastMsg: 'last msg',
-          lastMsgDate: 'last',
-          participants: e.participants,
-          messages: e.messages.map(m => {
-            return {
-              from: m.from,
-              content: m.content,
-              mine: this.userID === m.from
-            };
-          })
-        };
-      })
-    );
+  public unsubscribe() {
+    this.subscription.unsubscribe();
   }
 
-  enabled = () => this.auth.isVerified();
-
+  public sendMessage(chatId: string, message: string) {
+    if (!this.user) {
+      return null;
+    }
+    const chat = this.collection.doc<DBChat>(chatId).ref;
+    this.firestore.firestore.runTransaction(transaction => {
+      return transaction.get(chat).then(doc => {
+        if (doc.data().messages) {
+          const messages = doc.data().messages;
+          const newMessage = { from: this.user.uid, content: message };
+          messages.push(newMessage);
+          transaction.update(chat, { messages });
+        }
+      });
+    }).then();
+  }
 }

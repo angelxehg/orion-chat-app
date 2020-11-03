@@ -3,7 +3,7 @@
     <ion-item-divider>
       <ion-label>Mis chats</ion-label>
     </ion-item-divider>
-    <app-chat-item *ngFor="let item of items" [item]="item">
+    <app-chat-item *ngFor="let item of items | async" [item]="item">
     </app-chat-item>
   </ion-item-group>
 </ion-list>

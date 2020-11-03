@@ -6,10 +6,6 @@ import { TomatoeItem } from '../models/item';
 import { AuthService } from './auth.service';
 import { ToastService } from './toast.service';
 
-export const AngularFirestoreMock = {
-  authState: of(null)
-};
-
 export const CarServiceMock = {
   index: () => of([]),
   show: (id: string) => of({}),

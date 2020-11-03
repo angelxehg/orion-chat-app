@@ -5,10 +5,6 @@ import { AlertController } from '@ionic/angular';
 import { of } from 'rxjs';
 import { ToastService } from './toast.service';
 
-export const AngularFireAuthMock = {
-  authState: of(null)
-};
-
 export const AuthServiceMock = {
   authState: of(null),
   isLoggedIn: () => of(true).toPromise(),
@@ -26,7 +22,7 @@ export interface User {
 })
 export class AuthService {
 
-  public userData: firebase.User;
+  private userData: firebase.User;
 
   constructor(
     private router: Router,
@@ -51,6 +47,8 @@ export class AuthService {
     }
     return this.userData.emailVerified;
   }
+
+  public user = () => this.userData;
 
   public loginWithEmail() {
     this.alert.create({

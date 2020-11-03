@@ -2,8 +2,8 @@
   <ion-item-divider>
     <ion-label>Mis chats</ion-label>
   </ion-item-divider>
-  <ion-menu-toggle auto-hide="false" *ngFor="let item of items">
-    <app-chat-item [item]="item" [color]="activeColor(item)"></app-chat-item>
+  <ion-menu-toggle auto-hide="false" *ngFor="let item of items | async">
+    <app-chat-item [item]="item"></app-chat-item>
   </ion-menu-toggle>
 </ion-item-group>
 <ng-template #noVerified>

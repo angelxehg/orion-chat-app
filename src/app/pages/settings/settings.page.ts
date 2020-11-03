@@ -13,9 +13,19 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
+  user: firebase.User;
+
   version = environment.version;
 
-  constructor(private auth: AuthService, private settings: SettingsService) { }
+  constructor(private auth: AuthService, private settings: SettingsService) {
+    this.auth.authState.subscribe(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    });
+  }
 
   toggleTheme = () => this.settings.toggleTheme();
 
@@ -23,11 +33,9 @@ export class SettingsPage {
 
   get themeColor() { return this.settings.isDarkTheme() ? 'tertiary' : 'warning'; }
 
-  user = () => this.auth.userData;
-
   logout = () => this.auth.logout();
 
   openRepo() {
-    Browser.open({ url: 'https://github.com/angelxehg/tomatoe-chat#readme' });
+    Browser.open({ url: 'https://angelxehg.github.io/tomatoe-chat' });
   }
 }
