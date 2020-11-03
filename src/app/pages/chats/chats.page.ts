@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ChatsService } from 'src/app/services/new/chats.service';
+import { ChatsService } from 'src/app/services/chats.service';
 import { PanelService } from 'src/app/services/panel.service';
 
 @Component({

@@ -1,26 +1,12 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, of, Subject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
-import { TomatoeChat } from '../models/chat';
-import { AuthService } from './auth.service';
-import { ToastService } from './toast.service';
-
-interface Chat {
-  title: string;
-  participants: string[];
-  messages: Message[];
-}
-
-interface Message {
-  from: string;
-  content: string;
-}
+import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppChat, DBChat, transformChat } from 'src/app/models/new/chats';
 
 export const ChatServiceMock = {
-  observable: of([]),
-  mock: () => { },
-  enabled: () => true
+  items$: of([]),
 };
 
 @Injectable({
@@ -28,78 +14,60 @@ export const ChatServiceMock = {
 })
 export class ChatsService {
 
-  private collection: AngularFirestoreCollection<Chat>;
-  private userID = '';
+  private user: firebase.User;
 
-  public items: Observable<Chat[]>;
+  private collection: AngularFirestoreCollection<DBChat>;
+
+  private subscription: Subscription;
+
+  public items$ = new BehaviorSubject<AppChat[]>([]);
 
   constructor(
-    private auth: AuthService,
+    private auth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private toast: ToastService
   ) {
     this.auth.authState.subscribe(user => {
       if (user) {
-        console.log('There\'s a user');
-        this.userID = user.uid;
-        this.collection = this.firestore.collection<Chat>('chats',
-          q => q.where('participants', 'array-contains', this.userID)
+        this.user = user;
+        this.collection = this.firestore.collection<DBChat>('chats',
+          q => q.where('participants', 'array-contains', this.user.uid)
         );
+        this.items$.next([]);
       } else {
-        this.userID = '';
+        this.user = null;
         this.collection = null;
+        this.items$.next([]);
       }
     });
   }
 
-  public index(): Observable<TomatoeChat[]> {
-    if (!this.collection) {
-      return of(null);
+  public enabled() {
+    if (!this.user) {
+      return false;
     }
-    return this.collection.valueChanges({ idField: 'id' }).pipe(
-      map(elements => {
-        const chats: TomatoeChat[] = elements.map(e => {
-          return {
-            id: e.id,
-            title: e.title,
-            lastMsg: 'last msg',
-            lastMsgDate: 'last',
-            participants: e.participants,
-            messages: e.messages.map(m => {
-              return {
-                from: m.from,
-                content: m.content,
-                mine: this.userID === m.from
-              };
-            })
-          };
-        });
-        return chats;
-      })
-    );
+    return this.user.emailVerified;
   }
 
-  public show(id: string) {
-    return this.collection.doc<Chat>(id).valueChanges().pipe(
-      map(e => {
-        return {
-          id,
-          title: e.title,
-          lastMsg: 'last msg',
-          lastMsgDate: 'last',
-          participants: e.participants,
-          messages: e.messages.map(m => {
-            return {
-              from: m.from,
-              content: m.content,
-              mine: this.userID === m.from
-            };
-          })
-        };
-      })
-    );
+  private uid = () => {
+    if (!this.user) {
+      return '';
+    }
+    return this.user.uid;
   }
 
-  enabled = () => this.auth.isVerified();
+  public subscribe() {
+    const obs = this.collection.valueChanges({ idField: 'id' }).pipe(
+      map(dbChats => dbChats.map(
+        chat => transformChat(chat, this.uid())
+      ))
+    );
+    this.subscription = obs.subscribe(elements => {
+      this.items$.next(elements);
+    });
+    return this.subscription;
+  }
 
+  public unsubscribe() {
+    this.subscription.unsubscribe();
+  }
 }
