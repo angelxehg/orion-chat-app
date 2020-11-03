@@ -64,4 +64,21 @@ export class ChatsService {
   public unsubscribe() {
     this.subscription.unsubscribe();
   }
+
+  public sendMessage(chatId: string, message: string) {
+    if (!this.user) {
+      return null;
+    }
+    const chat = this.collection.doc<DBChat>(chatId).ref;
+    this.firestore.firestore.runTransaction(transaction => {
+      return transaction.get(chat).then(doc => {
+        if (doc.data().messages) {
+          const messages = doc.data().messages;
+          const newMessage = { from: this.user.uid, content: message };
+          messages.push(newMessage);
+          transaction.update(chat, { messages });
+        }
+      });
+    }).then();
+  }
 }

@@ -23,3 +23,15 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-textarea autocorrect spellcheck autoGrow [(ngModel)]="newMessage" placeholder="Escribe un mensaje...">
+    </ion-textarea>
+    <ion-buttons slot="end">
+      <ion-button (click)="sendMessage()">
+        <ion-icon slot="end" name="send"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

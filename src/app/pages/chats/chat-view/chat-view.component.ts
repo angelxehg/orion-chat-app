@@ -14,6 +14,8 @@ export class ChatViewComponent {
   chat: AppChat;
   id = '';
 
+  newMessage = '';
+
   constructor(
     public panel: PanelService,
     private route: ActivatedRoute,
@@ -40,6 +42,11 @@ export class ChatViewComponent {
   ionViewWillLeave() {
     this.chats.unsubscribe();
     this.panel.show();
+  }
+
+  sendMessage() {
+    this.chats.sendMessage(this.id, this.newMessage);
+    this.newMessage = '';
   }
 
 }
