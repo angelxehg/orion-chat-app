@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppChat, chatsExample, DBChat } from 'src/app/models/new/chats';
+import { AppChat, DBChat, transformChat } from 'src/app/models/new/chats';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class ChatsService {
 
   private subscription: Subscription;
 
-  public items$ = new BehaviorSubject<AppChat[]>(chatsExample);
+  public items$ = new BehaviorSubject<AppChat[]>([]);
 
   constructor(
     private auth: AngularFireAuth,
@@ -28,9 +28,11 @@ export class ChatsService {
         this.collection = this.firestore.collection<DBChat>('chats',
           q => q.where('participants', 'array-contains', this.user.uid)
         );
+        this.items$.next([]);
       } else {
         this.user = null;
         this.collection = null;
+        this.items$.next([]);
       }
     });
   }
@@ -43,25 +45,10 @@ export class ChatsService {
   }
 
   public subscribe() {
-    console.log('Subscribing to Chats from Firestore');
     const obs = this.collection.valueChanges({ idField: 'id' }).pipe(
-      map(dbChats => {
-        const appChats: AppChat[] = dbChats.map(chat => {
-          return {
-            id: chat.id,
-            title: chat.title,
-            participants: chat.participants,
-            messages: chat.messages.map(message => {
-              return {
-                from: message.from,
-                content: message.from,
-                mine: this.uid() === message.from
-              };
-            })
-          };
-        });
-        return appChats;
-      })
+      map(dbChats => dbChats.map(
+        chat => transformChat(chat, this.uid())
+      ))
     );
     this.subscription = obs.subscribe(elements => {
       this.items$.next(elements);
@@ -70,7 +57,6 @@ export class ChatsService {
   }
 
   public unsubscribe() {
-    console.log('Unsubscribing to Chats from Firestore');
     this.subscription.unsubscribe();
   }
 }

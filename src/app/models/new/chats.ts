@@ -12,28 +12,30 @@ export interface DBMessage {
 export interface AppChat extends DBChat {
   id: string;
   messages: AppMessage[];
+  lastMsg: string;
+  lastMsgDate: string;
 }
 
 export interface AppMessage extends DBMessage {
   mine: boolean;
 }
 
-export const chatsExample: AppChat[] = [{
-  id: 'chat',
-  title: 'Conversación de ejemplo',
-  messages: [
-    {
-      from: 'user1',
-      content: 'Hola!',
-      mine: true
-    },
-    {
-      from: 'user2',
-      content: 'Hola!',
-      mine: false
-    }
-  ],
-  participants: [
-    'user1', 'user2'
-  ]
-}];
+export function transformChat(chat: (DBChat & { id: string }), uid: string): AppChat {
+  const lastMessageFrom = uid === chat.messages.slice(-1)[0].from ? 'Yo' : 'Otro';
+  const lastMessageContent = chat.messages.slice(-1)[0].content;
+  const lastMessage = `${lastMessageFrom}: ${lastMessageContent}`;
+  return {
+    id: chat.id,
+    title: chat.title,
+    participants: chat.participants,
+    lastMsg: lastMessage,
+    lastMsgDate: '10:00',
+    messages: chat.messages.map(message => {
+      return {
+        from: message.from,
+        content: message.content,
+        mine: uid === message.from,
+      };
+    })
+  };
+}
