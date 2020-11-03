@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppChat, DBChat, transformChat } from 'src/app/models/new/chats';
+import { AuthService } from './auth.service';
 
 export const ChatServiceMock = {
   items$: of([]),
@@ -23,7 +23,7 @@ export class ChatsService {
   public items$ = new BehaviorSubject<AppChat[]>([]);
 
   constructor(
-    private auth: AngularFireAuth,
+    private auth: AuthService,
     private firestore: AngularFirestore,
   ) {
     this.auth.authState.subscribe(user => {
@@ -34,6 +34,9 @@ export class ChatsService {
         );
         this.items$.next([]);
       } else {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
         this.user = null;
         this.collection = null;
         this.items$.next([]);
@@ -41,24 +44,15 @@ export class ChatsService {
     });
   }
 
-  public enabled() {
-    if (!this.user) {
-      return false;
-    }
-    return this.user.emailVerified;
-  }
-
-  private uid = () => {
-    if (!this.user) {
-      return '';
-    }
-    return this.user.uid;
-  }
+  public enabled = () => this.auth.isVerified();
 
   public subscribe() {
+    if (!this.user) {
+      return null;
+    }
     const obs = this.collection.valueChanges({ idField: 'id' }).pipe(
       map(dbChats => dbChats.map(
-        chat => transformChat(chat, this.uid())
+        chat => transformChat(chat, this.user.uid)
       ))
     );
     this.subscription = obs.subscribe(elements => {

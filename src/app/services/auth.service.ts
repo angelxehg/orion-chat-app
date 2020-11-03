@@ -22,7 +22,7 @@ export interface User {
 })
 export class AuthService {
 
-  public userData: firebase.User;
+  private userData: firebase.User;
 
   constructor(
     private router: Router,
@@ -47,6 +47,8 @@ export class AuthService {
     }
     return this.userData.emailVerified;
   }
+
+  public user = () => this.userData;
 
   public loginWithEmail() {
     this.alert.create({
