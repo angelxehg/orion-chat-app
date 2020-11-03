@@ -11,7 +11,7 @@
       </ion-header>
       <ion-content>
         <app-menu *ngIf="panel.current == 'menu'"></app-menu>
-        <app-chat-menu [items]="panel.items" *ngIf="panel.current == 'chats'"></app-chat-menu>
+        <app-chat-menu *ngIf="panel.current == 'chats'"></app-chat-menu>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main">

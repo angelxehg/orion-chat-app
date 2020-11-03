@@ -15,8 +15,6 @@ export class ChatViewComponent {
   chat: TomatoeChat;
   id = '';
 
-  subscription: Subscription;
-
   constructor(public panel: PanelService, private route: ActivatedRoute, private chats: ChatsService) {
     const params = this.route.snapshot.params;
     if (params.chat) {
@@ -33,13 +31,9 @@ export class ChatViewComponent {
 
   ionViewWillEnter() {
     this.panel.show('chats', false);
-    this.subscription = this.chats.index().subscribe(items => {
-      this.panel.updateItems(items);
-    });
   }
 
   ionViewWillLeave() {
-    this.subscription.unsubscribe();
     this.panel.show();
   }
 

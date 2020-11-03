@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { TomatoeChat } from 'src/app/models/chat';
-import { ChatsService } from 'src/app/services/chats.service';
+import { ChatsService } from 'src/app/services/new/chats.service';
 import { PanelService } from 'src/app/services/panel.service';
 
 @Component({
@@ -11,26 +9,17 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class ChatsPage {
 
-  items: TomatoeChat[];
-
-  subscription: Subscription;
-
   constructor(private chats: ChatsService, public panel: PanelService) { }
 
   ionViewWillEnter() {
-    this.subscription = this.chats.index().subscribe(items => {
-      this.items = items;
-      this.panel.updateItems(items);
-    });
+    this.chats.subscribe();
     this.panel.show('chats');
   }
 
   ionViewWillLeave() {
-    this.subscription.unsubscribe();
+    this.chats.unsubscribe();
     this.panel.show();
   }
-
-  enabled = () => this.chats.enabled();
 
   createChat() {
     // this.chats.create();

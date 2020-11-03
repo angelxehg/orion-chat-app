@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { TomatoeChat } from 'src/app/models/chat';
-import { ChatsService } from 'src/app/services/chats.service';
+import { Component } from '@angular/core';
+import { ChatsService } from 'src/app/services/new/chats.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -9,10 +8,10 @@ import { ChatsService } from 'src/app/services/chats.service';
 })
 export class ChatListComponent {
 
-  @Input() items: TomatoeChat[] = [];
+  items = this.chats.items$;
 
   constructor(private chats: ChatsService) { }
 
-  enabled = () => this.chats.enabled();
+  enabled = () => true;
 
 }
