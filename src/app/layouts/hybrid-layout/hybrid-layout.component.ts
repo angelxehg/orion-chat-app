@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PanelService } from 'src/app/services/panel.service';
 
 @Component({
   selector: 'app-hybrid-layout',
@@ -7,6 +8,6 @@ import { Component } from '@angular/core';
 })
 export class HybridLayoutComponent {
 
-  constructor() { }
+  constructor(public panel: PanelService) { }
 
 }

@@ -1,2 +1,21 @@
-<ion-router-outlet id="main">
-</ion-router-outlet>
+<ion-content>
+  <ion-split-pane contentId="main" when="md" disabled="{{ !panel.panel }}">
+    <ion-menu contentId="main">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start" class="{{ panel.current === 'menu' ? 'ion-hide' : '' }}">
+            <ion-back-button defaultHref="app/home"></ion-back-button>
+          </ion-buttons>
+          <ion-title>{{ panel.title() }}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <app-menu *ngIf="panel.current == 'menu'"></app-menu>
+        <app-chat-menu [items]="panel.items" *ngIf="panel.current == 'chats'"></app-chat-menu>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main">
+      <app-tabs></app-tabs>
+    </ion-router-outlet>
+  </ion-split-pane>
+</ion-content>
