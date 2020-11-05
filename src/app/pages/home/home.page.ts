@@ -59,25 +59,6 @@ export class HomePage {
     },
   ];
 
-  devPages: TomatoeItem[] = [
-    {
-      title: 'Colores',
-      url: '/app/palette',
-      icon: {
-        name: 'color-palette',
-        color: 'warning'
-      }
-    },
-    {
-      title: 'Autos',
-      url: '/app/cars',
-      icon: {
-        name: 'car-sport',
-        color: 'warning'
-      }
-    },
-  ];
-
   constructor() { }
 
 }
