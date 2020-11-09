@@ -1,6 +1,6 @@
 # Tomatoe Chat
 
-![Logo Aplicación](./src/assets/icons/icon-128x128.png)
+![Vista previa app](./docs/social.png)
 
 Aplicación de mensajería organizada en canales. Es una evolución de Orion Chat. Disponible para [Web](https://orion.angelxehg.com) y [Android](https://github.com/angelxehg/tomatoe-chat/releases)
 
