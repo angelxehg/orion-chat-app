@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { AppChat, DBChat, transformChat } from 'src/app/models/new/chats';
 import { AppUser, AuthService } from './auth.service';
 
+export const AngularFirestoreMock = {};
+
 export const ChatServiceMock = {
   items$: of([]),
 };

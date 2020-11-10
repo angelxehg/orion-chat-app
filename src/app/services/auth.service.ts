@@ -5,8 +5,12 @@ import { AlertController } from '@ionic/angular';
 import { BehaviorSubject, of } from 'rxjs';
 import { ToastService } from './toast.service';
 
+export const AngularFireAuthMock = {
+  authState: of(null)
+};
+
 export const AuthServiceMock = {
-  authState: of(null),
+  currentUser: of(null),
   isLoggedIn: () => of(true).toPromise(),
   loginWithEmail: () => of(true).toPromise(),
   registerWithEmail: () => of(true).toPromise(),
