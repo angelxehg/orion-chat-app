@@ -14,6 +14,7 @@ export class ChatItemComponent {
     lastMsg: '',
     lastMsgDate: '',
     messages: [],
+    imageSrc: '',
     participants: []
   };
 

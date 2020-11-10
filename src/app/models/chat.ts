@@ -12,6 +12,7 @@ export interface DBMessage {
 export interface AppChat extends DBChat {
   id: string;
   messages: AppMessage[];
+  imageSrc: string;
   lastMsg: string;
   lastMsgDate: string;
 }
@@ -28,6 +29,7 @@ export function transformChat(chat: (DBChat & { id: string }), uid: string): App
     id: chat.id,
     title: chat.title,
     participants: chat.participants,
+    imageSrc: 'assets/icon/favicon.png',
     lastMsg: lastMessage,
     lastMsgDate: '10:00',
     messages: chat.messages.map(message => {
