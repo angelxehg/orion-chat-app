@@ -1,74 +1,16 @@
 <ion-content>
-  <ion-slides pager="true" [options]="slideOpts" (ionSlideDidChange)="slideChanged($event)" #slides>
-    <!-- Slides -->
-    <ion-slide>
-      <ion-card>
-        <ion-icon class="big-icon" name="chatbubbles" color="primary"></ion-icon>
-        <ion-card-header>
-          <ion-card-title>Envía y recibe mensajes</ion-card-title>
-        </ion-card-header>
-      </ion-card>
-    </ion-slide>
-    <ion-slide>
-      <ion-card>
-        <ion-icon class="big-icon" name="file-tray-full" color="secondary"></ion-icon>
-        <ion-card-header>
-          <ion-card-title>Organiza tus chats</ion-card-title>
-        </ion-card-header>
-      </ion-card>
-    </ion-slide>
-    <ion-slide>
-      <ion-card>
-        <ion-icon class="big-icon" name="documents" color="tertiary"></ion-icon>
-        <ion-card-header>
-          <ion-card-title>Mantén las cosas importantes cerca</ion-card-title>
-        </ion-card-header>
-      </ion-card>
-    </ion-slide>
-    <ion-slide>
-      <ion-card>
-        <ion-icon class="big-icon" name="enter" color="success"></ion-icon>
-        <ion-card-header>
-          <ion-card-title>Inicia sesión en Tomatoe Chat</ion-card-title>
-        </ion-card-header>
-        <ion-card-content class="card-items">
-          <!-- Links-->
-          <ion-item button (click)="login()">
-            <ion-icon slot="end" name="log-in"></ion-icon>
-            <ion-label>
-              Iniciar sesión
-            </ion-label>
-          </ion-item>
-          <ion-item button (click)="register()">
-            <ion-icon slot="end" name="list"></ion-icon>
-            <ion-label>
-              Registrarme
-            </ion-label>
-          </ion-item>
-          <ion-item button (click)="recover()">
-            <ion-icon slot="end" name="settings"></ion-icon>
-            <ion-label>
-              Recuperar contraseña
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
-  </ion-slides>
+  Aquí va el login
+  <ion-item button (click)="login()">
+    <ion-icon slot="end" name="log-in"></ion-icon>
+    <ion-label>
+      Iniciar sesión
+    </ion-label>
+  </ion-item>
+  <a routerLink="/register">Registro</a>
   <!-- Fab buttons -->
   <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button size="small" color="light" (click)="toggleTheme()">
       <ion-icon [name]="themeIcon" [color]="themeColor"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button size="small" color="light" *ngIf="currentSlide !== 0" (click)="slides.slidePrev()">
-      <ion-icon name="chevron-back"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" color="light" *ngIf="currentSlide !== 3" (click)="slides.slideNext()">
-      <ion-icon name="chevron-forward"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
