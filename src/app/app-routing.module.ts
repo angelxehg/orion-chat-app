@@ -31,6 +31,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/verify/verify.module').then(m => m.VerifyPageModule)
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthPageModule)
+  },
+  {
     path: 'app',
     component: HybridLayoutComponent,
     ...canActivate(redirectUnauthorizedToLogin),
