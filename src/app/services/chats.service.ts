@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppChat, DBChat, transformChat } from 'src/app/models/new/chats';
-import { AuthService } from './auth.service';
+import { AppUser, AuthService } from './auth.service';
 
 export const ChatServiceMock = {
   items$: of([]),
@@ -14,7 +14,7 @@ export const ChatServiceMock = {
 })
 export class ChatsService {
 
-  private user: firebase.User;
+  private user: AppUser;
 
   private collection: AngularFirestoreCollection<DBChat>;
 
@@ -26,7 +26,7 @@ export class ChatsService {
     private auth: AuthService,
     private firestore: AngularFirestore,
   ) {
-    this.auth.authState.subscribe(user => {
+    this.auth.currentUser.subscribe(user => {
       if (user) {
         this.user = user;
         this.collection = this.firestore.collection<DBChat>('chats',
@@ -62,7 +62,9 @@ export class ChatsService {
   }
 
   public unsubscribe() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   public sendMessage(chatId: string, message: string) {

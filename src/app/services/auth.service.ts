@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { ToastService } from './toast.service';
 
 export const AuthServiceMock = {
@@ -13,8 +13,11 @@ export const AuthServiceMock = {
   logout: () => of(true).toPromise(),
 };
 
-export interface User {
-  displayName?: string;
+export interface AppUser {
+  displayName: string;
+  uid: string;
+  email: string;
+  emailVerified: boolean;
 }
 
 @Injectable({
@@ -22,7 +25,8 @@ export interface User {
 })
 export class AuthService {
 
-  private userData: firebase.User;
+  private userData: AppUser;
+  public currentUser = new BehaviorSubject<AppUser>(null);
 
   constructor(
     private router: Router,
@@ -33,13 +37,13 @@ export class AuthService {
     this.fireAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
+        this.currentUser.next(user);
       } else {
         this.userData = null;
+        this.currentUser.next(null);
       }
     });
   }
-
-  public authState = this.fireAuth.authState;
 
   public isVerified = () => {
     if (!this.userData) {

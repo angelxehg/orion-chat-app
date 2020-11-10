@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Plugins } from '@capacitor/core';
 import { SettingsService } from 'src/app/services/settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AppUser, AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 const { Browser } = Plugins;
@@ -13,12 +13,12 @@ const { Browser } = Plugins;
 })
 export class SettingsPage {
 
-  user: firebase.User;
+  user: AppUser;
 
   version = environment.version;
 
   constructor(private auth: AuthService, private settings: SettingsService) {
-    this.auth.authState.subscribe(user => {
+    this.auth.currentUser.subscribe(user => {
       if (user) {
         this.user = user;
       } else {
