@@ -1,7 +1,7 @@
 {
   "name": "tomatoe-chat",
   "description": "Aplicación de mensajería organizada en canales. Es una evolución de Orion Chat.",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "homepage": "https://orion.angelxehg.com/",
   "author": {
     "name": "Angel Hurtado",
