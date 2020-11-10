@@ -1,8 +1,9 @@
-export interface TomatoeContactGroup {
-  title: string;
-  items?: TomatoeContact[];
+export interface DBContactGroup {
+  contacts: AppContact[];
 }
 
-export interface TomatoeContact {
-  title: string;
+export interface AppContact {
+  name: string;
+  email: string;
+  uid: string;
 }

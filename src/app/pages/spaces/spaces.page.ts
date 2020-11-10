@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TomatoeSpaceGroup } from 'src/app/models/space';
 import { SpacesService } from 'src/app/services/spaces.service';
 
 @Component({
@@ -10,13 +8,17 @@ import { SpacesService } from 'src/app/services/spaces.service';
 })
 export class SpacesPage {
 
-  items: Observable<TomatoeSpaceGroup[]> = this.spaces.observable;
+  items = this.spaces.items$;
 
   constructor(private spaces: SpacesService) { }
 
   enabled = () => this.spaces.enabled();
 
   ionViewWillEnter() {
-    this.spaces.mock();
+    this.spaces.subscribe();
+  }
+
+  ionViewWillLeave() {
+    this.spaces.unsubscribe();
   }
 }

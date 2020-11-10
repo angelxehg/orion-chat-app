@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { of, Subject } from 'rxjs';
-import { TomatoeSpaceGroup } from '../models/space';
-import { AuthService } from './auth.service';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppChat } from '../models/chat';
+import { AppSpace, DBSpaceGroup, transformSpaces } from '../models/space';
+import { AppUser, AuthService } from './auth.service';
 
 export const SpacesServiceMock = {
   observable: of([]),
@@ -14,38 +17,53 @@ export const SpacesServiceMock = {
 })
 export class SpacesService {
 
-  private items: TomatoeSpaceGroup[] = [];
-  private items$ = new Subject<TomatoeSpaceGroup[]>();
+  private user: AppUser;
 
-  public observable = this.items$.asObservable();
+  private collection: AngularFirestoreCollection<DBSpaceGroup>;
 
-  constructor(private auth: AuthService) { }
+  private subscription: Subscription;
+
+  public items$ = new BehaviorSubject<AppSpace[]>([]);
+
+  constructor(
+    private auth: AuthService,
+    private firestore: AngularFirestore,
+  ) {
+    this.auth.currentUser.subscribe(user => {
+      if (user) {
+        this.user = user;
+        this.collection = this.firestore.collection<DBSpaceGroup>('spaces');
+        this.items$.next([]);
+      } else {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+        this.user = null;
+        this.collection = null;
+        this.items$.next([]);
+      }
+    });
+  }
 
   enabled = () => this.auth.isVerified();
 
-  mock() {
-    this.items = [
-      {
-        title: 'Mis espacios',
-        items: [
-          {
-            title: 'Espacio 1'
-          },
-          {
-            title: 'Espacio 2'
-          },
-          {
-            title: 'Espacio 3'
-          },
-          {
-            title: 'Espacio 4'
-          },
-          {
-            title: 'Espacio 5'
-          }
-        ]
-      }
-    ];
-    this.items$.next(this.items);
+  public subscribe() {
+    if (!this.user) {
+      return null;
+    }
+    const obs = this.collection.doc<DBSpaceGroup>(this.user.uid).valueChanges().pipe(
+      map(dbSpaceGroup => transformSpaces(dbSpaceGroup))
+    );
+    this.subscription = obs.subscribe(elements => {
+      this.items$.next(elements);
+    });
+    return this.subscription;
   }
+
+  public unsubscribe() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
 }

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { of, Subject } from 'rxjs';
-import { TomatoeContactGroup } from '../models/contact';
-import { AuthService } from './auth.service';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { of, BehaviorSubject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppContact, DBContactGroup } from '../models/contact';
+import { AppUser, AuthService } from './auth.service';
 
 export const ContactsServiceMock = {
   observable: of([]),
@@ -14,38 +16,53 @@ export const ContactsServiceMock = {
 })
 export class ContactsService {
 
-  private items: TomatoeContactGroup[] = [];
-  private items$ = new Subject<TomatoeContactGroup[]>();
+  private user: AppUser;
 
-  public observable = this.items$.asObservable();
+  private collection: AngularFirestoreCollection<DBContactGroup>;
 
-  constructor(private auth: AuthService) { }
+  private subscription: Subscription;
+
+  public items$ = new BehaviorSubject<AppContact[]>([]);
+
+  constructor(
+    private auth: AuthService,
+    private firestore: AngularFirestore,
+  ) {
+    this.auth.currentUser.subscribe(user => {
+      if (user) {
+        this.user = user;
+        this.collection = this.firestore.collection<DBContactGroup>('contacts');
+        this.items$.next([]);
+      } else {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+        this.user = null;
+        this.collection = null;
+        this.items$.next([]);
+      }
+    });
+  }
 
   enabled = () => this.auth.isVerified();
 
-  mock() {
-    this.items = [
-      {
-        title: 'Mis contactos',
-        items: [
-          {
-            title: 'Contacto 1'
-          },
-          {
-            title: 'Contacto 2'
-          },
-          {
-            title: 'Contacto 3'
-          },
-          {
-            title: 'Contacto 4'
-          },
-          {
-            title: 'Contacto 5'
-          }
-        ]
-      }
-    ];
-    this.items$.next(this.items);
+  public subscribe() {
+    if (!this.user) {
+      return null;
+    }
+    const obs = this.collection.doc<DBContactGroup>(this.user.uid).valueChanges().pipe(
+      map(dbContacts => dbContacts.contacts)
+    );
+    this.subscription = obs.subscribe(elements => {
+      this.items$.next(elements);
+    });
+    return this.subscription;
   }
+
+  public unsubscribe() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
 }

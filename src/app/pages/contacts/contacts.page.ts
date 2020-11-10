@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TomatoeContactGroup } from 'src/app/models/contact';
 import { ContactsService } from 'src/app/services/contacts.service';
 
 @Component({
@@ -10,14 +8,18 @@ import { ContactsService } from 'src/app/services/contacts.service';
 })
 export class ContactsPage {
 
-  items: Observable<TomatoeContactGroup[]> = this.contacts.observable;
+  items = this.contacts.items$;
 
   constructor(private contacts: ContactsService) { }
 
   enabled = () => this.contacts.enabled();
 
   ionViewWillEnter() {
-    this.contacts.mock();
+    this.contacts.subscribe();
+  }
+
+  ionViewWillLeave() {
+    this.contacts.unsubscribe();
   }
 
 }
