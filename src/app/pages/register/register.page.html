@@ -1,0 +1,16 @@
+<ion-content>
+  Aquí va el register
+  <ion-item button (click)="register()">
+    <ion-icon slot="end" name="log-in"></ion-icon>
+    <ion-label>
+      Registro
+    </ion-label>
+  </ion-item>
+  <a routerLink="/login">Iniciar sesión</a>
+  <!-- Fab buttons -->
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button size="small" color="light" (click)="toggleTheme()">
+      <ion-icon [name]="themeIcon" [color]="themeColor"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

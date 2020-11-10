@@ -18,6 +18,11 @@ const routes: Routes = [
     ...canActivate(redirectLoggedInToApp)
   },
   {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule),
+    ...canActivate(redirectLoggedInToApp)
+  },
+  {
     path: 'verify',
     loadChildren: () => import('./pages/verify/verify.module').then(m => m.VerifyPageModule)
   },
