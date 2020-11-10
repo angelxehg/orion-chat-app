@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFirestoreMock } from 'src/app/models/mocks';
 import { AuthService, AuthServiceMock } from './auth.service';
 
-import { ChatsService } from './chats.service';
+import { AngularFirestoreMock, ChatsService } from './chats.service';
 
 describe('ChatsService', () => {
   let service: ChatsService;

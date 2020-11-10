@@ -28,32 +28,20 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/app/home',
+        redirectTo: '/app/contacts',
         pathMatch: 'full'
-      },
-      {
-        path: 'home',
-        loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-      },
-      {
-        path: 'spaces',
-        loadChildren: () => import('./pages/spaces/spaces.module').then(m => m.SpacesPageModule),
-      },
-      {
-        path: 'contacts',
-        loadChildren: () => import('./pages/contacts/contacts.module').then(m => m.ContactsPageModule)
       },
       {
         path: 'chats',
         loadChildren: () => import('./pages/chats/chats.module').then(m => m.ChatsPageModule)
       },
       {
-        path: 'events',
-        loadChildren: () => import('./pages/events/events.module').then(m => m.EventsPageModule)
+        path: 'contacts',
+        loadChildren: () => import('./pages/contacts/contacts.module').then(m => m.ContactsPageModule)
       },
       {
-        path: 'files',
-        loadChildren: () => import('./pages/files/files.module').then(m => m.FilesPageModule)
+        path: 'spaces',
+        loadChildren: () => import('./pages/spaces/spaces.module').then(m => m.SpacesPageModule),
       },
       {
         path: 'settings',

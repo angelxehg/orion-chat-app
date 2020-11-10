@@ -1,9 +1,5 @@
 <ion-tabs>
-  <ion-tab-bar slot="bottom" class="ion-hide-md-up" [class.ion-hide]="!showTabs()">
-    <!-- Home tab -->
-    <ion-tab-button tab="home">
-      <ion-icon [name]="activeIcon('home', 'home')"></ion-icon>
-    </ion-tab-button>
+  <ion-tab-bar slot="bottom" class="ion-hide-md-up">
     <!-- Chats tab -->
     <ion-tab-button tab="chats">
       <ion-icon [name]="activeIcon('chats', 'chatbubbles')"></ion-icon>
@@ -12,17 +8,9 @@
     <ion-tab-button tab="contacts">
       <ion-icon [name]="activeIcon('contacts', 'people')"></ion-icon>
     </ion-tab-button>
-    <!-- Events tab -->
-    <ion-tab-button tab="events" class="ion-hide-sm-down">
-      <ion-icon [name]="activeIcon('events', 'calendar')"></ion-icon>
-    </ion-tab-button>
     <!-- Spaces tab -->
-    <ion-tab-button tab="spaces" class="ion-hide-sm-down">
+    <ion-tab-button tab="spaces">
       <ion-icon [name]="activeIcon('spaces', 'file-tray-full')"></ion-icon>
-    </ion-tab-button>
-    <!-- Files tab -->
-    <ion-tab-button tab="files">
-      <ion-icon [name]="activeIcon('files', 'documents')"></ion-icon>
     </ion-tab-button>
     <!-- Settings tab -->
     <ion-tab-button tab="settings">

@@ -2,19 +2,26 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { ToastService } from './toast.service';
 
+export const AngularFireAuthMock = {
+  authState: of(null)
+};
+
 export const AuthServiceMock = {
-  authState: of(null),
+  currentUser: of(null),
   isLoggedIn: () => of(true).toPromise(),
   loginWithEmail: () => of(true).toPromise(),
   registerWithEmail: () => of(true).toPromise(),
   logout: () => of(true).toPromise(),
 };
 
-export interface User {
-  displayName?: string;
+export interface AppUser {
+  displayName: string;
+  uid: string;
+  email: string;
+  emailVerified: boolean;
 }
 
 @Injectable({
@@ -22,7 +29,8 @@ export interface User {
 })
 export class AuthService {
 
-  private userData: firebase.User;
+  private userData: AppUser;
+  public currentUser = new BehaviorSubject<AppUser>(null);
 
   constructor(
     private router: Router,
@@ -33,13 +41,13 @@ export class AuthService {
     this.fireAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
+        this.currentUser.next(user);
       } else {
         this.userData = null;
+        this.currentUser.next(null);
       }
     });
   }
-
-  public authState = this.fireAuth.authState;
 
   public isVerified = () => {
     if (!this.userData) {
@@ -162,7 +170,7 @@ export class AuthService {
     return this.fireAuth.signInWithEmailAndPassword(email, password).then(credential => {
       toast.dismiss();
       this.toast.success('Inicio de sesión correcto');
-      this.router.navigateByUrl('/app/home');
+      this.router.navigateByUrl('/app/spaces');
       return true;
     }).catch(err => {
       toast.dismiss();
@@ -216,7 +224,7 @@ export class AuthService {
     return this.fireAuth.applyActionCode(oobCode).then(() => {
       this.toast.success('Verificación exitosa');
       setTimeout((router: Router) => {
-        router.navigateByUrl('/app/home');
+        router.navigateByUrl('/app/spaces');
       }, 1000, this.router);
       return true;
     }).catch(err => {
