@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PanelService } from 'src/app/services/panel.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,7 +8,9 @@ import { Component } from '@angular/core';
 })
 export class TabsComponent {
 
-  constructor() { }
+  constructor(private panel: PanelService) { }
+
+  showTabs = () => this.panel.tabs;
 
   activeIcon(tab: string, icon: string) {
     if (window.location.pathname.includes(tab)) {

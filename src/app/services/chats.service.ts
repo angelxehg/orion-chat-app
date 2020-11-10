@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppChat, DBChat, transformChat } from 'src/app/models/new/chats';
+import { AppChat, DBChat, transformChat } from 'src/app/models/chat';
 import { AppUser, AuthService } from './auth.service';
 
 export const AngularFirestoreMock = {};
