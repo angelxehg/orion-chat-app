@@ -24,8 +24,6 @@ Compilar y probar aplicación en dispositivos:
 
 - Compilar assets con Ionic: `ionic build --prod`
 
-<!-- - Ejecutar Jetifier (solo Android): `npx jetify` -->
-
 - Copiar assets y actualizar plugins:
 
   - Android: `npx cap sync android`
