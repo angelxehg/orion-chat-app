@@ -14,5 +14,11 @@ export class SpacesPage {
 
   enabled = () => this.spaces.enabled();
 
-  ionViewWillEnter() { }
+  ionViewWillEnter() {
+    this.spaces.subscribe();
+  }
+
+  ionViewWillLeave() {
+    this.spaces.unsubscribe();
+  }
 }

@@ -1,7 +1,7 @@
 export interface DBChat {
   title: string;
-  messages: DBMessage[];
-  participants: string[];
+  messages?: DBMessage[];
+  participants?: string[];
 }
 
 export interface DBMessage {
@@ -11,10 +11,10 @@ export interface DBMessage {
 
 export interface AppChat extends DBChat {
   id: string;
-  messages: AppMessage[];
-  imageSrc: string;
-  lastMsg: string;
-  lastMsgDate: string;
+  messages?: AppMessage[];
+  imageSrc?: string;
+  lastMsg?: string;
+  lastMsgDate?: string;
 }
 
 export interface AppMessage extends DBMessage {

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
-import { AppSpace } from '../models/space';
-import { AuthService } from './auth.service';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { BehaviorSubject, of, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppChat } from '../models/chat';
+import { AppSpace, DBSpaceGroup, transformSpaces } from '../models/space';
+import { AppUser, AuthService } from './auth.service';
 
 export const SpacesServiceMock = {
   observable: of([]),
@@ -14,22 +17,53 @@ export const SpacesServiceMock = {
 })
 export class SpacesService {
 
+  private user: AppUser;
+
+  private collection: AngularFirestoreCollection<DBSpaceGroup>;
+
+  private subscription: Subscription;
+
   public items$ = new BehaviorSubject<AppSpace[]>([]);
 
-  constructor(private auth: AuthService) {
-    const items: AppSpace[] = [
-      {
-        title: 'Espacio A',
-        chats: ['Chat 1A', 'Chat 2A']
-      },
-      {
-        title: 'Espacio B',
-        chats: ['Chat 1B', 'Chat 2B']
-      },
-    ];
-    this.items$.next(items);
+  constructor(
+    private auth: AuthService,
+    private firestore: AngularFirestore,
+  ) {
+    this.auth.currentUser.subscribe(user => {
+      if (user) {
+        this.user = user;
+        this.collection = this.firestore.collection<DBSpaceGroup>('spaces');
+        this.items$.next([]);
+      } else {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+        this.user = null;
+        this.collection = null;
+        this.items$.next([]);
+      }
+    });
   }
 
   enabled = () => this.auth.isVerified();
+
+  public subscribe() {
+    if (!this.user) {
+      return null;
+    }
+    const obs = this.collection.doc<DBSpaceGroup>(this.user.uid).valueChanges().pipe(
+      map(dbSpaceGroup => transformSpaces(dbSpaceGroup))
+    );
+    this.subscription = obs.subscribe(elements => {
+      this.items$.next(elements);
+    });
+    return this.subscription;
+  }
+
+  public unsubscribe() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
 }
