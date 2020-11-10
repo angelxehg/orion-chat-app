@@ -1,8 +1,4 @@
-export interface TomatoeSpaceGroup {
+export interface AppSpace {
   title: string;
-  items?: TomatoeSpace[];
-}
-
-export interface TomatoeSpace {
-  title: string;
+  chats: string[];
 }
