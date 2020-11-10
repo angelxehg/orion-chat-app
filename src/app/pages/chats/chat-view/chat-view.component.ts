@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AppChat } from 'src/app/models/new/chats';
+import { AppChat } from 'src/app/models/chat';
 import { ChatsService } from 'src/app/services/chats.service';
 import { PanelService } from 'src/app/services/panel.service';
 

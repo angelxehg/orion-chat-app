@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TomatoeChat } from 'src/app/models/chat';
+import { AppChat } from 'src/app/models/chat';
 
 @Component({
   selector: 'app-chat-item',
@@ -8,11 +8,13 @@ import { TomatoeChat } from 'src/app/models/chat';
 })
 export class ChatItemComponent {
 
-  @Input() item: TomatoeChat = {
+  @Input() item: AppChat = {
     id: '',
     title: 'Item',
     lastMsg: '',
-    lastMsgDate: ''
+    lastMsgDate: '',
+    messages: [],
+    participants: []
   };
 
   @Input() color = '';
