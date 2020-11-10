@@ -25,19 +25,9 @@ export class MenuComponent {
       icon: 'people',
     },
     {
-      title: 'Eventos',
-      url: '/app/events',
-      icon: 'calendar',
-    },
-    {
       title: 'Espacios',
       url: '/app/spaces',
       icon: 'file-tray-full',
-    },
-    {
-      title: 'Archivos',
-      url: '/app/files',
-      icon: 'documents',
     },
     {
       title: 'Configuración',

@@ -48,14 +48,6 @@ const routes: Routes = [
         loadChildren: () => import('./pages/chats/chats.module').then(m => m.ChatsPageModule)
       },
       {
-        path: 'events',
-        loadChildren: () => import('./pages/events/events.module').then(m => m.EventsPageModule)
-      },
-      {
-        path: 'files',
-        loadChildren: () => import('./pages/files/files.module').then(m => m.FilesPageModule)
-      },
-      {
         path: 'settings',
         loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
       }

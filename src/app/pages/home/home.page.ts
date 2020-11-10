@@ -26,26 +26,10 @@ export class HomePage {
       }
     },
     {
-      title: 'Eventos',
-      url: '/app/events',
-      icon: {
-        name: 'calendar',
-        color: 'primary'
-      }
-    },
-    {
       title: 'Espacios',
       url: '/app/spaces',
       icon: {
         name: 'file-tray-full',
-        color: 'primary'
-      }
-    },
-    {
-      title: 'Archivos',
-      url: '/app/files',
-      icon: {
-        name: 'documents',
         color: 'primary'
       }
     },
