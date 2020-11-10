@@ -14,6 +14,12 @@ export class ContactsPage {
 
   enabled = () => this.contacts.enabled();
 
-  ionViewWillEnter() { }
+  ionViewWillEnter() {
+    this.contacts.subscribe();
+  }
+
+  ionViewWillLeave() {
+    this.contacts.unsubscribe();
+  }
 
 }
