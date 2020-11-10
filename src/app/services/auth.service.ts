@@ -166,7 +166,7 @@ export class AuthService {
     return this.fireAuth.signInWithEmailAndPassword(email, password).then(credential => {
       toast.dismiss();
       this.toast.success('Inicio de sesión correcto');
-      this.router.navigateByUrl('/app/home');
+      this.router.navigateByUrl('/app/spaces');
       return true;
     }).catch(err => {
       toast.dismiss();
@@ -220,7 +220,7 @@ export class AuthService {
     return this.fireAuth.applyActionCode(oobCode).then(() => {
       this.toast.success('Verificación exitosa');
       setTimeout((router: Router) => {
-        router.navigateByUrl('/app/home');
+        router.navigateByUrl('/app/spaces');
       }, 1000, this.router);
       return true;
     }).catch(err => {

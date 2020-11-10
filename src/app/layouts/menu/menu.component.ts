@@ -10,11 +10,6 @@ export class MenuComponent {
 
   items: MenuItem[] = [
     {
-      title: 'Inicio',
-      url: '/app/home',
-      icon: 'home',
-    },
-    {
       title: 'Chats',
       url: '/app/chats',
       icon: 'chatbubbles',
