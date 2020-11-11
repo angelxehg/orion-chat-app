@@ -49,10 +49,6 @@ const routes: Routes = [
         loadChildren: () => import('./pages/contacts/contacts.module').then(m => m.ContactsPageModule)
       },
       {
-        path: 'spaces',
-        loadChildren: () => import('./pages/spaces/spaces.module').then(m => m.SpacesPageModule),
-      },
-      {
         path: 'settings',
         loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
       }

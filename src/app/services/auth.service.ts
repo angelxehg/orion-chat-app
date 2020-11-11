@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { BehaviorSubject, of } from 'rxjs';
 import { DBContactGroup } from '../models/contact';
-import { DBSpaceGroup } from '../models/space';
 import { ToastService } from './toast.service';
 
 export const AngularFireAuthMock = {
@@ -248,10 +247,6 @@ export class AuthService {
       this.firestore.collection<DBContactGroup>('contacts')
         .doc(user.uid).set({
           contacts: []
-        }).then();
-      this.firestore.collection<DBSpaceGroup>('spaces')
-        .doc(user.uid).set({
-          spaces: []
         }).then();
       //
       credential.user.sendEmailVerification().then(() => {
