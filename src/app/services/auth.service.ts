@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { BehaviorSubject, of } from 'rxjs';
 import { DBContactGroup } from '../models/contact';
+import { DBSpaceGroup } from '../models/space';
 import { ToastService } from './toast.service';
 
 export const AngularFireAuthMock = {
@@ -29,6 +30,7 @@ export interface AppUser {
 export interface AppProfile {
   name: string;
   email: string;
+  uid: string;
 }
 
 @Injectable({
@@ -94,7 +96,8 @@ export class AuthService {
               user.updateProfile({ displayName: name }).then(() => {
                 const newProfile: AppProfile = {
                   name: user.displayName,
-                  email: user.email
+                  email: user.email,
+                  uid: user.uid
                 };
                 this.firestore.collection<AppProfile>('profiles')
                   .doc(user.uid).set(newProfile).then();
@@ -240,6 +243,17 @@ export class AuthService {
     return this.fireAuth.createUserWithEmailAndPassword(email, password).then(credential => {
       toast.dismiss();
       this.toast.success('Registro e Inicio de sesión correcto');
+      //
+      const user = credential.user;
+      this.firestore.collection<DBContactGroup>('contacts')
+        .doc(user.uid).set({
+          contacts: []
+        }).then();
+      this.firestore.collection<DBSpaceGroup>('spaces')
+        .doc(user.uid).set({
+          spaces: []
+        }).then();
+      //
       credential.user.sendEmailVerification().then(() => {
         this.router.navigateByUrl('/verify');
       });
