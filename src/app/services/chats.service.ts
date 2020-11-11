@@ -67,6 +67,11 @@ export class ChatsService {
           type: 'text',
           placeholder: 'Nombre del chat'
         },
+        {
+          name: 'emails',
+          type: 'text',
+          placeholder: 'Integrantes (emails, separados por comas)'
+        },
       ],
       buttons: [
         {
@@ -77,11 +82,16 @@ export class ChatsService {
         {
           text: 'Guardar',
           cssClass: 'success',
-          handler: ({ name }) => {
+          handler: ({ name, emails }) => {
+            const contactEmails: any[] = emails.replace(/\s/g, '').split(',');
+            const participants = this.contacts.items$.value
+              .filter(i => contactEmails.includes(i.email))
+              .map(i => i.uid);
+            participants.push(this.user.uid);
             const chat: DBChat = {
               title: name,
               messages: [],
-              participants: [this.user.uid]
+              participants
             };
             this.collection.add(chat).then(() => {
               this.toast.success('Chat creado');
