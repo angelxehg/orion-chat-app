@@ -4,6 +4,7 @@ import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppChat, DBChat, transformChat } from 'src/app/models/chat';
 import { AppUser, AuthService } from './auth.service';
+import { ContactsService } from './contacts.service';
 
 export const AngularFirestoreMock = {};
 
@@ -26,6 +27,7 @@ export class ChatsService {
 
   constructor(
     private auth: AuthService,
+    private contacts: ContactsService,
     private firestore: AngularFirestore,
   ) {
     this.auth.currentUser.subscribe(user => {
@@ -55,7 +57,21 @@ export class ChatsService {
     const obs = this.collection.valueChanges({ idField: 'id' }).pipe(
       map(dbChats => dbChats.map(
         chat => transformChat(chat, this.user.uid)
-      ))
+      )),
+      map(chats => {
+        const contacts = this.contacts.items$.value;
+        return chats.map(chat => {
+          const messages = chat.messages.map(msg => {
+            const contactName = contacts.find(i => i.uid === msg.from);
+            if (contactName) {
+              msg.name = contactName.name || '';
+            }
+            return msg;
+          });
+          chat.messages = messages;
+          return chat;
+        });
+      })
     );
     this.subscription = obs.subscribe(elements => {
       this.items$.next(elements);

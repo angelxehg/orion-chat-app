@@ -19,6 +19,7 @@ export interface AppChat extends DBChat {
 
 export interface AppMessage extends DBMessage {
   mine: boolean;
+  name?: string;
 }
 
 export function transformChat(chat: (DBChat & { id: string }), uid: string): AppChat {
