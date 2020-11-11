@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 import { AuthService, AuthServiceMock } from 'src/app/services/auth.service';
 import { SettingsService, SettingsServiceMock } from 'src/app/services/settings.service';
@@ -12,7 +13,10 @@ describe('LoginPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
-      imports: [IonicModule.forRoot()],
+      imports: [
+        IonicModule.forRoot(),
+        RouterTestingModule
+      ],
       providers: [
         { provide: AuthService, useValue: AuthServiceMock },
         { provide: SettingsService, useValue: SettingsServiceMock }
