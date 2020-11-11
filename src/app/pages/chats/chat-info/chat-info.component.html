@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="ion-hide-md-up">
+      <ion-back-button defaultHref="/app/chats"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Información del Chat
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="chat">
+    <!-- Info -->
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Información</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label position="floating">Título del chat</ion-label>
+        <ion-input [(ngModel)]="chat.title" [disabled]="!editMode"></ion-input>
+      </ion-item>
+    </ion-item-group>
+    <!-- People -->
+    <ion-item-group *ngIf="chat.participantsRich">
+      <ion-item-divider>
+        <ion-label>Integrantes</ion-label>
+      </ion-item-divider>
+      <ion-item *ngFor="let item of chat.participantsRich">
+        <ion-icon slot="end" name="people-outline" color="secondary"></ion-icon>
+        <ion-label>
+          <h2>{{ item.name }}</h2>
+          <p>{{ item.email }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

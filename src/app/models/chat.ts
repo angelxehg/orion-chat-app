@@ -1,3 +1,5 @@
+import { AppContact } from './contact';
+
 export interface DBChat {
   title: string;
   messages?: DBMessage[];
@@ -12,6 +14,7 @@ export interface DBMessage {
 export interface AppChat extends DBChat {
   id: string;
   messages?: AppMessage[];
+  participantsRich?: AppContact[];
   imageSrc?: string;
   lastMsg?: string;
   lastMsgDate?: string;

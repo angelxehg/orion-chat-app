@@ -11,6 +11,7 @@ import { ChatItemComponent } from './chat-item/chat-item.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatMenuComponent } from './chat-menu/chat-menu.component';
 import { ChatViewComponent } from './chat-view/chat-view.component';
+import { ChatInfoComponent } from './chat-info/chat-info.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { ChatViewComponent } from './chat-view/chat-view.component';
     ChatItemComponent,
     ChatListComponent,
     ChatMenuComponent,
-    ChatViewComponent
+    ChatViewComponent,
+    ChatInfoComponent
   ],
   exports: [
     ChatMenuComponent

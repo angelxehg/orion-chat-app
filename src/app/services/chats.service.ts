@@ -103,14 +103,16 @@ export class ChatsService {
       map(chats => {
         const contacts = this.contacts.items$.value;
         return chats.map(chat => {
+          const participants = contacts.filter(i => chat.participants.includes(i.uid));
           const messages = chat.messages.map(msg => {
-            const contactName = contacts.find(i => i.uid === msg.from);
+            const contactName = participants.find(i => i.uid === msg.from);
             if (contactName) {
               msg.name = contactName.name || '';
             }
             return msg;
           });
           chat.messages = messages;
+          chat.participantsRich = participants;
           return chat;
         });
       })

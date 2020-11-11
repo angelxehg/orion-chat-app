@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ChatInfoComponent } from './chat-info/chat-info.component';
 import { ChatViewComponent } from './chat-view/chat-view.component';
 
 import { ChatsPage } from './chats.page';
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: ':chat',
     component: ChatViewComponent
+  },
+  {
+    path: ':chat/info',
+    component: ChatInfoComponent
   }
 ];
 
