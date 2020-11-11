@@ -1,13 +1,24 @@
 <ion-content>
-  Aquí va el login
-  <ion-item button (click)="login()">
-    <ion-icon slot="end" name="log-in"></ion-icon>
-    <ion-label>
-      Iniciar sesión
-    </ion-label>
-  </ion-item>
-  <a routerLink="/register">Registro</a>
-  <a routerLink="/recover">Recuperar contraseña</a>
+  <ion-slides pager="true">
+    <!-- Slides -->
+    <ion-slide>
+      <ion-card>
+        <ion-icon class="big-icon" name="enter" color="success"></ion-icon>
+        <ion-card-header>
+          <ion-card-title>Iniciar sesión</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="card-items">
+          <!-- Links-->
+          <ion-item button (click)="login()">
+            <ion-icon slot="end" name="log-in"></ion-icon>
+            <ion-label>
+              Iniciar sesión
+            </ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
   <!-- Fab buttons -->
   <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button size="small" color="light" (click)="toggleTheme()">
