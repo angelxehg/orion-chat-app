@@ -35,6 +35,8 @@ export class SettingsPage {
 
   logout = () => this.auth.logout();
 
+  profile = () => this.auth.updateProfile();
+
   openRepo() {
     Browser.open({ url: 'https://angelxehg.github.io/tomatoe-chat' });
   }

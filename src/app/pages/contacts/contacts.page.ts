@@ -14,6 +14,8 @@ export class ContactsPage {
 
   enabled = () => this.contacts.enabled();
 
+  addContact = () => this.contacts.addContact();
+
   ionViewWillEnter() {
     this.contacts.subscribe();
   }

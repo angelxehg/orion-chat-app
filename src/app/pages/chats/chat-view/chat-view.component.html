@@ -16,7 +16,7 @@
         <ion-card color="{{ msg.mine ? 'primary' : 'light' }}">
           <ion-card-content>
             {{ msg.content }}
-            <!-- <ion-text *ngIf="!msg.mine" color="medium"><i><br />@{{ msg.from }}</i></ion-text> -->
+            <ion-text *ngIf="!msg.mine" color="medium"><i><br />@{{ msg.name }}</i></ion-text>
           </ion-card-content>
         </ion-card>
       </ion-col>
