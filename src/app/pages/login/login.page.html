@@ -8,13 +8,18 @@
           <ion-card-title>Iniciar sesión</ion-card-title>
         </ion-card-header>
         <ion-card-content class="card-items">
-          <!-- Links-->
+          <!-- Buttons -->
           <ion-item button (click)="login()">
             <ion-icon slot="end" name="log-in"></ion-icon>
             <ion-label>
               Iniciar sesión
             </ion-label>
           </ion-item>
+          <!-- Links -->
+          <br />
+          <a routerLink="/register">Registro</a>
+          <br />
+          <a routerLink="/recover">Recuperar contraseña</a>
         </ion-card-content>
       </ion-card>
     </ion-slide>
