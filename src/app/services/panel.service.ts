@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of, Subject } from 'rxjs';
-import { MenuGroup } from '../models/menu';
+import { of } from 'rxjs';
 
 export const PanelServiceMock = {
   title: () => 'Page',

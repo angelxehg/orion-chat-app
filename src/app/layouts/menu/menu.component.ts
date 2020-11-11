@@ -1,5 +1,4 @@
 import { Component, } from '@angular/core';
-import { MenuItem } from 'src/app/models/menu';
 
 @Component({
   selector: 'app-menu',
@@ -8,36 +7,13 @@ import { MenuItem } from 'src/app/models/menu';
 })
 export class MenuComponent {
 
-  items: MenuItem[] = [
-    {
-      title: 'Chats',
-      url: '/app/chats',
-      icon: 'chatbubbles',
-    },
-    {
-      title: 'Contactos',
-      url: '/app/contacts',
-      icon: 'people',
-    },
-    {
-      title: 'Espacios',
-      url: '/app/spaces',
-      icon: 'file-tray-full',
-    },
-    {
-      title: 'Configuración',
-      url: '/app/settings',
-      icon: 'cog',
-    },
-  ];
-
   constructor() { }
 
-  activeIcon(item: MenuItem) {
-    if (window.location.pathname.includes(item.url)) {
-      return item.icon;
+  activeIcon(url: string, icon: string) {
+    if (window.location.pathname.includes(url)) {
+      return icon;
     }
-    return `${item.icon}-outline`;
+    return `${icon}-outline`;
   }
 
   activeColor(url) {

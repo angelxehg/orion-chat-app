@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { BehaviorSubject, of } from 'rxjs';
 import { DBContactGroup } from '../models/contact';
-import { DBSpaceGroup } from '../models/space';
 import { ToastService } from './toast.service';
 
 export const AngularFireAuthMock = {
@@ -221,7 +220,7 @@ export class AuthService {
     return this.fireAuth.signInWithEmailAndPassword(email, password).then(credential => {
       toast.dismiss();
       this.toast.success('Inicio de sesión correcto');
-      this.router.navigateByUrl('/app/spaces');
+      this.router.navigateByUrl('/app/contacts');
       return true;
     }).catch(err => {
       toast.dismiss();
@@ -248,10 +247,6 @@ export class AuthService {
       this.firestore.collection<DBContactGroup>('contacts')
         .doc(user.uid).set({
           contacts: []
-        }).then();
-      this.firestore.collection<DBSpaceGroup>('spaces')
-        .doc(user.uid).set({
-          spaces: []
         }).then();
       //
       credential.user.sendEmailVerification().then(() => {
@@ -286,7 +281,7 @@ export class AuthService {
     return this.fireAuth.applyActionCode(oobCode).then(() => {
       this.toast.success('Verificación exitosa');
       setTimeout((router: Router) => {
-        router.navigateByUrl('/app/spaces');
+        router.navigateByUrl('/app/contacts');
       }, 1000, this.router);
       return true;
     }).catch(err => {
