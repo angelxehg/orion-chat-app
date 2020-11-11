@@ -20,11 +20,6 @@ export class MenuComponent {
       icon: 'people',
     },
     {
-      title: 'Espacios',
-      url: '/app/spaces',
-      icon: 'file-tray-full',
-    },
-    {
       title: 'Configuración',
       url: '/app/settings',
       icon: 'cog',
