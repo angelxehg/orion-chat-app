@@ -1,0 +1,25 @@
+ion-slides {
+  height: 100%;
+  ion-card {
+    background: var(--ion-card-background);
+  }
+}
+
+ion-card {
+  width: 100%;
+  @media (min-width: 400px) { 
+    width: 400px;
+  }
+  ion-icon.big-icon {
+    margin-top: 20px;
+    margin-bottom: -15px;
+    font-size: xxx-large;
+  }
+  ion-card-content.card-items {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  ion-item {
+    --background: var(--ion-card-background);
+  }
+}

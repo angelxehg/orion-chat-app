@@ -5,21 +5,19 @@
       <ion-card>
         <ion-icon class="big-icon" name="enter" color="success"></ion-icon>
         <ion-card-header>
-          <ion-card-title>Iniciar sesión</ion-card-title>
+          <ion-card-title>Registro</ion-card-title>
         </ion-card-header>
         <ion-card-content class="card-items">
           <!-- Buttons -->
-          <ion-item button (click)="login()">
+          <ion-item button (click)="register()">
             <ion-icon slot="end" name="log-in"></ion-icon>
             <ion-label>
-              Iniciar sesión
+              Registro
             </ion-label>
           </ion-item>
           <!-- Links -->
           <br />
-          <a routerLink="/register">Registro</a>
-          <br />
-          <a routerLink="/recover">Recuperar contraseña</a>
+          <a routerLink="/login">Inicio de sesión</a>
         </ion-card-content>
       </ion-card>
     </ion-slide>

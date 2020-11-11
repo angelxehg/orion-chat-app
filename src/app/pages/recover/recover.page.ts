@@ -1,18 +1,17 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-recover',
+  templateUrl: './recover.page.html',
+  styleUrls: ['./recover.page.scss'],
 })
-export class LoginPage {
+export class RecoverPage {
 
   constructor(private auth: AuthService, private settings: SettingsService) { }
 
-  login = () => this.auth.loginWithEmail();
+  recover = () => this.auth.recoverPasswordByEmail();
 
   toggleTheme = () => this.settings.toggleTheme();
 

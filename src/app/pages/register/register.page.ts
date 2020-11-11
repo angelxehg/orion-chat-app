@@ -1,18 +1,17 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-register',
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
 })
-export class LoginPage {
+export class RegisterPage {
 
   constructor(private auth: AuthService, private settings: SettingsService) { }
 
-  login = () => this.auth.loginWithEmail();
+  register = () => this.auth.registerWithEmail();
 
   toggleTheme = () => this.settings.toggleTheme();
 

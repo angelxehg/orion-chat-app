@@ -4,15 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { AuthService, AuthServiceMock } from 'src/app/services/auth.service';
 import { SettingsService, SettingsServiceMock } from 'src/app/services/settings.service';
 
-import { LoginPage } from './login.page';
+import { RecoverPage } from './recover.page';
 
-describe('LoginPage', () => {
-  let component: LoginPage;
-  let fixture: ComponentFixture<LoginPage>;
+describe('RecoverPage', () => {
+  let component: RecoverPage;
+  let fixture: ComponentFixture<RecoverPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginPage],
+      declarations: [RecoverPage],
       imports: [
         IonicModule.forRoot(),
         RouterTestingModule
@@ -23,7 +23,7 @@ describe('LoginPage', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LoginPage);
+    fixture = TestBed.createComponent(RecoverPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
