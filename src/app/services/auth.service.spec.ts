@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore/public_api';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AngularFireAuthMock, AuthService } from './auth.service';
