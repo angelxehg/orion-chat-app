@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { AppChat, DBChat, transformChat } from 'src/app/models/chat';
 import { AppUser, AuthService } from './auth.service';
 import { ContactsService } from './contacts.service';
@@ -24,6 +24,7 @@ export class ChatsService {
   private collection: AngularFirestoreCollection<DBChat>;
 
   private subscription: Subscription;
+  private contactsSubscription: Subscription;
 
   public items$ = new BehaviorSubject<AppChat[]>([]);
 
@@ -106,36 +107,49 @@ export class ChatsService {
     if (!this.user) {
       return null;
     }
-    const obs = this.collection.valueChanges({ idField: 'id' }).pipe(
-      map(dbChats => dbChats.map(
-        chat => transformChat(chat, this.user.uid)
-      )),
-      map(chats => {
-        const contacts = this.contacts.items$.value;
-        return chats.map(chat => {
-          const participants = contacts.filter(i => chat.participants.includes(i.uid));
-          const messages = chat.messages.map(msg => {
-            const contactName = participants.find(i => i.uid === msg.from);
-            if (contactName) {
-              msg.name = contactName.name || '';
-            }
-            return msg;
-          });
-          chat.messages = messages;
-          chat.participantsRich = participants;
-          return chat;
+    this.contacts.subscribe();
+    this.contactsSubscription = this.contacts.items$.pipe(
+      map(contacts => {
+        if (contacts.length > 0) {
+          this.contacts.unsubscribe();
+        }
+        return contacts;
+      }),
+      map(async contacts => {
+        const obs = this.collection.valueChanges({ idField: 'id' }).pipe(
+          map(dbChats => dbChats.map(
+            chat => transformChat(chat, this.user.uid, contacts)
+          )),
+          map(chats => {
+            return chats.map(chat => {
+              const participants = contacts.filter(i => chat.participants.includes(i.uid));
+              const messages = chat.messages.map(msg => {
+                const contactName = participants.find(i => i.uid === msg.from);
+                if (contactName) {
+                  msg.name = contactName.name || '';
+                }
+                return msg;
+              });
+              chat.messages = messages;
+              chat.participantsRich = participants;
+              return chat;
+            });
+          })
+        );
+        this.subscription = obs.subscribe(elements => {
+          this.items$.next(elements);
         });
+        return '';
       })
-    );
-    this.subscription = obs.subscribe(elements => {
-      this.items$.next(elements);
-    });
-    return this.subscription;
+    ).subscribe();
+    return this.contactsSubscription;
   }
 
   public unsubscribe() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+      this.contacts.unsubscribe();
+      this.contactsSubscription.unsubscribe();
     }
   }
 

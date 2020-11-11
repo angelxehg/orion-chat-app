@@ -25,10 +25,16 @@ export interface AppMessage extends DBMessage {
   name?: string;
 }
 
-export function transformChat(chat: (DBChat & { id: string }), uid: string): AppChat {
+export function transformChat(chat: (DBChat & { id: string }), uid: string, contacts: AppContact[]): AppChat {
   let lastMessage = '';
   if (chat.messages.length > 0) {
-    const lastMessageFrom = uid === chat.messages.slice(-1)[0].from ? 'Yo' : 'Otro';
+    const lastMessageFromPerson = contacts.find(i => i.uid === chat.messages.slice(-1)[0].from);
+    let lastMessageFrom = 'Yo';
+    if (lastMessageFromPerson) {
+      if (lastMessageFromPerson.uid !== uid) {
+        lastMessageFrom = lastMessageFromPerson.name;
+      }
+    }
     const lastMessageContent = chat.messages.slice(-1)[0].content;
     lastMessage = `${lastMessageFrom}: ${lastMessageContent}`;
   }
