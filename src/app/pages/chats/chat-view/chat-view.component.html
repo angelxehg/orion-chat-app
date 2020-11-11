@@ -3,6 +3,11 @@
     <ion-buttons slot="start" class="ion-hide-md-up">
       <ion-back-button defaultHref="/app/chats"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="info">
+        <ion-icon slot="icon-only" name="alert-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       {{ title() }}
     </ion-title>

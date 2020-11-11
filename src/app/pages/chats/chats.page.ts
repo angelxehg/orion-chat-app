@@ -21,7 +21,5 @@ export class ChatsPage {
     this.panel.show();
   }
 
-  createChat() {
-    // this.chats.create();
-  }
+  createChat = () => this.chats.create();
 }
