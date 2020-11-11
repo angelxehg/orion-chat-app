@@ -2,10 +2,28 @@
   <ion-item-divider>
     <ion-label>Secciones</ion-label>
   </ion-item-divider>
-  <ion-menu-toggle auto-hide="false" *ngFor="let item of items">
-    <ion-item routerDirection="root" [routerLink]="[item.url]" lines="none" detail="false">
-      <ion-icon slot="start" [name]="activeIcon(item)" [color]="activeColor(item.url)"></ion-icon>
-      <ion-label [color]="activeColor(item.url)">{{ item.title }}</ion-label>
+  <!-- Chats menu -->
+  <ion-menu-toggle auto-hide="false">
+    <ion-item routerDirection="root" routerLink="/app/chats" lines="none" detail="false">
+      <ion-icon slot="start" [name]="activeIcon('/app/chats','chatbubbles')" [color]="activeColor('/app/chats')">
+      </ion-icon>
+      <ion-label [color]="activeColor('/app/chats')">Chats</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+  <!-- Contacts menu -->
+  <ion-menu-toggle auto-hide="false">
+    <ion-item routerDirection="root" routerLink="/app/contacts" lines="none" detail="false">
+      <ion-icon slot="start" [name]="activeIcon('/app/contacts','people')" [color]="activeColor('/app/contacts')">
+      </ion-icon>
+      <ion-label [color]="activeColor('/app/contacts')">Contactos</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+  <!-- Settings menu -->
+  <ion-menu-toggle auto-hide="false">
+    <ion-item routerDirection="root" routerLink="/app/settings" lines="none" detail="false">
+      <ion-icon slot="start" [name]="activeIcon('/app/settings','cog')" [color]="activeColor('/app/settings')">
+      </ion-icon>
+      <ion-label [color]="activeColor('/app/settings')">Configuración</ion-label>
     </ion-item>
   </ion-menu-toggle>
 </ion-item-group>
