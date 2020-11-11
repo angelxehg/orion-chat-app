@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AlertController } from '@ionic/angular';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppChat, DBChat, transformChat } from 'src/app/models/chat';
 import { AppUser, AuthService } from './auth.service';
 import { ContactsService } from './contacts.service';
+import { ToastService } from './toast.service';
 
 export const AngularFirestoreMock = {};
 
@@ -27,8 +29,10 @@ export class ChatsService {
 
   constructor(
     private auth: AuthService,
+    private alert: AlertController,
     private contacts: ContactsService,
     private firestore: AngularFirestore,
+    private toast: ToastService
   ) {
     this.auth.currentUser.subscribe(user => {
       if (user) {
@@ -49,6 +53,44 @@ export class ChatsService {
   }
 
   public enabled = () => this.auth.isVerified();
+
+  public create() {
+    if (!this.user) {
+      return;
+    }
+    this.alert.create({
+      header: 'Crear nuevo chat',
+      subHeader: 'Ingresa los datos del chat',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Nombre del chat'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'danger',
+        },
+        {
+          text: 'Guardar',
+          cssClass: 'success',
+          handler: ({ name }) => {
+            const chat: DBChat = {
+              title: name,
+              messages: [],
+              participants: [this.user.uid]
+            };
+            this.collection.add(chat).then(() => {
+              this.toast.success('Chat creado');
+            });
+          }
+        }
+      ]
+    }).then(a => a.present());
+  }
 
   public subscribe() {
     if (!this.user) {
