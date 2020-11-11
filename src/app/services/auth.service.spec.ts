@@ -1,8 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore/public_api';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AngularFireAuthMock, AuthService } from './auth.service';
+import { AngularFirestoreMock } from './chats.service';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -13,7 +15,8 @@ describe('AuthService', () => {
         RouterTestingModule.withRoutes([]),
       ],
       providers: [
-        { provide: AngularFireAuth, useValue: AngularFireAuthMock }
+        { provide: AngularFireAuth, useValue: AngularFireAuthMock },
+        { provide: AngularFirestore, useValue: AngularFirestoreMock }
       ]
     });
     service = TestBed.inject(AuthService);

@@ -18,7 +18,7 @@
       <ion-item-divider>
         <ion-label>Cuenta</ion-label>
       </ion-item-divider>
-      <ion-item>
+      <ion-item button detail="false" (click)="profile()">
         <ion-icon slot="end" name="person-outline" [color]="user.displayName ? 'secondary' : 'danger'"></ion-icon>
         <ion-label>{{ user.displayName || 'Configurar perfil...' }}</ion-label>
       </ion-item>

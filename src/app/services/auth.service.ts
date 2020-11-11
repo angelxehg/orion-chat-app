@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { BehaviorSubject, of } from 'rxjs';
+import { DBContactGroup } from '../models/contact';
 import { ToastService } from './toast.service';
 
 export const AngularFireAuthMock = {
@@ -24,6 +26,11 @@ export interface AppUser {
   emailVerified: boolean;
 }
 
+export interface AppProfile {
+  name: string;
+  email: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +43,8 @@ export class AuthService {
     private router: Router,
     private alert: AlertController,
     private toast: ToastService,
-    private fireAuth: AngularFireAuth
+    private fireAuth: AngularFireAuth,
+    private firestore: AngularFirestore,
   ) {
     this.fireAuth.authState.subscribe(user => {
       if (user) {
@@ -57,6 +65,46 @@ export class AuthService {
   }
 
   public user = () => this.userData;
+
+  public updateProfile() {
+    if (!this.userData) {
+      return;
+    }
+    this.alert.create({
+      header: 'Configurar perfil',
+      subHeader: 'Ingresa tu nombre',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Ingresa tu nombre'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'danger',
+        },
+        {
+          text: 'Guardar',
+          cssClass: 'success',
+          handler: ({ name }) => {
+            this.fireAuth.currentUser.then(user => {
+              user.updateProfile({ displayName: name }).then(() => {
+                const newProfile: AppProfile = {
+                  name: user.displayName,
+                  email: user.email
+                };
+                this.firestore.collection<AppProfile>('profiles')
+                  .doc(user.uid).set(newProfile).then();
+              });
+            });
+          }
+        }
+      ]
+    }).then(a => a.present());
+  }
 
   public loginWithEmail() {
     this.alert.create({
