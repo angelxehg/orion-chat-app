@@ -165,45 +165,14 @@ export class AuthService {
     });
   }
 
-  public recoverPasswordByEmail() {
-    this.alert.create({
-      header: 'Recuperación de contraseña',
-      subHeader: 'Recuperar contraseña con tu email',
-      inputs: [
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'Ingresa tu email'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'danger',
-        },
-        {
-          text: 'Registrar',
-          cssClass: 'success',
-          handler: ({ email }) => {
-            this.authSendRecoveryEmail(email);
-          }
-        }
-      ]
-    }).then(a => a.present());
-  }
-
-  public logout = () => this.fireAuth.signOut().then(() => {
-    this.router.navigateByUrl('/login');
-  })
-
-  private async authSendRecoveryEmail(email: string) {
+  public async recoverPasswordByEmail(givenCredential: AppCredential) {
+    const { email } = givenCredential;
     if (!email) {
       this.toast.error('No se ha especificado un correo electrónico');
       return false;
     }
     const toast = await this.toast.waiting('Enviando enlace al correo...');
-    this.fireAuth.sendPasswordResetEmail(email).then(() => {
+    return this.fireAuth.sendPasswordResetEmail(email).then(() => {
       toast.dismiss();
       this.toast.success('Se envió el correo de recuperación');
       this.router.navigateByUrl('/verify');
@@ -213,6 +182,10 @@ export class AuthService {
       return false;
     });
   }
+
+  public logout = () => this.fireAuth.signOut().then(() => {
+    this.router.navigateByUrl('/login');
+  })
 
   public verifyEmail(oobCode: string) {
     return this.fireAuth.applyActionCode(oobCode).then(() => {

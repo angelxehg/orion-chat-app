@@ -3,14 +3,19 @@
     <!-- Slides -->
     <ion-slide>
       <ion-card>
-        <ion-icon class="big-icon" name="enter" color="success"></ion-icon>
+        <ion-icon class="big-icon" name="color-wand" color="tertiary"></ion-icon>
         <ion-card-header>
           <ion-card-title>Recuperar contraseña</ion-card-title>
         </ion-card-header>
         <ion-card-content class="card-items">
+          <!-- Inputs -->
+          <ion-item>
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input [(ngModel)]="credential.email" autocomplete="email"></ion-input>
+          </ion-item>
           <!-- Buttons-->
-          <ion-item button (click)="recover()">
-            <ion-icon slot="end" name="log-in"></ion-icon>
+          <ion-item button (click)="recover()" [disabled]="!ready()">
+            <ion-icon slot="end" name="color-wand"></ion-icon>
             <ion-label>
               Recuperar
             </ion-label>

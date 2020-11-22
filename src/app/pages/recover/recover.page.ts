@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AppCredential, AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
@@ -9,9 +9,27 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 export class RecoverPage {
 
+  credential: AppCredential = {
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+  };
+
+  ionViewWillEnter() {
+    this.credential.password = '';
+    this.credential.passwordConfirmation = '';
+  }
+
+  ionViewWillLeave() {
+    this.credential.password = '';
+    this.credential.passwordConfirmation = '';
+  }
+
   constructor(private auth: AuthService, private settings: SettingsService) { }
 
-  recover = () => this.auth.recoverPasswordByEmail();
+  ready = () => this.credential.email;
+
+  recover = () => this.auth.recoverPasswordByEmail(this.credential).then();
 
   toggleTheme = () => this.settings.toggleTheme();
 
