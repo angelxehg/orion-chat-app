@@ -133,42 +133,36 @@ export class AuthService {
     });
   }
 
-  public registerWithEmail() {
-    this.alert.create({
-      header: 'Registro con email',
-      subHeader: 'Registro con tu email y contraseña',
-      inputs: [
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'Ingresa tu email'
-        },
-        {
-          name: 'password',
-          type: 'password',
-          placeholder: 'Ingresa tu contraseña'
-        },
-        {
-          name: 'passwordConfirmation',
-          type: 'password',
-          placeholder: 'Confirma tu contraseña'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'danger',
-        },
-        {
-          text: 'Registrar',
-          cssClass: 'success',
-          handler: ({ email, password, passwordConfirmation }) => {
-            this.authRegisterWithEmail(email, password, passwordConfirmation);
-          }
-        }
-      ]
-    }).then(a => a.present());
+  public async registerWithEmail(givenCredential: AppCredential) {
+    const { email, password, passwordConfirmation } = givenCredential;
+    if (!email || !password || !passwordConfirmation) {
+      this.toast.error('No ingresó un correo o contraseña validos');
+      return false;
+    }
+    if (password !== passwordConfirmation) {
+      this.toast.error('Las contraseñas no coinciden');
+      return false;
+    }
+    const toast = await this.toast.waiting('Registrando...');
+    return this.fireAuth.createUserWithEmailAndPassword(email, password).then(credential => {
+      toast.dismiss();
+      this.toast.success('Registro e Inicio de sesión correcto');
+      //
+      const user = credential.user;
+      this.firestore.collection<DBContactGroup>('contacts')
+        .doc(user.uid).set({
+          contacts: []
+        }).then();
+      //
+      credential.user.sendEmailVerification().then(() => {
+        this.router.navigateByUrl('/verify');
+      });
+      return true;
+    }).catch(err => {
+      toast.dismiss();
+      this.toast.error('No se pudo crear cuenta');
+      return false;
+    });
   }
 
   public recoverPasswordByEmail() {
@@ -202,37 +196,6 @@ export class AuthService {
   public logout = () => this.fireAuth.signOut().then(() => {
     this.router.navigateByUrl('/login');
   })
-
-  private async authRegisterWithEmail(email: string, password: string, passwordConfirmation: string) {
-    if (!email || !password || !passwordConfirmation) {
-      this.toast.error('No ingresó un correo o contraseña validos');
-      return false;
-    }
-    if (password !== passwordConfirmation) {
-      this.toast.error('Las contraseñas no coinciden');
-      return false;
-    }
-    const toast = await this.toast.waiting('Registrando...');
-    return this.fireAuth.createUserWithEmailAndPassword(email, password).then(credential => {
-      toast.dismiss();
-      this.toast.success('Registro e Inicio de sesión correcto');
-      //
-      const user = credential.user;
-      this.firestore.collection<DBContactGroup>('contacts')
-        .doc(user.uid).set({
-          contacts: []
-        }).then();
-      //
-      credential.user.sendEmailVerification().then(() => {
-        this.router.navigateByUrl('/verify');
-      });
-      return true;
-    }).catch(err => {
-      toast.dismiss();
-      this.toast.error('No se pudo crear cuenta');
-      return false;
-    });
-  }
 
   private async authSendRecoveryEmail(email: string) {
     if (!email) {

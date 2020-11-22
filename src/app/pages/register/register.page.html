@@ -3,16 +3,30 @@
     <!-- Slides -->
     <ion-slide>
       <ion-card>
-        <ion-icon class="big-icon" name="enter" color="success"></ion-icon>
+        <ion-icon class="big-icon" name="reader" color="secondary"></ion-icon>
         <ion-card-header>
           <ion-card-title>Registro</ion-card-title>
         </ion-card-header>
         <ion-card-content class="card-items">
+          <!-- Inputs -->
+          <ion-item>
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input [(ngModel)]="credential.email" autocomplete="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input [(ngModel)]="credential.password" autocomplete="new-password" type="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Confirmar contraseña</ion-label>
+            <ion-input [(ngModel)]="credential.passwordConfirmation" autocomplete="new-password" type="password">
+            </ion-input>
+          </ion-item>
           <!-- Buttons -->
-          <ion-item button (click)="register()">
-            <ion-icon slot="end" name="log-in"></ion-icon>
+          <ion-item button (click)="register()" [disabled]="!ready()">
+            <ion-icon slot="end" name="reader"></ion-icon>
             <ion-label>
-              Registro
+              Registrarme
             </ion-label>
           </ion-item>
           <!-- Links -->
