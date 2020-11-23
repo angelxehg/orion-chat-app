@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  version: '2.0.0-rc.1',
+  version: '2.0.0',
   firebase: {
     apiKey: 'AIzaSyAJCX0vuYdhkEgbT53JlLGgVKueIz8iNDs',
     authDomain: 'tomatoe-chat.firebaseapp.com',

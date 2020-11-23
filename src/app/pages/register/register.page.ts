@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AppCredential, AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
@@ -9,9 +9,27 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 export class RegisterPage {
 
+  credential: AppCredential = {
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+  };
+
   constructor(private auth: AuthService, private settings: SettingsService) { }
 
-  register = () => this.auth.registerWithEmail();
+  ionViewWillEnter() {
+    this.credential.password = '';
+    this.credential.passwordConfirmation = '';
+  }
+
+  ionViewWillLeave() {
+    this.credential.password = '';
+    this.credential.passwordConfirmation = '';
+  }
+
+  ready = () => this.credential.email && this.credential.password && this.credential.passwordConfirmation;
+
+  register = () => this.auth.registerWithEmail(this.credential).then();
 
   toggleTheme = () => this.settings.toggleTheme();
 

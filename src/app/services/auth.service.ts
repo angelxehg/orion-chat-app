@@ -32,6 +32,12 @@ export interface AppProfile {
   uid: string;
 }
 
+export interface AppCredential {
+  email: string;
+  password: string;
+  passwordConfirmation?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -108,116 +114,14 @@ export class AuthService {
     }).then(a => a.present());
   }
 
-  public loginWithEmail() {
-    this.alert.create({
-      header: 'Iniciar sesión',
-      subHeader: 'Inicia sesión con tu email y contraseña',
-      inputs: [
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'Ingresa tu email'
-        },
-        {
-          name: 'password',
-          type: 'password',
-          placeholder: 'Ingresa tu contraseña'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'danger',
-        },
-        {
-          text: 'Iniciar sesión',
-          cssClass: 'success',
-          handler: ({ email, password }) => {
-            this.authLoginWithEmail(email, password);
-          }
-        }
-      ]
-    }).then(a => a.present());
-  }
-
-  public registerWithEmail() {
-    this.alert.create({
-      header: 'Registro con email',
-      subHeader: 'Registro con tu email y contraseña',
-      inputs: [
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'Ingresa tu email'
-        },
-        {
-          name: 'password',
-          type: 'password',
-          placeholder: 'Ingresa tu contraseña'
-        },
-        {
-          name: 'passwordConfirmation',
-          type: 'password',
-          placeholder: 'Confirma tu contraseña'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'danger',
-        },
-        {
-          text: 'Registrar',
-          cssClass: 'success',
-          handler: ({ email, password, passwordConfirmation }) => {
-            this.authRegisterWithEmail(email, password, passwordConfirmation);
-          }
-        }
-      ]
-    }).then(a => a.present());
-  }
-
-  public recoverPasswordByEmail() {
-    this.alert.create({
-      header: 'Recuperación de contraseña',
-      subHeader: 'Recuperar contraseña con tu email',
-      inputs: [
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'Ingresa tu email'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'danger',
-        },
-        {
-          text: 'Registrar',
-          cssClass: 'success',
-          handler: ({ email }) => {
-            this.authSendRecoveryEmail(email);
-          }
-        }
-      ]
-    }).then(a => a.present());
-  }
-
-  public logout = () => this.fireAuth.signOut().then(() => {
-    this.router.navigateByUrl('/login');
-  })
-
-  private async authLoginWithEmail(email: string, password: string) {
+  public async loginWithEmail(givenCredential: AppCredential) {
+    const { email, password } = givenCredential;
     if (!email || !password) {
       this.toast.error('No ingresó un correo o contraseña validos');
       return false;
     }
     const toast = await this.toast.waiting('Iniciando sesión...');
-    return this.fireAuth.signInWithEmailAndPassword(email, password).then(credential => {
+    return this.fireAuth.signInWithEmailAndPassword(email, password).then(() => {
       toast.dismiss();
       this.toast.success('Inicio de sesión correcto');
       this.router.navigateByUrl('/app/contacts');
@@ -229,7 +133,8 @@ export class AuthService {
     });
   }
 
-  private async authRegisterWithEmail(email: string, password: string, passwordConfirmation: string) {
+  public async registerWithEmail(givenCredential: AppCredential) {
+    const { email, password, passwordConfirmation } = givenCredential;
     if (!email || !password || !passwordConfirmation) {
       this.toast.error('No ingresó un correo o contraseña validos');
       return false;
@@ -260,13 +165,14 @@ export class AuthService {
     });
   }
 
-  private async authSendRecoveryEmail(email: string) {
+  public async recoverPasswordByEmail(givenCredential: AppCredential) {
+    const { email } = givenCredential;
     if (!email) {
       this.toast.error('No se ha especificado un correo electrónico');
       return false;
     }
     const toast = await this.toast.waiting('Enviando enlace al correo...');
-    this.fireAuth.sendPasswordResetEmail(email).then(() => {
+    return this.fireAuth.sendPasswordResetEmail(email).then(() => {
       toast.dismiss();
       this.toast.success('Se envió el correo de recuperación');
       this.router.navigateByUrl('/verify');
@@ -276,6 +182,10 @@ export class AuthService {
       return false;
     });
   }
+
+  public logout = () => this.fireAuth.signOut().then(() => {
+    this.router.navigateByUrl('/login');
+  })
 
   public verifyEmail(oobCode: string) {
     return this.fireAuth.applyActionCode(oobCode).then(() => {
