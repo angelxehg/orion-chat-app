@@ -15,5 +15,5 @@ jobs:
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
-      - run: gcloud config set project yourappid
-      - run: gcloud firestore export gs://yourbucket.appspot.com
+      - run: gcloud config set project tomatoe-chat
+      - run: gcloud firestore export gs://tomatoe-chat.appspot.com
